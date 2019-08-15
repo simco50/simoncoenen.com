@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            BoxHead - DirectX 11
+        
+    </title>
+
+    
+        <meta name="description" content="Simon Coenen, Game Programmer">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/project_boxhead">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="BoxHead - DirectX 11" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Challenges Static batching Data driven design using json Shadow mapping Physx Cloth Using winsock2 for online leaderboards Flow field pathfinding Technology Used Visual Studio Unity3D Adobe Photoshop Autodesk 3ds max Language C++ C# HLSL json" />
+<meta property="og:description" content="Challenges Static batching Data driven design using json Shadow mapping Physx Cloth Using winsock2 for online leaderboards Flow field pathfinding Technology Used Visual Studio Unity3D Adobe Photoshop Autodesk 3ds max Language C++ C# HLSL json" />
+<link rel="canonical" href="https://www.simoncoenen.com/project_boxhead" />
+<meta property="og:url" content="https://www.simoncoenen.com/project_boxhead" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-15T12:33:36+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="BoxHead - DirectX 11" />
+<meta name="twitter:site" content="@simon_coenen" />
+<script type="application/ld+json">
+{"datePublished":"2019-08-15T12:33:36+01:00","dateModified":"2019-08-15T12:33:36+01:00","url":"https://www.simoncoenen.com/project_boxhead","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/project_boxhead"},"description":"Challenges Static batching Data driven design using json Shadow mapping Physx Cloth Using winsock2 for online leaderboards Flow field pathfinding Technology Used Visual Studio Unity3D Adobe Photoshop Autodesk 3ds max Language C++ C# HLSL json","@type":"BlogPosting","headline":"BoxHead - DirectX 11","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+
+    
+    <div class="embed-responsive embed-responsive-16by9 project-video">
+    <iframe src="https://player.vimeo.com/video/170031034?color=ff9933&title=0&byline=0&portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+    
+
+    <div class="row">
+        <div class="col-xl-6">
+            <h1 class="project-header">BoxHead - DirectX 11</h1>
+            <h4><p>Made in DirectX 11 Engine</p>
+</h4>
+            <a class="btn btn-sm btn-light" href="index">Return</a>
+        </div>
+    
+        <div class="col-xl-6 project-info">
+            <p class="text-justify project-description">
+                <p>Using a DirectX 11 component based engine I created Boxhead in 3D, an old Flash game I’ve played a lot when I was young. I started off with a boilerplate framework and expanded its feature set by adding hardware skinning/animation, static batching, shadow mapping, PhysX cloth, post processing shaders and pathfinding. Besides this I did some research in steering behaviors, A* pathfinding and behavior trees. First in Unity3D and then in C++.</p>
+
+            </p>
+        </div>
+    </div>
+
+    <div class="project-info">
+<div class="row">
+<div class="col-lg-4">
+      <h2 id="challenges">Challenges</h2>
+      <ul>
+        <li>Static batching</li>
+        <li>Data driven design using json</li>
+        <li>Shadow mapping</li>
+        <li>Physx Cloth</li>
+        <li>Using winsock2 for online leaderboards</li>
+        <li>Flow field pathfinding</li>
+      </ul>
+    </div>
+<div class="col-lg-4">
+      <h2 id="technology-used">Technology Used</h2>
+      <ul>
+        <li>Visual Studio</li>
+        <li>Unity3D</li>
+        <li>Adobe Photoshop</li>
+        <li>Autodesk 3ds max</li>
+      </ul>
+    </div>
+<div class="col-lg-4">
+      <h2 id="language">Language</h2>
+      <ul>
+        <li>C++</li>
+        <li>C#</li>
+        <li>HLSL</li>
+        <li>json</li>
+      </ul>
+    </div>
+</div>
+
+
+<a href="https://bitbucket.org/Simoncoenen/gameplay-programming-exam/src/0af73d93b19634cbfa459960b035d6b7c4ce4064/OverlordProject/Exam/?at=master" class="btn btn-success sharp list-group-item list-group-item-success" target="_blank">Source</a>
+
+
+
+<a href="/downloads/Boxhead_Build.rar" class="btn btn-success sharp list-group-item list-group-item-success" target="_blank">Build</a>
+
+
+
+<a href="/downloads/ai_paper.pdf" class="btn btn-success sharp list-group-item list-group-item-success" target="_blank">AI Research paper</a>
+
+
+
+</div>
+
+<h1 id="project-details">Project Details</h1>
+
+<h2 id="flow-field-pathfinding">Flow field pathfinding</h2>
+
+<div class="row">
+
+<div class="col-lg-8">
+    <p>Since Boxhead has enemies that have to find a way through the level, they needed some kind of pathfinding. There are many kinds of pathfinding and I chose to try <strong>A* pathfinding</strong> and <strong>flow field pathfinding</strong>.
+The game strongly relies on a grid system for object placement so I could leverage that to simplify a pathfinding system.
+I began with researching how flow fields work and how they were created. I started with making the heat map which indicates how far all the cells are from the target position. Every cell stores a number that holds that distance.
+After doing this, I had the data I needed to create the actual flow field vectors for each cell. Calculating the vectors for each cell is actually quite easy, you simple subtract the left cell’s distance from the right cell for the x value and the same for the y value but then with the lower and the upper cell respectively. Visualizing this resulted in a quite satisfying image. (see image) 
+With the flow field, I could simply calculate the closest cell to the agent and set the velocity of that agent to the vector of that cell.</p>
+  </div>
+
+<div class="col-lg-4">
+<img class="img-fluid" src="/images/projects/boxhead/other/flowfieldvisual.jpg" />
+</div>
+</div>
+
+<h2 id="flow-field-pathfinding-and-a-pathfinding">Flow field pathfinding and A* pathfinding</h2>
+
+<div class="row">
+
+<div class="col-lg-4">
+<img src="/images/projects/boxhead/other/graph.jpg" class="img-fluid" />
+</div>
+			
+<div class="col-lg-8">
+    <p>The main reason I chose to implement two different types of pathfinding is because I was interested to know how flow field agents compete with A* agents. I read almost everywhere that A* pathfinding is the standard and the “best” pathfinding solution. My goal was to both have them working in the game and eventually compare them both in different situations.
+As expected, A* pathfinding performed better in general, with few agents but because Boxhead is a never-ending game, the amount of agents keeps increasing meaning that the A* algorithm needs to calculate the path for every agent which had a great impact on the performance. Of course, there are a few simple improvements I wrote so that the paths are only recalculated when needed and that agents can acquire paths from other agents. But still, after a while, it hits the performance quite hard. That’s where flow fields come in to play. The big advantage is that a flow field only has to be calculated once for all agents meaning that it is more efficient from a certain amount of agents because it takes longer to calculate a flow field than an agents path with A*.
+To visualize this, I made a very simple graph.</p>
+  </div>
+</div>
+
+<div class="row">
+<div class="col-lg-6">
+    <p>I’ve always been interested in interaction with network but I had absolutely no experience with that. I wanted to make a highscore system so that players could see other players their scores. This required me to do some reading up on networking.
+I found a great website called <a href="http://dreamlo.com">Dreamlo.com</a> that hosts free scoreboards using a really simple system. To get all the highscores you make an http GET request and it sends all the highscores. To upload a highscore, you just add the name of the player and his score to the URL. The page being targeted is a php page that has logic to query a database.
+Since not every player would be able to connect to the internet when they were playing, I made a class that handles the online scores and a class that handles the offline scores that are saved on the client’s computer. Both systems are quite alike only that the online system makes the http request.
+The method that makes the request itself is made so that it can do both the uploading of scores and the receiving of scores.
+On the right is a part of the OnlineHighscore class. For this, I also made a small exception handling class called “SocketError” to I could easily debug any event and log it to the console.</p>
+  </div>
+
+<div class="col-lg-6">
+
+    <div class="code-block">
+
+      <figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">OnlineLeaderboard</span><span class="o">::</span><span class="n">UploadScore</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">score</span><span class="p">,</span> <span class="kt">float</span> <span class="n">m_PlayTime</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+	<span class="c1">//Format the name</span>
+	<span class="n">string</span> <span class="n">newName</span> <span class="o">=</span> <span class="n">FormatName</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+	<span class="n">Logger</span><span class="o">::</span><span class="n">LogInfo</span><span class="p">(</span><span class="s">L"OnlineLeaderboard::UploadScore &gt; Adding new score..."</span><span class="p">);</span>
+	
+	<span class="c1">//Make path</span>
+	<span class="n">stringstream</span> <span class="n">path</span><span class="p">;</span>
+	<span class="n">path</span> <span class="o">&lt;&lt;</span> <span class="s">"/lb/"</span> <span class="o">&lt;&lt;</span> <span class="n">PRIVATE_LINK</span> <span class="o">&lt;&lt;</span> <span class="s">"/add/"</span> <span class="o">&lt;&lt;</span> <span class="n">newName</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span> <span class="o">&lt;&lt;</span> <span class="n">score</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">trunc</span><span class="p">(</span><span class="n">m_PlayTime</span><span class="p">);</span>
+
+	<span class="c1">//Make a request to the server</span>
+	<span class="k">try</span><span class="p">{</span>
+		<span class="n">string</span> <span class="n">response</span> <span class="o">=</span> <span class="n">HttpGet</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">path</span><span class="p">.</span><span class="n">str</span><span class="p">());</span>
+	<span class="p">}</span>
+	<span class="k">catch</span> <span class="p">(</span><span class="n">SocketError</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">){</span>
+		<span class="n">Logger</span><span class="o">::</span><span class="n">LogWarning</span><span class="p">(</span><span class="n">error</span><span class="p">.</span><span class="n">GetMessageW</span><span class="p">());</span>
+	<span class="p">}</span>
+	<span class="n">Logger</span><span class="o">::</span><span class="n">LogInfo</span><span class="p">(</span><span class="s">L"OnlineLeaderboard::UploadScore() &gt; Successful"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="n">OnlineLeaderboard</span><span class="o">::</span><span class="n">HttpGet</span><span class="p">(</span><span class="n">string</span> <span class="n">host</span><span class="p">,</span> <span class="n">string</span> <span class="n">path</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+	<span class="n">WSADATA</span> <span class="n">wsaData</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">result</span><span class="p">;</span>
+
+	<span class="c1">// Initialize Winsock</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">WSAStartup</span><span class="p">(</span><span class="n">MAKEWORD</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">wsaData</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"WSAStartUp"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+
+	<span class="c1">// Resolve the server address and port</span>
+	<span class="n">addrinfo</span> <span class="o">*</span> <span class="n">pAddrInfo</span><span class="p">;</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="n">host</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">"80"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pAddrInfo</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"addrinfo"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+
+	<span class="c1">//Create the socket</span>
+	<span class="n">SOCKET</span> <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">pAddrInfo</span><span class="o">-&gt;</span><span class="n">ai_family</span><span class="p">,</span> <span class="n">pAddrInfo</span><span class="o">-&gt;</span><span class="n">ai_socktype</span><span class="p">,</span> <span class="n">pAddrInfo</span><span class="o">-&gt;</span><span class="n">ai_protocol</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">sock</span> <span class="o">==</span> <span class="n">INVALID_SOCKET</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Socket"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+
+	<span class="c1">// Connect to server.</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">pAddrInfo</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">,</span> <span class="n">pAddrInfo</span><span class="o">-&gt;</span><span class="n">ai_addrlen</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Connect"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+
+	<span class="k">const</span> <span class="n">string</span> <span class="n">request</span> <span class="o">=</span> <span class="s">"GET "</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s">" HTTP/1.1</span><span class="se">\n</span><span class="s">Host: "</span> <span class="o">+</span> <span class="n">host</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span>
+
+	<span class="c1">// Send an initial buffer</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">request</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">SOCKET_ERROR</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Send"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+
+	<span class="c1">// shutdown the connection since no more data will be sent</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">SD_SEND</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">SOCKET_ERROR</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Close send connection"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+
+	<span class="c1">// Receive until the peer closes the connection</span>
+	<span class="n">string</span> <span class="n">response</span><span class="p">;</span>
+	<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>
+	<span class="kt">int</span> <span class="n">bytesRecv</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+	<span class="k">for</span> <span class="p">(;;)</span>
+	<span class="p">{</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="n">recv</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">SOCKET_ERROR</span><span class="p">)</span>
+			<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Recv"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+			<span class="k">break</span><span class="p">;</span>
+		<span class="n">response</span> <span class="o">+=</span> <span class="n">string</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+		<span class="n">Logger</span><span class="o">::</span><span class="n">LogFormat</span><span class="p">(</span><span class="n">LogLevel</span><span class="o">::</span><span class="n">Info</span><span class="p">,</span> <span class="s">L"OnlineLeaderboard::HttpGet() &gt; Bytes received: %i"</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+		<span class="n">bytesRecv</span> <span class="o">+=</span> <span class="n">result</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="n">Logger</span><span class="o">::</span><span class="n">LogFormat</span><span class="p">(</span><span class="n">LogLevel</span><span class="o">::</span><span class="n">Info</span><span class="p">,</span> <span class="s">L"OnlineLeaderboard::HttpGet() &gt; Recv Completed. Total bytes received: %i"</span><span class="p">,</span> <span class="n">bytesRecv</span><span class="p">);</span>
+
+	<span class="c1">// cleanup</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">closesocket</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">SOCKET_ERROR</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"Closesocket"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+
+	<span class="n">result</span> <span class="o">=</span> <span class="n">WSACleanup</span><span class="p">();</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">SOCKET_ERROR</span><span class="p">)</span>
+		<span class="k">throw</span> <span class="n">SocketError</span><span class="p">(</span><span class="s">L"WSACleanup"</span><span class="p">,</span> <span class="n">WSAGetLastError</span><span class="p">());</span>
+	<span class="n">freeaddrinfo</span><span class="p">(</span><span class="n">pAddrInfo</span><span class="p">);</span>
+	<span class="n">Logger</span><span class="o">::</span><span class="n">LogFormat</span><span class="p">(</span><span class="n">LogLevel</span><span class="o">::</span><span class="n">Info</span><span class="p">,</span> <span class="s">L"OnlineLeaderboard::HttpGet() &gt; Cleanup successful"</span><span class="p">,</span> <span class="n">bytesRecv</span><span class="p">);</span>
+
+	<span class="k">return</span> <span class="n">response</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+    </div>
+  </div>
+</div>
+
+    
+    
+    
+
+
+<div class="project-images">
+    <h3 class="page-header">Images</h3>
+    <p>Click on an image to enlarge</p>
+
+    
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="/images/projects/boxhead/lg/lg_01.jpg" data-lightbox="boxhead">
+                    <img src="/images/projects/boxhead/thumb/thumb_01.jpg" alt="">
+                </a>
+            </div>
+        
+    
+        
+        
+            <div class="col-sm-4">
+                <a href="/images/projects/boxhead/lg/lg_02.jpg" data-lightbox="boxhead">
+                    <img src="/images/projects/boxhead/thumb/thumb_02.jpg" alt="">
+                </a>
+            </div>
+        
+    
+        
+        
+            <div class="col-sm-4">
+                <a href="/images/projects/boxhead/lg/lg_03.jpg" data-lightbox="boxhead">
+                    <img src="/images/projects/boxhead/thumb/thumb_03.jpg" alt="">
+                </a>
+            </div>
+        </div>
+    
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="/images/projects/boxhead/lg/lg_04.jpg" data-lightbox="boxhead">
+                    <img src="/images/projects/boxhead/thumb/thumb_04.jpg" alt="">
+                </a>
+            </div>
+        </div>
+    
+</div>
+    
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

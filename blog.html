@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Blog
+        
+    </title>
+
+    
+        <meta name="description" content="Simon Coenen, Game Programmer">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog.html">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Blog" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Simon Coenen - Game Progammer" />
+<meta property="og:description" content="Simon Coenen - Game Progammer" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Blog" />
+<meta name="twitter:site" content="@simon_coenen" />
+<script type="application/ld+json">
+{"url":"https://www.simoncoenen.com/blog.html","description":"Simon Coenen - Game Progammer","@type":"WebPage","headline":"Blog","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            
+<a class="blacklink" href="/blog/programming/PakFiles.html"><h1>Pak files - Virtual file system</h1></a>
+<p>10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    16 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives this more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
+
+<p>Today, many game engines have adopted the idea of having large files of binary asset data. Unreal Engine uses <a href="https://github.com/panzi/u4pak"><em>.pak</em> files</a>, Unity uses <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html"><em>.assets</em> files</a>, Anvil uses <a href="https://github.com/Mischa-Alff/broadside/wiki/AnvilNext-%60.forge%60-file-format"><em>.forge</em> files</a>, <a href="https://leagueoflegends.fandom.com/wiki/RAF:_Riot_Archive_File"><em>.raf</em></a> in League of Legends, …</p>
+
+<p>As a small project, I’ve decided to look into creating a similar format. On top of what I’ve described above, the files in a pak file are usually also compressed. This can significantly reduce disk size and possibly even improving performance when disk access is slow and the cost to decompress is low.</p>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/PakFiles.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
+<a class="blacklink" href="/blog/programming/StaticReflection.html"><h1>Basic compile-time type information using constexpr</h1></a>
+<p>21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    11 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
+
+<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. The relevant files to look at are:</p>
+
+<ul>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Object.h">Object.h</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.cpp">TypeInfo.cpp</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.h">TypeInfo.h</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Context.h">Context.h</a></li>
+</ul>
+
+<h2 id="what-it-does">What it does</h2>
+
+<p>I mainly started working on this out of curiosity and to see how far I could take it without having to modify loads of files everywhere. I can definitely take it much further but in its current state I can retrieve type information and create instances of classes using string hashes and object factories. Getting type information is compile-time without any runtime cost.</p>
+
+<p>I currently use it for getting game object components, object instantiation, shader variable addressing and general dynamic casting.</p>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/StaticReflection.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
+<a class="blacklink" href="/blog/programming/Natvis.html"><h1>Natvis in Visual Studio</h1></a>
+<p>13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    5 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates.html">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
+
+<p>So instead of having to dig through a load of expanders to find what you’re looking for in an object, you can fully customize the window to show only the relevant information of that object. Natvis is a xml-based file that you simply include in your Visual Studio project that <em>Just Works™</em>.</p>
+
+<p>Many of you might already know about this but there’s a small detail that helps you with debugging natvis that you might not know about!</p>
+
+<p><img src="/images/blog/003_natvis/Difference.png" alt="Difference" class="img-fluid" /></p>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/Natvis.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
+<a class="blacklink" href="/blog/programming/CPP_Delegates.html"><h1>C++ Delegates</h1></a>
+<p>07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    12 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
+As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
+
+<p>Take a look at an extremely simple example of executing a member function with a <code class="highlighter-rouge">int(float)</code> signature. Straight forward right? Well, not really…</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
+
+<span class="c1">// Function pointer. Arrrghh</span>
+<span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">::*</span> <span class="n">pFunctionA</span><span class="p">)(</span><span class="kt">float</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
+<span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="o">*</span><span class="n">pFunctionA</span><span class="p">)(</span><span class="mi">42</span><span class="p">);</span>
+
+<span class="c1">// std::function. Object itself passed as variable (makes kind of sense but extremely awkward!)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">&amp;</span><span class="p">,</span> <span class="kt">float</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">pFunctionB</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
+<span class="n">pFunctionB</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+
+<span class="c1">// Delegate. Elegant and straight forward</span>
+<span class="k">auto</span> <span class="n">pFunctionC</span> <span class="o">=</span> <span class="n">Delegate</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;::</span><span class="n">CreateRaw</span><span class="p">(</span><span class="o">&amp;</span><span class="n">foo</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">);</span>
+<span class="n">pFunctionC</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+</code></pre></div></div>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/CPP_Delegates.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
+<a class="blacklink" href="/blog/general/Blog.html"><h1>A blog...?</h1></a>
+<p>06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    1 min
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
+Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
+
+<ul>
+  <li><a href="https://www.jendrikillner.com/post/">Jendryk Illner</a> - Graphics Programming Weekly</li>
+  <li><a href="https://wickedengine.net/">Turánszki János</a> - Wicked Engine Dev Blog</li>
+  <li><a href="http://asawicki.info/news.php5?x=all">Adam Sawicki</a> - General Graphics Programming and opinion blog</li>
+  <li><a href="https://interplayoflight.wordpress.com">Interplay of Light</a> - Various Graphics Programming and misc posts.</li>
+  <li><a href="https://ajweeks.com/blog/">AJ Weeks</a> - General updates on personal engine development</li>
+  <li>Many more…</li>
+</ul>
+
+<p>There are loads of interesting blogs I check out once in a while but I always though making one myself wouldn’t be very interesting because many of the things I could write about are already touched upon many many times in other places and I don’t really feel like I could be committed to maintain it.</p>
+
+<p>However, I’ve been working on <a href="https://github.com/simco50?tab=repositories">a personal game engine and loads of other little projects</a> and other things for a while now but I could never think of a way to present this in a good form to others because those things will never be “finished”. That’s why I thought a blog could be a great way to pick a few interesting things I’ve done and write about it. Besides, implementing something is one thing but by writing about it, you have to comprehend the subject much better as there will be gaps of information that will force me to research more.</p>
+
+<p>I’m hoping for this to be a good little exercise moving forward. If there’s anything you don’t agree with, like to comment on or if you just like to reach out to me, always feel free to reach out to me on <a href="http://www.twitter.com/simon_coenen">Twitter</a>, <a href="mailto:sim2.coenen@gmail.com">email</a> or comment below.</p>
+</p>
+<a class="btn btn-success sharp" href="/blog/general/Blog.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
+
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+        }
+    });
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    </body>
+</html>

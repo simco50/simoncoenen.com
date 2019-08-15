@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Natvis in Visual Studio
+        
+    </title>
+
+    
+        <meta name="description" content="Modifying watch window in Visual Studio using Natvis">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/Natvis.html">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Natvis in Visual Studio" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Modifying watch window in Visual Studio using Natvis" />
+<meta property="og:description" content="Modifying watch window in Visual Studio using Natvis" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/Natvis.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/Natvis.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-13T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" />
+<meta property="twitter:title" content="Natvis in Visual Studio" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"datePublished":"2019-06-13T00:00:00+01:00","dateModified":"2019-06-13T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/Natvis.html","image":"https://www.simoncoenen.com/images/blog/003_natvis/Difference.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/Natvis.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Modifying watch window in Visual Studio using Natvis","@type":"BlogPosting","headline":"Natvis in Visual Studio","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/CPP_Delegates.html">&laquo; Previous: C++ Delegates</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/StaticReflection.html">Next: Basic compile-time type information using constexpr &raquo;</a>
+  
+  </div>
+</div>
+
+<h1>Natvis in Visual Studio</h1>
+<p>13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    5 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates.html">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
+
+<p>So instead of having to dig through a load of expanders to find what you’re looking for in an object, you can fully customize the window to show only the relevant information of that object. Natvis is a xml-based file that you simply include in your Visual Studio project that <em>Just Works™</em>.</p>
+
+<p>Many of you might already know about this but there’s a small detail that helps you with debugging natvis that you might not know about!</p>
+
+<p><img src="/images/blog/003_natvis/Difference.png" alt="Difference" class="img-fluid" /></p>
+
+<!--more-->
+
+<h2 id="setup">Setup</h2>
+
+<p>It’s very easy to setup a natvis file, you create a new <code class="highlighter-rouge">.natvis</code> file with the following boilerplate code and include it in your project, the filename is not important. Visual Studio will automatically pick it up and you can have as many as you want.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;AutoVisualizer</span> <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/vstudio/debugger/natvis/2010"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Content goes here --&gt;</span>
+<span class="nt">&lt;/AutoVisualizer&gt;</span>
+</code></pre></div></div>
+
+<p>You can modify the natvis files while debugging and it will update automatically! When you make a mistake, visual studio will always fall back to the default view.</p>
+
+<p>Debugging issues in natvis can be really annoying not knowing there’s an option for the output log to log errors and warnings during debugging. <strong>I highly recommend doing this</strong>! You can enable this in the Visual Studio options here.</p>
+
+<p><img src="/images/blog/003_natvis/Options.png" alt="Options" class="img-fluid" /></p>
+
+<h2 id="applying-to-delegates">Applying to delegates</h2>
+
+<p>I found my delegates a good test case for natvis because it’s not always obvious when a delegate is bound and how it was allocated.</p>
+
+<p>For the Delegates, implementing natvis is quite simple. To achieve the results in the image shown in the beginning, we have to change the way a <code class="highlighter-rouge">Delegate&lt;&gt;</code> and an <code class="highlighter-rouge">InlineAllocator&lt;&gt;</code> is visualized.</p>
+
+<p>I wanted to easily know when a Delegate was bound or not and if the data of the function it it’s bound to, is allocated dynamically or inline. Interesting to note here, is that we can leverage the fact that MSVC sets uninitialized stack values to <code class="highlighter-rouge">0xcccccccc</code> that way we can distinguish uninitialized values from initialized values.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"Delegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Allocator.m_Size &amp;gt;= 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Allocator.m_Size == 0"</span><span class="nt">&gt;</span>Unbound<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString&gt;</span>Bound<span class="nt">&lt;/DisplayString&gt;</span>
+<span class="nt">&lt;/Type&gt;</span>
+
+<span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"InlineAllocator&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Size &amp;gt;= 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Size == 0"</span><span class="nt">&gt;</span>Unallocated: {m_Size} bytes<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Size &amp;gt; $T1"</span><span class="nt">&gt;</span>Dynamic Memory: {m_Size} bytes<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Size &amp;lt;= $T1"</span><span class="nt">&gt;</span>Inline Memory: {m_Size} bytes<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;Expand&gt;</span>
+        <span class="nt">&lt;Item</span> <span class="na">Name=</span><span class="s">"Data"</span> <span class="na">Condition=</span><span class="s">"m_Size &amp;gt; $T1"</span><span class="nt">&gt;</span>pPtr<span class="nt">&lt;/Item&gt;</span>
+        <span class="nt">&lt;Item</span> <span class="na">Name=</span><span class="s">"Data"</span> <span class="na">Condition=</span><span class="s">"m_Size &amp;lt;= $T1"</span><span class="nt">&gt;</span>(void*)Buffer<span class="nt">&lt;/Item&gt;</span>
+        <span class="nt">&lt;Item</span> <span class="na">Name=</span><span class="s">"Size"</span><span class="nt">&gt;</span>m_Size<span class="nt">&lt;/Item&gt;</span>
+    <span class="nt">&lt;/Expand&gt;</span>
+<span class="nt">&lt;/Type&gt;</span>
+</code></pre></div></div>
+
+<p>In this case, I address all the instances of the <code class="highlighter-rouge">Delegate</code> class by using the wildcard <code class="highlighter-rouge">'*'</code> in <code class="highlighter-rouge">Delegate&amp;lt;*&amp;gt;</code> (notice we’re working in XML here and not use <code class="highlighter-rouge">'&lt;'</code> and <code class="highlighter-rouge">'&gt;'</code>, hence the <code class="highlighter-rouge">&amp;lt;</code> and <code class="highlighter-rouge">&amp;gt;</code>). This can be “specialized” using explicit types and/or values.</p>
+
+<p>Addressing template values and types is done with the following syntax: <code class="highlighter-rouge">$T%idx%</code>. So in this case, I get the first template value (which is the max size of an inline allocation) using <code class="highlighter-rouge">$T1</code>. This also works for types if you want to do typecasting. Using the template value, we can figure out if the allocation is inline or dynamic.</p>
+
+<p>I’ve extended this to work with the <code class="highlighter-rouge">MulticastDelegate</code> and what is cool is that because the <code class="highlighter-rouge">MulticastDelegate</code> is internally just a list of regular <code class="highlighter-rouge">Delegate</code>s, expanding the elements, will show each <code class="highlighter-rouge">Delegate</code> also using the visualization we’ve setup above. This is where things get a little bit more interesting. You can completely customize the way data is represented using <code class="highlighter-rouge">CustomListItems</code>. This allows you to even execute logic to get the data representation you want!</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"MulticastDelegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Locks == 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Events.size() == 0"</span><span class="nt">&gt;</span>Unbound<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;DisplayString&gt;</span>Bound: {m_Events.size()}<span class="nt">&lt;/DisplayString&gt;</span>
+    <span class="nt">&lt;Expand&gt;</span>
+    <span class="nt">&lt;Item</span> <span class="na">Name=</span><span class="s">"Locked"</span><span class="nt">&gt;</span>m_Locks <span class="ni">&amp;gt;</span> 0<span class="nt">&lt;/Item&gt;</span>
+    <span class="nt">&lt;CustomListItems</span> <span class="na">MaxItemsPerView=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Variable</span> <span class="na">Name=</span><span class="s">"i"</span> <span class="na">InitialValue=</span><span class="s">"0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Size&gt;</span>m_Events.size()<span class="nt">&lt;/Size&gt;</span>
+    <span class="nt">&lt;Loop&gt;</span>
+        <span class="nt">&lt;Item&gt;</span>m_Events[i].second.m_Allocator<span class="nt">&lt;/Item&gt;</span>
+        <span class="nt">&lt;Exec&gt;</span>i++<span class="nt">&lt;/Exec&gt;</span>
+    <span class="nt">&lt;/Loop&gt;</span>
+    <span class="nt">&lt;/CustomListItems&gt;</span>
+    <span class="nt">&lt;/Expand&gt;</span>
+<span class="nt">&lt;/Type&gt;</span>
+</code></pre></div></div>
+
+<p>For every Delegate in the list, we’re actually only interested in the <code class="highlighter-rouge">InlineAllocator</code> because that shows us all the information I’m interested in.</p>
+
+<p>Below the difference:</p>
+
+<p><img src="/images/blog/003_natvis/MulticastVis.png" alt="MulticastVis" class="img-fluid" /></p>
+
+<h2 id="more-information">More information</h2>
+
+<p>You can do much more than the simple example shown above. For example, visualizing non-sequential memory is not straight forward, however there is some great functionality in the natvis framework that help you do this.
+I highly recommend looking at the <a href="https://docs.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects?view=vs-2019#BKMK_Syntax_reference">syntax reference</a> for more info.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://docs.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects?view=vs-2019">Create custom views of C++ objects in the debugger</a></li>
+  <li><a href="https://devblogs.microsoft.com/cppblog/debug-visualizers-in-visual-c-2015/">Debug Visualizers in Visual C++ 2015</a></li>
+  <li><a href="https://davidhalonen.wordpress.com/2016/04/23/visual-studio-data-visualization-debugging-natvis/">Visual Studio Data Visualization: Debugging Natvis</a></li>
+</ul>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/CPP_Delegates.html">&laquo; Previous: C++ Delegates</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/StaticReflection.html">Next: Basic compile-time type information using constexpr &raquo;</a>
+  
+  </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_config = function () {
+    this.page.url = "https://www.simoncoenen.com/blog/programming/Natvis.html";
+    this.page.identifier = "Natvis in Visual Studio";
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//simon-coenen.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+</script>
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

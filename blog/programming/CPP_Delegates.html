@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            C++ Delegates
+        
+    </title>
+
+    
+        <meta name="description" content="Unreal Engine -like delegates in C++ using templates">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/CPP_Delegates.html">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="C++ Delegates" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Unreal Engine -like delegates in C++ using templates" />
+<meta property="og:description" content="Unreal Engine -like delegates in C++ using templates" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/CPP_Delegates.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/CPP_Delegates.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-07T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" />
+<meta property="twitter:title" content="C++ Delegates" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"datePublished":"2019-06-07T00:00:00+01:00","dateModified":"2019-06-07T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Unreal Engine -like delegates in C++ using templates","@type":"BlogPosting","headline":"C++ Delegates","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
+  
+  </div>
+</div>
+
+<h1>C++ Delegates</h1>
+<p>07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    12 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
+As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
+
+<p>Take a look at an extremely simple example of executing a member function with a <code class="highlighter-rouge">int(float)</code> signature. Straight forward right? Well, not really…</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
+
+<span class="c1">// Function pointer. Arrrghh</span>
+<span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">::*</span> <span class="n">pFunctionA</span><span class="p">)(</span><span class="kt">float</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
+<span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="o">*</span><span class="n">pFunctionA</span><span class="p">)(</span><span class="mi">42</span><span class="p">);</span>
+
+<span class="c1">// std::function. Object itself passed as variable (makes kind of sense but extremely awkward!)</span>
+<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">&amp;</span><span class="p">,</span> <span class="kt">float</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">pFunctionB</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
+<span class="n">pFunctionB</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+
+<span class="c1">// Delegate. Elegant and straight forward</span>
+<span class="k">auto</span> <span class="n">pFunctionC</span> <span class="o">=</span> <span class="n">Delegate</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;::</span><span class="n">CreateRaw</span><span class="p">(</span><span class="o">&amp;</span><span class="n">foo</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">);</span>
+<span class="n">pFunctionC</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+</code></pre></div></div>
+<!--more-->
+
+<p>Using a custom solution looks far more elegant. The syntax for function pointers are such a nightmare even for the most simple cases.</p>
+
+<p>Besides usability, having a custom solution allows for some neat optimizations and control which I will discuss below.</p>
+
+<p>If you’ve been working with for example C#, you might be familiar with delegates and events already. Unfortunately, C++ has no functionality as powerful as this.
+What delegates allow you to do, is store a function in an object to execute at a later time. Pretty much what we’re trying to achieve here.</p>
+
+<p>The full source of this can be found on <a href="https://github.com/simco50/CppDelegates">GitHub</a>. I’d recommend taking a look at it while reading this because it will give more context.</p>
+
+<hr />
+
+<h2 id="terminology">Terminology</h2>
+
+<p>I’ve following Unreal Engine’s terminology and created the two main Delegate “types”. You could say there are more but they are functionally identical:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Delegate&lt;RetVal, Args&gt;</code>
+    <ul>
+      <li>Binds a single function. Pretty much like a <code class="highlighter-rouge">delegate</code> in C#</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">MulticastDelegate&lt;Args&gt;</code>
+    <ul>
+      <li>Binds multiple functions. Similar to an <code class="highlighter-rouge">event</code> in C#</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Unlike a function pointer, which can only point to the address of a global/static or member function, a delegate allows various types of functions to be bound to it, including lambda’s.</p>
+
+<hr />
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="delegate">Delegate</h3>
+
+<p>A Delegate allows you to store a function and its data to execute later. Unlike a regular function pointer, this is much more flexible because it supports global/static functions, member function, lambda’s and member functions taking into account the reference count of a shared_ptr.</p>
+
+<p>Below is an example of binding a lambda to a delegate that returns an <code class="highlighter-rouge">int</code> and has a <code class="highlighter-rouge">float</code> as a parameter.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Foo</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">Bar</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Raw delegate parameter: %f"</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">Delegate</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;</span> <span class="n">del</span><span class="p">;</span>
+<span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
+<span class="n">del</span><span class="p">.</span><span class="n">BindRaw</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">out</span> <span class="o">=</span> <span class="n">del</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"Lambda delegate return value:  %d"</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This outputs the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
+Lambda delegate parameter: 20
+Lambda delegate return value: 10
+</code></pre></div></div>
+
+<h3 id="multicastdelegate">MulticastDelegate</h3>
+
+<p>Building upon the above, we can create a delegate that can hold more than one reference to a function. This is what the MulticastDelegate is for. Multiple callbacks can be bound and when the MulticastDelegate is executed, it will call all the functions bound to it. You can compare this with an <code class="highlighter-rouge">event</code> in C#.
+What makes this so powerful, is that multiple “types” of functions can be bound to this.</p>
+
+<p>Below an example. Because multiple callbacks can be bound to a single MulticastDelegate, it doesn’t make sense for such a delegate to have a return type. Because of that, a function bound to a MulticastDelegate must always have a <code class="highlighter-rouge">void</code> return type.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Foo</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="n">Bar</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Raw delegate parameter: %f"</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">MulticastDelegate</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">del</span><span class="p">;</span>
+<span class="n">del</span><span class="p">.</span><span class="n">AddLambda</span><span class="p">([](</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Lambda delegate parameter: %f"</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">90</span><span class="p">);</span>
+
+<span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
+<span class="n">del</span><span class="p">.</span><span class="n">AddRaw</span><span class="p">(</span><span class="o">&amp;</span><span class="n">foo</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">);</span>
+<span class="n">del</span><span class="p">.</span><span class="n">Broadcast</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
+Lambda delegate parameter: 20
+Raw delegate parameter: 20
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="implementation">Implementation</h2>
+
+<p>Now comes the meaty part!
+When working on this, I was reading the book <a href="https://www.amazon.co.uk/Effective-Modern-Specific-Ways-Improve/dp/1491903996">Effective Modern C++ by Scott Meyers</a> and there are a few awesome chapters about template programming and type deduction and I highly recommend reading it if some of the code snippets below are unclear. This little project was mainly meant to get familiar with template programming.</p>
+
+<p>A lot of details will be omitted here because otherwise the post size will explode, I will only include the fundamental parts.</p>
+
+<h3 id="delegate-1">Delegate</h3>
+
+<p>As you might expect, this solution will need a load of templates because every function signature describes its own type. Looking at the few examples below, we can extract what defines the ‘type’ of a function: the <strong>return value</strong> and the <strong>parameters</strong>.</p>
+
+<p>Eg.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">Foo</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">);</span>                       <span class="c1">// == int(*)(float, char)</span>
+<span class="kt">int</span> <span class="n">Clazz</span><span class="o">::</span><span class="n">Foo</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">);</span>         <span class="c1">// == int(*Clazz::)(const float&amp;, char)</span>
+<span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">){};</span>                      <span class="c1">// == ????</span>
+</code></pre></div></div>
+
+<p>The basics of a delegate are fairly simple; It’s a structure that has the address to a function and potentially holds data to pass through when the function is called.
+Because We want to support multiple function types, we must define an interface:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">IDelegate</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="n">RetVal</span> <span class="n">Execute</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>As mentioned, a delegate is defined by the function ‘signature’, the class is already templated using its return value and parameters.</p>
+
+<p>Now with this base class, we can start defining our different callback types. I’ve created the four that cover pretty much all the bases:</p>
+
+<ul>
+  <li><strong>Static</strong>: For static or global functions that don’t have a reference to the object</li>
+  <li><strong>Raw</strong>: Member functions</li>
+  <li><strong>Delegate</strong>: Lambda’s. Here we store the capture list</li>
+  <li><strong>SharedPtr</strong>: A delegate that stores a <code class="highlighter-rouge">std::weak_ptr</code> of the object. This way, it is aware of object lifetime.</li>
+</ul>
+
+<p>Here, I want to focus on the <strong>LambdaDelegate</strong> because that one will become the most interesting.
+The implementation is pretty straight forward and is also quite simple for the other types.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">LambdaDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">LambdaDelegate</span><span class="p">(</span><span class="n">TLambda</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">m_Lambda</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lambda</span><span class="p">))</span>
+    <span class="p">{}</span>
+
+    <span class="n">RetVal</span> <span class="n">Execute</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="k">override</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">RetVal</span><span class="p">)((</span><span class="n">m_Lambda</span><span class="p">)(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+    <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">TLambda</span> <span class="n">m_Lambda</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Where all the implementations come together is in the final Delegate class. This class has a bunch of functions that allow you to bind all implemented types of delegates. You might notice the dynamic allocation, not great, I’ll address that in the next section.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Delegate</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">using</span> <span class="n">IDelegateT</span> <span class="o">=</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span><span class="p">;</span>
+
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args2</span><span class="o">&gt;</span>
+    <span class="k">static</span> <span class="n">Delegate</span> <span class="n">CreateLambda</span><span class="p">(</span><span class="n">TLambda</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Delegate</span> <span class="n">handler</span><span class="p">;</span>
+        <span class="n">handler</span><span class="p">.</span><span class="n">m_pAllocator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LambdaDelegate</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="p">,</span> <span class="n">RetVal</span><span class="p">(</span><span class="n">Args</span><span class="p">...)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lambda</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">handler</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">LambdaType</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args2</span><span class="o">&gt;</span>
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">BindLambda</span><span class="p">(</span><span class="n">LambdaType</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">,</span> <span class="n">Args2</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Release</span><span class="p">();</span>
+        <span class="o">*</span><span class="k">this</span> <span class="o">=</span> <span class="n">CreateLambda</span><span class="o">&lt;</span><span class="n">LambdaType</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">LambdaType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lambda</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">RetVal</span> <span class="n">Execute</span><span class="p">(</span><span class="n">Args</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="k">const</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">m_Allocator</span><span class="p">.</span><span class="n">HasAllocation</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="s">"Delegate is not bound"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">GetDelegate</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+    <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">IDelegateT</span><span class="o">*</span> <span class="n">m_pAllocator</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="optimization-the-inlineallocator">Optimization: The InlineAllocator</h3>
+
+<p>As said, the <code class="highlighter-rouge">LambdaDelegate</code> stores the data of all elements in the capture list. That is the nature of a lambda. This means that naturally, a lambda needs to be dynamically allocated because the size of this data is not known beforehand. Besides, having different implementations for each delegate type, forces us to use dynamic allocations. This could have some bad performance implications. However, there’s a neat way of improving this and make sure small lambda’s don’t necessarily need to be dynamically allocated. This is where an <code class="highlighter-rouge">InlineAllocator</code> comes in and it will replace the dynamic allocation.</p>
+
+<p>This allocator will allocate inline until it crosses a specified size (32 bytes in this case). What this does is make sure a Delegate always has a fixed size until it cross the 32 bytes threshold. In most cases this is enough and thus executing the delegate will have a smaller execution overhead, especially when multiple delegates are fired in sequence. Using a <code class="highlighter-rouge">union</code> makes it easy to do this:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">union</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">Buffer</span><span class="p">[</span><span class="n">MaxStackSize</span><span class="p">];</span>
+    <span class="kt">void</span><span class="o">*</span> <span class="n">pPtr</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="multicastdelegate-1">MulticastDelegate</h3>
+
+<p>A <code class="highlighter-rouge">MulticastDelegate</code> builds upon the regular delegate. It is simply a list with a ‘handle’ pointing to a bound delegate. This handle is a unique ID and is there to be able to later unbind the callback from the delegate.
+Executing the a MulticastDelegate basically boils down to a for-loop.
+An interesting catch is the fact that it’s possible to unbind functions during execution. This can be worked around by clearing callbacks instead of removing them during execution so that they can later be emplaced by new function bindings. The <code class="highlighter-rouge">Lock()</code> makes sure this is handled properly.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">Broadcast</span><span class="p">(</span><span class="n">Args</span> <span class="p">...</span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Lock</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_Events</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m_Events</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">first</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
+        <span class="p">{</span>
+            <span class="n">m_Events</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">second</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">Unlock</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="extra">Extra</h2>
+
+<p>Unreal Engine has a pretty cool extra feature called <em>‘payloads’</em>. This gives you the ability to store data in the delegate at bind-time. This is doing using a <code class="highlighter-rouge">std::tuple</code>. I’ve implemented this myself too but I’ve never really found much use in having it so. However, it’s a great exercise in learning template programming as it makes the implementation much more complex in an interesting way. You can find this in the source code on GitHub.</p>
+
+<hr />
+
+<h2 id="moving-on">Moving on</h2>
+
+<p>This post is already getting a bit long so I’d definitely recommend taking a look at the full source code, it’s mainly all just <a href="https://github.com/simco50/CppDelegates/blob/master/Delegates.h">in a single header</a></p>
+
+<p>In the end, I think these Delegates are extremely powerful and I use them wherever I can in personal projects. This makes the code well decoupled while still having structure.</p>
+
+<p>Feel free to head <a href="https://github.com/simco50/CppDelegates">over to the repository</a> and copy, modify and/or use the code for yourself!</p>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
+  
+  </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_config = function () {
+    this.page.url = "https://www.simoncoenen.com/blog/programming/CPP_Delegates.html";
+    this.page.identifier = "C++ Delegates";
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//simon-coenen.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+</script>
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

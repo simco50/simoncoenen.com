@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Basic compile-time type information using constexpr
+        
+    </title>
+
+    
+        <meta name="description" content="Using compile-time string hashing to generate type information in C++">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/StaticReflection.html">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Basic compile-time type information using constexpr" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Using compile-time string hashing to generate type information in C++" />
+<meta property="og:description" content="Using compile-time string hashing to generate type information in C++" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/StaticReflection.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/StaticReflection.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-21T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" />
+<meta property="twitter:title" content="Basic compile-time type information using constexpr" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"datePublished":"2019-06-21T00:00:00+01:00","dateModified":"2019-06-21T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/StaticReflection.html","image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Using compile-time string hashing to generate type information in C++","@type":"BlogPosting","headline":"Basic compile-time type information using constexpr","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li class="nav-item active">
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/Natvis.html">« Previous: Natvis in Visual Studio</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/PakFiles.html">Next: Pak files - Virtual file system »</a>
+  
+  </div>
+</div>
+
+<h1>Basic compile-time type information using constexpr</h1>
+<p>21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    11 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
+
+<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. The relevant files to look at are:</p>
+
+<ul>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Object.h">Object.h</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.cpp">TypeInfo.cpp</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.h">TypeInfo.h</a></li>
+  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Context.h">Context.h</a></li>
+</ul>
+
+<h2 id="what-it-does">What it does</h2>
+
+<p>I mainly started working on this out of curiosity and to see how far I could take it without having to modify loads of files everywhere. I can definitely take it much further but in its current state I can retrieve type information and create instances of classes using string hashes and object factories. Getting type information is compile-time without any runtime cost.</p>
+
+<p>I currently use it for getting game object components, object instantiation, shader variable addressing and general dynamic casting.</p>
+
+<!--more-->
+
+<p>Just these functions are already quite powerful especially for (de)serialization.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Foo</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Object</span>
+<span class="p">{</span>
+    <span class="n">FLUX_OBJECT</span><span class="p">(</span><span class="n">Foo</span><span class="p">,</span> <span class="n">Object</span><span class="p">)</span>
+<span class="p">};</span>
+<span class="n">RegisterFactory</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// Register type to factory</span>
+<span class="n">Object</span><span class="o">*</span> <span class="n">pObj</span> <span class="o">=</span> <span class="n">NewObject</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span> <span class="c1">// Create instance using string</span>
+<span class="n">Object</span><span class="o">*</span> <span class="n">pObj2</span> <span class="o">=</span> <span class="n">NewObject</span><span class="p">(</span><span class="n">Foo</span><span class="o">::</span><span class="n">GetTypeStatic</span><span class="p">());</span> <span class="c1">// Create instance using string hash</span>
+<span class="n">Foo</span><span class="o">*</span> <span class="n">pFoo</span> <span class="o">=</span> <span class="n">DynamicCast</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pObj</span><span class="p">);</span> <span class="c1">// Free dynamic type casting</span>
+<span class="n">pFoo</span><span class="o">-&gt;</span><span class="n">IsTypeOf</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// == true</span>
+<span class="n">pFoo</span><span class="o">-&gt;</span><span class="n">GetTypeName</span><span class="p">();</span> <span class="c1">// == "Foo"</span>
+<span class="n">pFoo</span><span class="o">-&gt;</span><span class="n">IsAbstract</span><span class="p">();</span> <span class="c1">// == false</span>
+</code></pre></div></div>
+
+<h2 id="compile-time-string-hashing">Compile-time string hashing</h2>
+
+<p>At the base of all this lies compile-time string hashing. This is done to get a unique (ideally) hash for every type name so that we can create a lookup table.
+By making use of constexpr, we can have expressions get evaluated at compile time. Combined with constexpr, we can create a constexpr FNV-1a stringhash function.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">val_const</span><span class="p">{</span> <span class="mh">0xcbf29ce484222325</span> <span class="p">};</span>
+<span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">prime_const</span><span class="p">{</span> <span class="mh">0x100000001b3</span> <span class="p">};</span>
+
+<span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">Hash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">value</span><span class="p">)</span> <span class="k">noexcept</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'\0'</span><span class="p">)</span> <span class="o">?</span> <span class="n">value</span> <span class="o">:</span> <span class="n">Hash</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">value</span> <span class="o">^</span> <span class="kt">size_t</span><span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">*</span> <span class="n">prime_const</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Like the C++ documentation says, <code class="highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
+
+<p>From <a href="https://en.cppreference.com/w/cpp/language/constexpr">cppreference.com</a>:</p>
+<blockquote>
+  <p>The constexpr specifier declares that it is possible to evaluate the value of the function or variable at compile time. Such variables and functions can then be used where only compile time constant expressions are allowed.</p>
+</blockquote>
+
+<p>So we can’t be sure when the function we wrote is going to be executed at compile time. A way to actually enforce this is to make the value in which the return value will get stored also <code class="highlighter-rouge">constexpr</code>. That way, if the function can not be evaluated at compile-time, the compiler will output an error.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//constexpr function</span>
+<span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">Hash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
+
+<span class="c1">//ERROR: function call must have a constant value</span>
+<span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">NonConstexprHash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A cool little feature in Visual Studio with <code class="highlighter-rouge">constexpr</code> values is that it shows the resulting value when you hover over it. However, I’ve noticed that it sometimes shows the wrong value.</p>
+
+<h2 id="the-object-class">The “Object” class</h2>
+
+<p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
+In this case, relevant to reflection, it has the following functions:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="n">StringHash</span> <span class="n">GetType</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">virtual</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">GetTypeName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTypeName</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">virtual</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="n">GetTypeInfo</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">static</span> <span class="n">StringHash</span> <span class="n">GetTypeStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">GetTypeNameStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTypeName</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span> <span class="n">typeInfoStatic</span><span class="p">(</span><span class="s">"Object"</span><span class="p">,</span> <span class="nb">nullptr</span><span class="p">);</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">typeInfoStatic</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">IsTypeOf</span><span class="p">(</span><span class="n">StringHash</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>As you can see, there are two versions of each function: a virtual method and a static method. The virtual method gets overridden by each class that inherits from Object and the static method gets hidden also by the class that inherits from Object. This might seem like a chore to do for each class by this can easily be wrapped in a small macro, just like Unreal Engine has <code class="highlighter-rouge">UOBJECT_BODY()</code>.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define FLUX_OBJECT_BASE(typeName, baseTypeName, isAbstract) \
+    private: \
+        static constexpr TypeInfo TYPE_INFO = TypeInfo(#typeName, baseTypeName::GetTypeInfoStatic(), &amp;typeName::CreateInstanceStatic, isAbstract); \
+    public: \
+        using ClassName = typeName; \
+        using BaseClass = baseTypeName; \
+        virtual StringHash GetType() const override { return GetTypeInfoStatic()-&gt;GetType(); } \
+        virtual const char* GetTypeName() const override { return GetTypeInfoStatic()-&gt;GetTypeName(); } \
+        virtual const TypeInfo* GetTypeInfo() const override { return GetTypeInfoStatic(); } \
+        static constexpr StringHash GetTypeStatic() { return GetTypeInfoStatic()-&gt;GetType(); } \
+        static constexpr const char* GetTypeNameStatic() { return GetTypeInfoStatic()-&gt;GetTypeName(); } \
+        static constexpr const TypeInfo* GetTypeInfoStatic() { return &amp;TYPE_INFO; } \
+    private: \
+</span></code></pre></div></div>
+
+<p>This provides each class with the tools to get its type id and name either statically or with a reference to an instance. As you can see, the static functions can be used at compile-time.</p>
+
+<p>Unreal Engine obviously has much more magic here. On top of that, UE4 has UnrealHeaderTool which will parse the file and actually generate extra code (which are the <code class="highlighter-rouge">classname.generated.h</code> files).</p>
+
+<h2 id="typeinfo">TypeInfo</h2>
+
+<p>One thing you might have seen in the code above, is the class <code class="highlighter-rouge">TypeInfo</code>. This class serves as the metadata for a class that describes the relation between the class and its parent and will provide us with the ability to create a simple <code class="highlighter-rouge">DynamicCast</code> function. There is exactly one <code class="highlighter-rouge">TypeInfo</code> for each class as it gets statically initialized in <code class="highlighter-rouge">GetTypeInfoStatic()</code>, it contains the type hash, name and a reference to the TypeInfo of the parent’s class.</p>
+
+<p>Knowing what the parent class of an object is, allows us to create a simple <code class="highlighter-rouge">DynamicCast</code> by walking up the class hierarchy until we either hit the TypeInfo we’re looking for (<em>success</em>) or the parent TypeInfo is <code class="highlighter-rouge">nullptr</code> (<em>fail</em>).</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">TypeInfo</span><span class="o">::</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="k">const</span> <span class="n">StringHash</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="n">pInfo</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="c1">//Keep walking up until we find a match or hit a null parent (== Object)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">pInfo</span> <span class="o">!=</span> <span class="nb">nullptr</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">pInfo</span><span class="o">-&gt;</span><span class="n">m_Type</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">pInfo</span> <span class="o">=</span> <span class="n">pInfo</span><span class="o">-&gt;</span><span class="n">m_pBaseTypeInfo</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">T</span><span class="o">*</span> <span class="n">DynamicCast</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">pObject</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pObject</span><span class="o">-&gt;</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">GetTypeStatic</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pObject</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">nullptr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="object-factories">Object factories</h2>
+
+<p>One of the main reasons for a reflection system is making serialization and deserialization possible. Say, I want to serialize and then deserialize an object, the only way to do that without reflection, is having a huge if/else block checking what object it needs to create because in C++, you can’t just do something like <code class="highlighter-rouge">object = new "Foo"</code>.</p>
+
+<p>This is pretty awful and not really maintainable.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="o">*</span> <span class="n">pObj</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">typeName</span> <span class="o">=</span> <span class="n">deserializer</span><span class="p">.</span><span class="n">ReadString</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">typeName</span> <span class="o">==</span> <span class="s">"Foo"</span><span class="p">)</span>
+    <span class="n">pObj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foo</span><span class="p">();</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">typeName</span> <span class="o">==</span> <span class="s">"Bar"</span><span class="p">)</span>
+    <span class="n">pObj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bar</span><span class="p">();</span>
+<span class="k">else</span> <span class="k">if</span><span class="p">(...)</span>
+    <span class="p">...</span>
+<span class="k">else</span>
+    <span class="c1">//Not handled??? PANIC!!</span>
+</code></pre></div></div>
+
+<p>This is where object factories come in. Each object type has its own factory and get stored in a simple container to be able to associate the type hash with a factory. In my implementation, I just store a function pointer in each TypeInfo that creates an instance of that class. This is also nicely wrapped in that macro I’ve mentioned before:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">Object</span><span class="o">*</span> <span class="nf">CreateInstanceStatic</span><span class="p">(</span><span class="n">Context</span><span class="o">*</span> <span class="n">pContext</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">typeName</span><span class="p">(</span><span class="n">pContext</span><span class="p">));</span> <span class="p">}</span>
+<span class="k">static</span> <span class="k">constexpr</span> <span class="n">TypeInfo</span> <span class="n">TYPE_INFO</span> <span class="o">=</span> <span class="n">TypeInfo</span><span class="p">(</span><span class="err">#</span><span class="n">typeName</span><span class="p">,</span> <span class="n">baseTypeName</span><span class="o">::</span><span class="n">GetTypeInfoStatic</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">typeName</span><span class="o">::</span><span class="n">CreateInstanceStatic</span><span class="p">,</span> <span class="n">isAbstract</span><span class="p">);</span> \
+</code></pre></div></div>
+
+<p>With a full serialization system, each class would have either its own Serialize and Deserialize function so it can be constructed properly or there would be some other system that would be able to “inject” the data into the created objects.</p>
+
+<p>An extra detail here to note is that I’ve made a difference between a regular class and an abstract class. This way we can get runtime errors when we’re trying to instantiate an instance of an abstract class.</p>
+
+<h2 id="other-uses-of-compile-time-stringhash">Other uses of compile-time StringHash</h2>
+
+<p>Initially, I’ve worked on the compile time string hashing just for the purpose of basic reflection and “messing around”. Later, I realized there are lot more powerful things you can do with them. For example with shader variables, Before,  I was addressing them using strings. It’s easy to make typo’s when using strings and using them makes renaming identifiers hard because there is no validation and this can cause some really annoying bugs. Using compile time hashes, I could improve the performance and prevent making typo’s by putting common shader variables names in an enum. This provides some kind of “safety net” and IntelliSense has some nice auto-complete now <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">. An enum enforces compile-time constants so you can’t put strings in it. However, since our hashes are compile time, we can wrap the strings with <code class="highlighter-rouge">StringHash</code> as follows:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">ShaderConstant</span>
+<span class="p">{</span>
+<span class="cp">#define DEFINE_SHADER_PARAMETER(variableName, name) variableName = StringHash(name);
+</span>    <span class="n">DEFINE_SHADER_PARAMETER</span><span class="p">(</span><span class="n">cElapsedTime</span><span class="p">,</span> <span class="s">"cElapsedTime"</span><span class="p">);</span>
+    <span class="n">DEFINE_SHADER_PARAMETER</span><span class="p">(</span><span class="n">cDeltaTime</span><span class="p">,</span> <span class="s">"cDeltaTime"</span><span class="p">);</span>
+    <span class="n">DEFINE_SHADER_PARAMETER</span><span class="p">(</span><span class="n">cLights</span><span class="p">,</span> <span class="s">"cLights"</span><span class="p">);</span>
+<span class="cp">#undef DEFINE_SHADER_PARAMETER
+</span><span class="p">};</span>
+
+<span class="c1">//This...</span>
+<span class="n">SetShaderVariable</span><span class="p">(</span><span class="s">"cElapsedTime"</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">);</span>
+<span class="c1">//Becomes this</span>
+<span class="n">SetShaderVariable</span><span class="p">(</span><span class="n">ShaderConstant</span><span class="o">::</span><span class="n">cElapsedTime</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">);</span>
+</code></pre></div></div>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/Natvis.html">« Previous: Natvis in Visual Studio</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/PakFiles.html">Next: Pak files - Virtual file system »</a>
+  
+  </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_config = function () {
+    this.page.url = "https://www.simoncoenen.com/blog/programming/StaticReflection.html";
+    this.page.identifier = "Basic compile-time type information using constexpr";
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//simon-coenen.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+</script>
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, ©2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

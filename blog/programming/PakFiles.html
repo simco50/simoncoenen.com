@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Pak files - Virtual file system
+        
+    </title>
+
+    
+        <meta name="description" content="Virtual file system using pak files">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/PakFiles.html">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Pak files - Virtual file system" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Virtual file system using pak files" />
+<meta property="og:description" content="Virtual file system using pak files" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/PakFiles.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/PakFiles.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-07-10T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" />
+<meta property="twitter:title" content="Pak files - Virtual file system" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"datePublished":"2019-07-10T00:00:00+01:00","dateModified":"2019-07-10T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Virtual file system using pak files","@type":"BlogPosting","headline":"Pak files - Virtual file system","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+<h1>Pak files - Virtual file system</h1>
+<p>10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    16 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives this more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
+
+<p>Today, many game engines have adopted the idea of having large files of binary asset data. Unreal Engine uses <a href="https://github.com/panzi/u4pak"><em>.pak</em> files</a>, Unity uses <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html"><em>.assets</em> files</a>, Anvil uses <a href="https://github.com/Mischa-Alff/broadside/wiki/AnvilNext-%60.forge%60-file-format"><em>.forge</em> files</a>, <a href="https://leagueoflegends.fandom.com/wiki/RAF:_Riot_Archive_File"><em>.raf</em></a> in League of Legends, …</p>
+
+<p>As a small project, I’ve decided to look into creating a similar format. On top of what I’ve described above, the files in a pak file are usually also compressed. This can significantly reduce disk size and possibly even improving performance when disk access is slow and the cost to decompress is low.</p>
+
+<!--more-->
+
+<p>The source code of this can be found on my <a href="https://github.com/simco50/FluxEngine/tree/master/FluxEngine/FileSystem">GitHub repository</a>.</p>
+
+<h2 id="taking-a-closer-look-at-doom1wad">Taking a closer look at DOOM1.WAD</h2>
+
+<p>I found it interesting to take a closer look at how data memory in Doom’s WAD files are laid out. You can <a href="http://distro.ibiblio.org/pub/linux/distributions/slitaz/sources/packages/d/doom1.wad">download DOOM1.WAD for free</a>. This is the asset file used for the shareware version of the game. To open and view this, I’ve used <a href="https://mh-nexus.de/en/hxd/">HxD</a> which is a free Hex editor for Windows but any other hex editor will do the job.</p>
+
+<p>According to the <a href="https://doomwiki.org/wiki/WAD">Doom Wiki</a>, a WAD file has one file header, multiple “directories” and a large binary blob of data. The file start with a 12 byte header containing a magic value (<code class="highlighter-rouge">IWAD</code> or <code class="highlighter-rouge">PWAD</code>), the amount of lumps and an offset in bytes from the start of the file to where the directory headers start. Following this directory offset in the hex editor, we hit the first directory entry. A directory is a 16 byte header containing another offset in bytes pointing to where the actual lump’s data is located, the size of the data and the name of the lump.</p>
+
+<p>Looking at HxD, you can quite easily trace this:</p>
+
+<p><img src="/images/blog/005_pakfiles/cover.jpg" alt="Doom WAD file" class="img-fluid" /></p>
+
+<p>The header basically contains a pointer to a sequence of directories at the end of the file and those directories each point to where its data starts in the file. Using this information, you should be able to create a simple program to extract the WAD file. There are many tools that can do this.</p>
+
+<p>Doom implements so called IWAD and PWAD files, the one above is an IWAD file, these get automatically loaded by the game. PWAD files are meant for patches as these can get loaded on top of the game and replace IWAD data.</p>
+
+<h2 id="pak-file-implementation">Pak file implementation</h2>
+
+<h3 id="layout">Layout</h3>
+
+<p>Looking at how these pak files are implemented in the game engines of today, there are barely any differences to how it worked in Doom. There’s still a file header, multiple directories and a large binary blob.
+I came up with the following structure that worked for me:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>PAK</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Element</strong></td>
+      <td><strong>Size (Bytes)</strong></td>
+      <td><strong>Description</strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>PakHeader</strong></td>
+      <td>159</td>
+      <td>File header. One per pak</td>
+    </tr>
+    <tr>
+      <td>Magic</td>
+      <td>4</td>
+      <td>“PAK”. To validate file format.</td>
+    </tr>
+    <tr>
+      <td>Version</td>
+      <td>1</td>
+      <td>Version of the pak file format</td>
+    </tr>
+    <tr>
+      <td>Content Version</td>
+      <td>4</td>
+      <td>Version of the content</td>
+    </tr>
+    <tr>
+      <td>Folder Path</td>
+      <td>100</td>
+      <td>Path of the pak file</td>
+    </tr>
+    <tr>
+      <td>Pak Name</td>
+      <td>50</td>
+      <td>Name of the pak</td>
+    </tr>
+    <tr>
+      <td># Entries</td>
+      <td>4</td>
+      <td>Number of file entries (used to iterate over all entry headers)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><strong>PakFileTableEntry</strong></td>
+      <td>314</td>
+      <td>File entry header. (Count defined in file header)</td>
+    </tr>
+    <tr>
+      <td>File Path</td>
+      <td>255</td>
+      <td>File path of the file</td>
+    </tr>
+    <tr>
+      <td>IsCompressed</td>
+      <td>1</td>
+      <td>True if data is compressed</td>
+    </tr>
+    <tr>
+      <td>Uncompressed Size</td>
+      <td>4</td>
+      <td>Size of the uncompressed data</td>
+    </tr>
+    <tr>
+      <td>Compressed Size</td>
+      <td>4</td>
+      <td>Size of uncompressed data (Equal to uncompressed size if not compressed)</td>
+    </tr>
+    <tr>
+      <td>Offset</td>
+      <td>50</td>
+      <td>Offset in bytes to point to where the data starts in the data blob</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This translates to the following class layouts:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">PakHeader</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">ID</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"PAK"</span> <span class="p">};</span>         <span class="c1">//Used to quickly verify file format</span>
+    <span class="kt">char</span> <span class="n">PakVersion</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">//The version of the format. This should match with the code that parses it</span>
+    <span class="n">int32</span> <span class="n">ContentVersion</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>       <span class="c1">//The version of the content. Used to possibly do patches and updates to files</span>
+    <span class="kt">char</span> <span class="n">FolderPath</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>           <span class="c1">//The path to the original folder</span>
+    <span class="kt">char</span> <span class="n">PakName</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>               <span class="c1">//The name of the pak file</span>
+    <span class="n">uint32</span> <span class="n">NumEntries</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>          <span class="c1">//The number of directories/files</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">PakFileTableEntry</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">FilePath</span><span class="p">[</span><span class="mi">255</span><span class="p">];</span>             <span class="c1">//The path to the file (relative to the pak directory)</span>
+    <span class="kt">bool</span> <span class="n">Compressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>        <span class="c1">//True if compressed</span>
+    <span class="n">uint32</span> <span class="n">UncompressedSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">//Size before compression</span>
+    <span class="n">uint32</span> <span class="n">CompressedSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>      <span class="c1">//Size after compression</span>
+    <span class="n">uint32</span> <span class="n">Offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>              <span class="c1">//Offset pointing to start of binary data</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>While working on this, I’ve wondered why many pak file formats store their file headers (aka directories) at the end of the file. I’m not entirely sure why but the main reason I can think of is because you need to know the result of the data compression before you can write the file headers. If you want to write your file headers first, you have to keep all data in memory and wait until the end of the process to dump it all. For large pak files, you might run out of memory. If the data is written immediately to the file, it doesn’t have to be stored in memory. This might be an interesting thing to research at some point.</p>
+
+<h3 id="paking-and-compression">Paking and compression</h3>
+
+<p>Once you get the idea of a pak file, actually implementing it is fairly easy. You grab a list of files you want to pak, load them into memory one by one, potentially compress them and write it to a file. Besides that, store the file information and data offset in the file header.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Create the header</span>
+<span class="n">PakHeader</span> <span class="n">header</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="n">header</span><span class="p">.</span><span class="n">NumEntries</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">header</span><span class="p">.</span><span class="n">PakVersion</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">PAK_FILE_VERSION</span><span class="p">;</span>
+<span class="n">header</span><span class="p">.</span><span class="n">ContentVersion</span> <span class="o">=</span> <span class="n">contentVersion</span><span class="p">;</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span><span class="n">responseFileStream</span><span class="p">,</span> <span class="n">filePath</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">fileStream</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">ate</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="o">!</span><span class="n">fileStream</span><span class="p">.</span><span class="n">fail</span><span class="p">());</span>
+
+    <span class="c1">//Create the file entry</span>
+    <span class="n">PakFileTableEntry</span> <span class="n">pakFileEntry</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">UncompressedSize</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">fileStream</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+    <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">Offset</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">dataBuffer</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">Compressed</span> <span class="o">=</span> <span class="p">(</span><span class="n">pakFileEntry</span><span class="p">.</span><span class="n">UncompressedSize</span> <span class="o">&gt;</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">compressBias</span> <span class="o">&amp;&amp;</span> <span class="n">compress</span> <span class="o">==</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="n">fileStream</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="c1">//Read the file into memory</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">fileData</span><span class="p">;</span>
+    <span class="n">fileData</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">pakFileEntry</span><span class="p">.</span><span class="n">UncompressedSize</span><span class="p">);</span>
+    <span class="n">fileStream</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">fileData</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">UncompressedSize</span><span class="p">);</span>
+
+    <span class="c1">//Compress the data</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pakFileEntry</span><span class="p">.</span><span class="n">Compressed</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">compressedData</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">result</span> <span class="o">=</span> <span class="n">CompressLZ4</span><span class="p">(</span><span class="n">fileData</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">fileData</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">hq</span><span class="p">,</span> <span class="n">compressedData</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+        <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">CompressedSize</span> <span class="o">=</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">compressedData</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="n">dataBuffer</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dataBuffer</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">compressedData</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">compressedData</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">compressedData</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">CompressedSize</span> <span class="o">=</span> <span class="n">pakFileEntry</span><span class="p">.</span><span class="n">UncompressedSize</span><span class="p">;</span>
+        <span class="n">dataBuffer</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dataBuffer</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">fileData</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">fileData</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="c1">//Add the entry and close the file stream</span>
+    <span class="n">fileEntries</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pakFileEntry</span><span class="p">);</span>
+    <span class="n">fileStream</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Usually, when creating a pak file, you get the option to compress the data. This compression is always done <strong>per file</strong>, the data is never compressed in its whole. Even though this could improve compression ratio, it would not make sense because you’d have to load the entire data blob and uncompress it even if you just want to read a few files. Compression can be done with any library however some libraries are built more for fast decompression which is what we want in realtime applications. 
+I choose to use <a href="https://github.com/lz4/lz4">L4Z</a> but others like <a href="https://zlib.net/">zlib</a> (used in UE4) and <a href="http://www.radgametools.com/oodle.htm">Oodle</a> are also commonly used.
+Some files like config files are very small and don’t benefit from compression because the compressed result could get be than they actually are. I just came up with a threshold (0.5MB) that defines from what size a file should get compressed.</p>
+
+<p>There’s another interesting benefit from using pak files, that is <strong>security</strong>. Having a custom format rather than a commonly used and known format already provides a small layer of security that stops normal people from tampering with your data however, this is extremely easy to work around using a hex editor to reverse-engineer it. An obvious solution is to encrypt all the data but this has a huge performance problem, however there is a middle ground here. The data in a pak file is just a blob of bytes that are impossible to interpret without the file headers, especially when the data blobs are compressed. So instead of encrypting the data, encrypting the file headers is a much better and faster method to secure your data. This can easily be achieved. Besides encryption, the data can have checksums that can be verified and checked for tampering.</p>
+
+<h3 id="reading-and-decompression">Reading and decompression</h3>
+
+<p>Reading pak files is pretty much as simple as writing them however going for a naïve approach will limit the flexibility of using pak files combined with regular physical files. At the base of this lies a <strong>virtual file system</strong>. There are loads of code repositories that all implement this differently, I simply went my own way without looking too much at what’s already out there. A virtual file system (aka VFS), allows you to treat all files as if they were just physical files. This not only works with pak files, it can work with any archived file or even files on a network or server. The idea is that every type of data implements the same filesystem interface so that all files can be treated the same. This is especially important during development because you wouldn’t want to be needing to create a pak file each time you modify an asset. The VFS works by “mounting” certain directories or archives to a virtual file path. That way, the system can pretend that for example the files of my pak file at <code class="highlighter-rouge">C:\Games\MyGame\Resources\MyPak.pak</code> are in <code class="highlighter-rouge">Resources\</code>  and I can address the files in the pak files as if they were just physical files.</p>
+
+<p>I created two interfaces: <code class="highlighter-rouge">IMountPoint</code> and <code class="highlighter-rouge">IFile</code>. A mountpoint is basically the directory or archive that will get attached to the VFS. Each type of input implements how the file or directory should be treated. For a regular file directory, this is fairly simple. A <code class="highlighter-rouge">PhysicalMountPoint</code> simply reads the contents of the whole directory and stores in a list so that the VFS can later access and search it. <code class="highlighter-rouge">File</code> implements how a single file entry should be interpreted. Again for a regular file, this is just reading the file like you normally do, that is what the <code class="highlighter-rouge">PhysicalFile</code> does.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMountPoint</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">IMountPoint</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">physicalPath</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">order</span> <span class="o">=</span> <span class="n">INT_MAX</span><span class="p">);</span>
+	<span class="k">virtual</span> <span class="o">~</span><span class="n">IMountPoint</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">OnMount</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">File</span><span class="o">&gt;</span> <span class="n">GetFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">filePath</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">HasFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">filePath</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">File</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IOStream</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">File</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">fileName</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">File</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">OpenRead</span><span class="p">(</span><span class="kt">bool</span> <span class="n">allowWrite</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">OpenWrite</span><span class="p">(</span><span class="kt">bool</span> <span class="n">append</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">allowRead</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="k">virtual</span> <span class="n">Flush</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Close</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">IsOpen</span><span class="p">()</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">Exists</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GetDirectoryPath</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GetFileName</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>A MountPoint can be given an “order”. This idea gives me the ability to prioritize certain folders or pak files in order to support patching or modding. Simply giving a certain pak file a higher order, will make the VFS choose the file with the highest order first. When accessing a file, the VFS will search the mountpoints in descending order.</p>
+
+<p>Using the same interfaces, I implemented the <code class="highlighter-rouge">PakMountPoint</code> and <code class="highlighter-rouge">PakFile</code>. They both implement the same functionality. The <code class="highlighter-rouge">PakMountPoint</code> actually uses a <code class="highlighter-rouge">PhysicalFile</code> to read the file headers of the pak file and store a list of files similar to the <code class="highlighter-rouge">PhysicalMountPoint</code> together with the data offset information in order to be able to access the data of each file.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">PakMountPoint</span><span class="o">::</span><span class="n">OnMount</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="c1">//A pak file is a regular file so load that first</span>
+	<span class="n">m_pPakFile</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">PhysicalFile</span><span class="o">&gt;</span><span class="p">(</span><span class="n">m_PhysicalPath</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_pPakFile</span><span class="o">-&gt;</span><span class="n">OpenRead</span><span class="p">())</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+	<span class="c1">//Read in the header</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_pPakFile</span><span class="o">-&gt;</span><span class="n">ReadFrom</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m_Header</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">PakFileHeader</span><span class="p">)))</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="s">"PAK"</span><span class="p">,</span> <span class="n">m_Header</span><span class="p">.</span><span class="n">ID</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">m_Header</span><span class="p">.</span><span class="n">Version</span> <span class="o">!=</span> <span class="n">PAK_VERSION</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="n">m_Order</span> <span class="o">=</span> <span class="n">m_Header</span><span class="p">.</span><span class="n">ContentVersion</span><span class="p">;</span>
+
+	<span class="c1">//Read in all the table entries</span>
+	<span class="n">m_FileEntries</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">m_Header</span><span class="p">.</span><span class="n">NumEntries</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_pPakFile</span><span class="o">-&gt;</span><span class="n">ReadFrom</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">m_FileEntries</span><span class="p">.</span><span class="n">data</span><span class="p">()),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">PakFileHeader</span><span class="p">),</span> <span class="n">m_Header</span><span class="p">.</span><span class="n">NumEntries</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">PakFileEntry</span><span class="p">)))</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">PakFile</code> uses the info in the mountpoint to fetch the right part of the data blob and is able to uncompress the data if required. I’ve realized that the name <code class="highlighter-rouge">PakFile</code> in my implementation is quite ambiguous as it represents a single file inside a pak file and not the pak file itself.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="n">PakFile</span><span class="o">::</span><span class="n">Read</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">pBuffer</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="n">PakMountPoint</span><span class="o">*</span> <span class="n">pMountPoint</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">PakMountPoint</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">m_pMountPoint</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">sizeToRead</span> <span class="o">=</span> <span class="n">m_FilePointer</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="n">m_pTableEntry</span><span class="o">-&gt;</span><span class="n">UncompressedSize</span> <span class="o">?</span> <span class="n">m_pTableEntry</span><span class="o">-&gt;</span><span class="n">UncompressedSize</span> <span class="o">-</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">m_FilePointer</span> <span class="o">:</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">size</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">read</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_pTableEntry</span><span class="o">-&gt;</span><span class="n">Compressed</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//If the file is compressed we have to cache the uncompressed data if we want to use it later</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">CacheUncompressedData</span><span class="p">())</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">memcpy</span><span class="p">(</span><span class="n">pBuffer</span><span class="p">,</span> <span class="n">m_UncompressedCache</span><span class="p">.</span><span class="n">data</span><span class="p">()</span> <span class="o">+</span> <span class="n">m_FilePointer</span><span class="p">,</span> <span class="n">sizeToRead</span><span class="p">);</span>
+        <span class="n">read</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">sizeToRead</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">read</span> <span class="o">=</span> <span class="n">pMountPoint</span><span class="o">-&gt;</span><span class="n">GetPakFile</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ReadFrom</span><span class="p">(</span><span class="n">pBuffer</span><span class="p">,</span> <span class="n">m_pTableEntry</span><span class="o">-&gt;</span><span class="n">Offset</span> <span class="o">+</span> <span class="n">m_FilePointer</span><span class="p">,</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">sizeToRead</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">m_FilePointer</span> <span class="o">+=</span> <span class="n">read</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">read</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Writing to a <code class="highlighter-rouge">PakFile</code> is not implemented as it doesn’t really make sense to do that.</p>
+
+<p>With this interface in place, supporting other archived types is very easy. I’ve also implemented support for zip files by creating a <code class="highlighter-rouge">ZipMountPoint</code> and <code class="highlighter-rouge">ZipFile</code>.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://doomwiki.org/wiki/WAD">WAD file format in DOOM</a></li>
+  <li><a href="https://doomwiki.org/wiki/DOOM.WAD">DOOM.WAD</a></li>
+  <li><a href="https://github.com/lz4/lz4">L4Z</a></li>
+  <li><a href="https://zlib.net/">zlib</a></li>
+  <li><a href="http://www.radgametools.com/oodle.htm">Oodle</a></li>
+  <li><a href="https://docs.unrealengine.com/en-US/Engine/Basics/Projects/Packaging/index.html#signingandencryption">Pak file signing and encryption in Unreal Engine</a></li>
+</ul>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_config = function () {
+    this.page.url = "https://www.simoncoenen.com/blog/programming/PakFiles.html";
+    this.page.identifier = "Pak files - Virtual file system";
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//simon-coenen.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+</script>
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>
