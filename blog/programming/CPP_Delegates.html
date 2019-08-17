@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.6" />
 <meta property="og:title" content="C++ Delegates" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"datePublished":"2019-06-07T00:00:00+01:00","dateModified":"2019-06-07T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Unreal Engine -like delegates in C++ using templates","@type":"BlogPosting","headline":"C++ Delegates","@context":"https://schema.org"}</script>
+{"headline":"C++ Delegates","dateModified":"2019-06-07T00:00:00+01:00","datePublished":"2019-06-07T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Unreal Engine -like delegates in C++ using templates","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -254,7 +254,7 @@ When working on this, I was reading the book <a href="https://www.amazon.co.uk/E
 
 <p>Eg.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">Foo</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">);</span>                       <span class="c1">// == int(*)(float, char)</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">Foo</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">);</span>                       <span class="c1">// == int(*)(float, char)</span>
 <span class="kt">int</span> <span class="n">Clazz</span><span class="o">::</span><span class="n">Foo</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">);</span>         <span class="c1">// == int(*Clazz::)(const float&amp;, char)</span>
 <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span> <span class="n">b</span><span class="p">){};</span>                      <span class="c1">// == ????</span>
 </code></pre></div></div>
@@ -265,7 +265,7 @@ Because We want to support multiple function types, we must define an interface:
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">IDelegate</span>
 <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="k">virtual</span> <span class="n">RetVal</span> <span class="n">Execute</span><span class="p">(</span><span class="n">Args</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </code></pre></div></div>
@@ -287,7 +287,7 @@ The implementation is pretty straight forward and is also quite simple for the o
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">LambdaDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span>
 <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="k">explicit</span> <span class="n">LambdaDelegate</span><span class="p">(</span><span class="n">TLambda</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">)</span>
     <span class="o">:</span> <span class="n">m_Lambda</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lambda</span><span class="p">))</span>
     <span class="p">{}</span>
@@ -296,7 +296,7 @@ The implementation is pretty straight forward and is also quite simple for the o
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">RetVal</span><span class="p">)((</span><span class="n">m_Lambda</span><span class="p">)(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
     <span class="p">}</span>
-<span class="k">private</span><span class="o">:</span>
+<span class="nl">private:</span>
     <span class="n">TLambda</span> <span class="n">m_Lambda</span><span class="p">;</span>
 <span class="p">};</span>
 </code></pre></div></div>
@@ -306,7 +306,7 @@ The implementation is pretty straight forward and is also quite simple for the o
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">Delegate</span>
 <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="k">using</span> <span class="n">IDelegateT</span> <span class="o">=</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span><span class="p">;</span>
 
     <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args2</span><span class="o">&gt;</span>
@@ -327,7 +327,7 @@ The implementation is pretty straight forward and is also quite simple for the o
         <span class="n">assert</span><span class="p">(</span><span class="n">m_Allocator</span><span class="p">.</span><span class="n">HasAllocation</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="s">"Delegate is not bound"</span><span class="p">);</span>
         <span class="k">return</span> <span class="n">GetDelegate</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
     <span class="p">}</span>
-<span class="k">private</span><span class="o">:</span>
+<span class="nl">private:</span>
     <span class="n">IDelegateT</span><span class="o">*</span> <span class="n">m_pAllocator</span><span class="p">;</span>
 <span class="p">};</span>
 </code></pre></div></div>
@@ -425,6 +425,13 @@ Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">
                     <a href="/feed.xml" class="fa fa-rss"> RSS</a>
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="/blog/programming/PakFiles.html">

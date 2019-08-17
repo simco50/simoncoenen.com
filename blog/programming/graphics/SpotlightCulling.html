@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Optimizing spotlight intersection in tiled/clustered light culling
+        
+    </title>
+
+    
+        <meta name="description" content="Optimizing spotlight intersection in tiled/clustered light culling">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html">
+    <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
+    
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Optimizing spotlight intersection in tiled/clustered light culling" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="Optimizing spotlight intersection in tiled/clustered light culling" />
+<meta property="og:description" content="Optimizing spotlight intersection in tiled/clustered light culling" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-17T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" />
+<meta property="twitter:title" content="Optimizing spotlight intersection in tiled/clustered light culling" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"headline":"Optimizing spotlight intersection in tiled/clustered light culling","dateModified":"2019-08-17T00:00:00+01:00","datePublished":"2019-08-17T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html","image":"https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Optimizing spotlight intersection in tiled/clustered light culling","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+<h1>Optimizing spotlight intersection in tiled/clustered light culling</h1>
+<p>17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    12 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
+I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
+
+<p>To give a very brief summary of what <strong>light culling</strong> actually is:</p>
+
+<p>Light culling is an optimization method to reduce the amount of lights that are considered when shading individual pixels by placing lights in either a 2D (tiled) or 3D (clustered) grid based on their position, dimensions and possibly other parameters.
+Before the shading pass, a compute shader splits up the view frustum in buckets and loops over all the lights and places them in the buckets that it intersects with.
+Later during shading, using the pixel position, the appropriate light bucket can be calculated and only the lights in that bucket need to be considered for that pixel. 
+The technique can also be leveraged to accelerate other things like decals, environment probes, …
+This greatly improves shading of a scene with a lot of dynamic lights. It’s a very common technique used in many games and engines.</p>
+
+<p>Spot light culling can be challenging to find a good intersection method for. There are several different approaches to this and depending on how far you think this through, there are some significant optimizations to be made here compared to naive methods.</p>
+
+<p>I’ve gained lots of insight from other articles which really helped me learn about all the methods. One of which is <strong><a href="https://bartwronski.com/2017/04/13/cull-that-cone/">the amazing article of Bartłomiej Wroński</a></strong> and I really recommend checking it out if you want some more in-depth information about this. The others are mentioned below in case you want to learn more about the subject.</p>
+
+<!--more-->
+
+<p>I’ve created a few <strong>interactive visualisations</strong> so you can see how a cone interacts with the frustum grid using different culling methods. 
+This is obviously just in 2D, but it applies to 3D in pretty much the exact same way.
+You can click the button to unlock the light position and move your mouse around to move the light and click again to lock it in place so you can alter the spotlight parameters.
+Enable the debug view to see the intersection primitives used for the method.</p>
+
+<p>I believe having these kinds of visualizations are super helpful when thinking about these things as usually these things are very hard to debug especially in shaders.
+Hopefully it will provide some extra insight in how it works.</p>
+
+<h3 id="first-things-first">First things first</h3>
+
+<p>So, what are we after here? We need to find an accurate and efficient method to see if a spot light falls inside a tile or cluster.
+Both in tiled and in clustered light culling, <strong>the buckets are represented as frustums with a near and far plane</strong>.
+That makes 6 planes (left, right, top, bottom, near and far) in total. In the case of clustered light culling, the near and far plane are defined by a logarithmic function while in tiled lighting, the frustums are created from the min and max depth of all pixels in that tile.</p>
+
+<h3 id="cone-vs-frustum">Cone vs Frustum</h3>
+
+<p>The initial thought is to use the frustum as the primitive to test the cone against.
+For a spot light, test that <strong>both the origin and the further point of the cone is behind each frustum plane</strong>.
+In a clustered lighting scenario, this gives the following result.</p>
+
+<div class="d-none d-lg-block">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" srcdoc="
+&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;style&gt;
+    html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+&lt;/style&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src=&quot;/images/blog/006_cone_culling/Cone_vs_Frustum.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+"></iframe>
+</div>
+</div>
+<div class="d-block d-lg-none">
+<img class="img-fluid" src="/images/blog/006_cone_culling/Cone_vs_Frustum.png" />
+<p style="font-style: italic">(visualizer replaced by image because screen is too small)</p>
+</div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">PointBehindPlane</span><span class="p">(</span><span class="n">float3</span> <span class="n">p</span><span class="p">,</span> <span class="n">Plane</span> <span class="n">plane</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="n">plane</span><span class="p">.</span><span class="n">DistanceToOrigin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">ConeBehindPlane</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Plane</span> <span class="n">plane</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">float3</span> <span class="n">furthestPointDirection</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">plane</span><span class="p">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span><span class="p">),</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">furthestPointOnCircle</span> <span class="o">=</span> <span class="n">cone</span><span class="p">.</span><span class="n">Tip</span> <span class="o">+</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span> <span class="o">*</span> <span class="n">cone</span><span class="p">.</span><span class="n">Height</span> <span class="o">-</span> <span class="n">furthestPointDirection</span> <span class="o">*</span> <span class="n">cone</span><span class="p">.</span><span class="n">Radius</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">PointBehindPlane</span><span class="p">(</span><span class="n">cone</span><span class="p">.</span><span class="n">Tip</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">PointBehindPlane</span><span class="p">(</span><span class="n">furthestPointOnCircle</span><span class="p">,</span> <span class="n">plane</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">ConeInFrustum</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Frustum</span> <span class="n">frustum</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zNear</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zFar</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Plane</span> <span class="n">nearPlane</span><span class="p">,</span> <span class="n">farPlane</span><span class="p">;</span>
+    <span class="n">nearPlane</span><span class="p">.</span><span class="n">Normal</span> <span class="o">=</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">nearPlane</span><span class="p">.</span><span class="n">DistanceToOrigin</span> <span class="o">=</span> <span class="n">zNear</span><span class="p">;</span>
+    <span class="n">farPlane</span><span class="p">.</span><span class="n">Normal</span> <span class="o">=</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">farPlane</span><span class="p">.</span><span class="n">DistanceToOrigin</span> <span class="o">=</span> <span class="o">-</span><span class="n">zFar</span><span class="p">;</span>
+ 
+    <span class="kt">bool</span> <span class="n">inside</span> <span class="o">=</span> <span class="o">!</span><span class="p">(</span><span class="n">ConeBehindPlane</span><span class="p">(</span><span class="n">cone</span><span class="p">,</span> <span class="n">nearPlane</span><span class="p">)</span> <span class="o">||</span> <span class="n">ConeBehindPlane</span><span class="p">(</span><span class="n">cone</span><span class="p">,</span> <span class="n">farPlane</span><span class="p">));</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="n">inside</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="o">!</span><span class="n">ConeBehindPlane</span><span class="p">(</span><span class="n">cone</span><span class="p">,</span> <span class="n">frustum</span><span class="p">.</span><span class="n">Planes</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">inside</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You see that the results are not so great. For some reason, clusters that are clearly outside the cone, are passing the test? Well, if you think about it and work out the test for each plane, it makes sense. <a href="https://wickedengine.net/2018/01/10/optimizing-tile-based-light-culling/">János Turánszki</a> has a great article with a nice drawing of why this happens.</p>
+
+<p>This can be solved by creating an AABB from the frustum and use that as the primitive for testing. However, in tiled lighting, you still want to use frustum culling because in tiles with <strong>large depth discontinuities</strong>, an AABB will be huge and therefore inaccurate. You want to use a combination of both.</p>
+
+<p>In clustered light culling, just using an AABB works well enough the logarithmic nature of the cluster division on the Z axis causes the clusters to be square-ish and thus doesn’t suffer from these long AABBs in tiled lighting.</p>
+
+<h4 id="method-1-bounding-sphere-around-cone-simple-sphereaabb">Method 1: Bounding sphere around cone (Simple Sphere/AABB)</h4>
+
+<p>This method is probably the first you will go with because it’s easy and thus a good start for testing.
+By simply using the range and angle of the cone to find the radius of a sphere, a spot light could be treated exactly the same way as a point light, as a sphere.
+As you might expect, the result is far from good because <strong>the bounding sphere is quite awful</strong>.</p>
+
+<div class="d-none d-lg-block">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" srcdoc="
+&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;style&gt;
+    html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+&lt;/style&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src=&quot;/images/blog/006_cone_culling/Simple_Sphere_vs_AABB.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+"></iframe>
+</div>
+</div>
+<div class="d-block d-lg-none">
+<img class="img-fluid" src="/images/blog/006_cone_culling/Simple_Sphere_vs_AABB.png" />
+<p style="font-style: italic">(visualizer replaced by image because screen is too small)</p>
+</div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">SpotlightVsAABB</span><span class="p">(</span><span class="n">Spotlight</span> <span class="n">spotlight</span><span class="p">,</span> <span class="n">AABB</span> <span class="n">aabb</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">float3</span> <span class="n">d</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">abs</span><span class="p">(</span><span class="n">aabb</span><span class="p">.</span><span class="n">center</span> <span class="o">-</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">position</span><span class="p">)</span> <span class="o">-</span> <span class="n">aabb</span><span class="p">.</span><span class="n">extents</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">distSq</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">r</span> <span class="o">=</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">range</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">spotlight</span><span class="p">.</span><span class="n">angle</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">distSq</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="method-2-tighter-bounding-sphere-around-cone-tight-sphereaabb">Method 2: Tighter bounding sphere around cone (Tight Sphere/AABB)</h4>
+
+<p>The solution above obviously has some serious problems.
+It really helps visualizing what the shape is and its dimensions when thinking about optimizing.
+What we’ve created with the method above, is not a great bounding sphere for our spotlight.
+Treating the cone origin as the center of the sphere is not a good idea.
+Instead, you split up the bounding sphere calculation in two different cases to <strong>create a tighter sphere</strong>.</p>
+
+<div class="d-none d-lg-block">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" srcdoc="
+&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;style&gt;
+    html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+&lt;/style&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src=&quot;/images/blog/006_cone_culling/Tight_Sphere_vs_AABB.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+"></iframe>
+</div>
+</div>
+<div class="d-block d-lg-none">
+<img class="img-fluid" src="/images/blog/006_cone_culling/Tight_Sphere_vs_AABB.png" />
+<p style="font-style: italic">(visualizer replaced by image because screen is too small)</p>
+</div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">SpotlightVsAABB_Tight</span><span class="p">(</span><span class="n">Spotlight</span> <span class="n">spotlight</span><span class="p">,</span> <span class="n">AABB</span> <span class="n">aabb</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">spotlight</span><span class="p">.</span><span class="n">angle</span> <span class="o">&gt;</span> <span class="n">PI_DIV_4</span><span class="p">)</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">range</span> <span class="o">*</span> <span class="n">tan</span><span class="p">(</span><span class="n">spotlight</span><span class="p">.</span><span class="n">angle</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">range</span> <span class="o">*</span> <span class="mf">0.5</span><span class="n">f</span> <span class="o">/</span> <span class="n">pow</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">light</span><span class="p">.</span><span class="n">angle</span><span class="p">),</span> <span class="mf">2.0</span><span class="n">f</span><span class="p">);</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">direction</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="n">float3</span> <span class="n">d</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">abs</span><span class="p">(</span><span class="n">aabb</span><span class="p">.</span><span class="n">center</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span> <span class="o">-</span> <span class="n">aabb</span><span class="p">.</span><span class="n">extents</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">distSq</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">distSq</span> <span class="o">&lt;=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="method-3-bounding-spheres-around-aabbs-conesphere">Method 3: Bounding spheres around AABBs (Cone/Sphere)</h4>
+
+<p>You have probably noticed the above method still has a lot of false positives when the cone angle gets small or large, this is simply because the constraint is a sphere.
+After looking for better solutions, I stumbled on this great article: <a href="https://bartwronski.com/2017/04/13/cull-that-cone/">Cull that Cone!</a> by Bart Wronski, he suggests flipping the problem and <strong>use a bounding sphere around each of AABBs</strong> to do Cone/Sphere testing.
+Like you can see above, this is an enormous improvement compared to the two other solutions.</p>
+
+<div class="d-none d-lg-block">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" srcdoc="
+&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;style&gt;
+    html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+&lt;/style&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script src=&quot;/images/blog/006_cone_culling/Cone_vs_Sphere.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;
+"></iframe>
+</div>
+</div>
+<div class="d-block d-lg-none">
+<img class="img-fluid" src="/images/blog/006_cone_culling/Cone_vs_Sphere.png" />
+<p style="font-style: italic">(visualizer replaced by image because screen is too small)</p>
+</div>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">SpotlightVsAABB</span><span class="p">(</span><span class="n">Spotlight</span> <span class="n">spotlight</span><span class="p">,</span> <span class="n">AABB</span> <span class="n">aabb</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">float</span> <span class="n">sphereRadius</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">aabb</span><span class="p">.</span><span class="n">extents</span><span class="p">,</span> <span class="n">aabb</span><span class="p">.</span><span class="n">extents</span><span class="p">);</span>
+    <span class="n">float3</span> <span class="n">v</span> <span class="o">=</span> <span class="n">aabb</span><span class="p">.</span><span class="n">venter</span> <span class="o">-</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">lenSq</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">v1Len</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">direction</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">distanceClosestPoint</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">spotlight</span><span class="p">.</span><span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">lenSq</span> <span class="o">-</span> <span class="n">v1Len</span> <span class="o">*</span> <span class="n">v1Len</span><span class="p">)</span> <span class="o">-</span> <span class="n">v1Len</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">spotlight</span><span class="p">.</span><span class="n">angle</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="n">angleCull</span> <span class="o">=</span> <span class="n">distanceClosestPoint</span> <span class="o">&gt;</span> <span class="n">sphereRadius</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">frontCull</span> <span class="o">=</span> <span class="n">v1Len</span> <span class="o">&gt;</span> <span class="n">sphereRadius</span> <span class="o">+</span> <span class="n">spotlight</span><span class="p">.</span><span class="n">range</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">backCull</span> <span class="o">=</span> <span class="n">v1Len</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">sphereRadius</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="n">angleCull</span> <span class="o">||</span> <span class="n">frontCull</span> <span class="o">||</span> <span class="n">backCull</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="wrapping-up">Wrapping up</h3>
+
+<p>I’ve found the Cone/Sphere tests were quite successful and solve a lot of problems which the other 2 methods have.
+The method is more expensive, but it achieves more accurate results.
+Depending on the properties of the spotlights in the scene, both the last two methods are a good solution.
+The tight Sphere/AABB method is still great when the angle of the spotlight is around 45 degrees because then the false positives are minimal.</p>
+
+<p>For clustered light culling, the last option is great because we’re dealing with quite square shaped AABBs.
+However, with tiled light culling having large discontinuities, bounding spheres around AABBs are usually not ideal and therefore it needs to be <strong>combined</strong> with frustum culling.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li><a href="https://bartwronski.com/2017/04/13/cull-that-cone/">Cull That Cone! - Bartłomiej Wroński</a></li>
+  <li><a href="http://www.cse.chalmers.se/~uffe/clustered_shading_preprint.pdf">Clustered Deferred and Forward Shading - Ola Olsson, Markus Billeter, and Ulf Assarsson</a></li>
+  <li><a href="https://www.3dgep.com/volume-tiled-forward-shading/">Volume Tiled Forward Shading - Jeremiah van Oosten</a></li>
+  <li><a href="http://www.humus.name/Articles/PracticalClusteredShading.pdf">Partical Clustered Shader - Emil Person</a></li>
+</ul>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+var disqus_config = function () {
+    this.page.url = "https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html";
+    this.page.identifier = "Optimizing spotlight intersection in tiled/clustered light culling";
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//simon-coenen.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+
+</script>
+<noscript>
+Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/general/Blog.html">
+                            <span data-feather="home"></span>
+                            A blog...?
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

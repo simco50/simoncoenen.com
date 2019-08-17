@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.6" />
 <meta property="og:title" content="Blog" />
 <meta property="og:locale" content="en_GB" />
 <meta name="description" content="Simon Coenen - Game Progammer" />
@@ -33,7 +33,7 @@
 <meta property="twitter:title" content="Blog" />
 <meta name="twitter:site" content="@simon_coenen" />
 <script type="application/ld+json">
-{"url":"https://www.simoncoenen.com/blog.html","description":"Simon Coenen - Game Progammer","@type":"WebPage","headline":"Blog","@context":"https://schema.org"}</script>
+{"headline":"Blog","url":"https://www.simoncoenen.com/blog.html","description":"Simon Coenen - Game Progammer","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -100,6 +100,35 @@
     <div class="row">
         <div class="col-md-9">
             
+<a class="blacklink" href="/blog/programming/graphics/SpotlightCulling.html"><h1>Optimizing spotlight intersection in tiled/clustered light culling</h1></a>
+<p>17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    12 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
+I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
+
+<p>To give a very brief summary of what <strong>light culling</strong> actually is:</p>
+
+<p>Light culling is an optimization method to reduce the amount of lights that are considered when shading individual pixels by placing lights in either a 2D (tiled) or 3D (clustered) grid based on their position, dimensions and possibly other parameters.
+Before the shading pass, a compute shader splits up the view frustum in buckets and loops over all the lights and places them in the buckets that it intersects with.
+Later during shading, using the pixel position, the appropriate light bucket can be calculated and only the lights in that bucket need to be considered for that pixel. 
+The technique can also be leveraged to accelerate other things like decals, environment probes, …
+This greatly improves shading of a scene with a lot of dynamic lights. It’s a very common technique used in many games and engines.</p>
+
+<p>Spot light culling can be challenging to find a good intersection method for. There are several different approaches to this and depending on how far you think this through, there are some significant optimizations to be made here compared to naive methods.</p>
+
+<p>I’ve gained lots of insight from other articles which really helped me learn about all the methods. One of which is <strong><a href="https://bartwronski.com/2017/04/13/cull-that-cone/">the amazing article of Bartłomiej Wroński</a></strong> and I really recommend checking it out if you want some more in-depth information about this. The others are mentioned below in case you want to learn more about the subject.</p>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/graphics/SpotlightCulling.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
 <a class="blacklink" href="/blog/programming/PakFiles.html"><h1>Pak files - Virtual file system</h1></a>
 <p>10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
@@ -248,6 +277,13 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
                     <a href="/feed.xml" class="fa fa-rss"> RSS</a>
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="/blog/programming/PakFiles.html">

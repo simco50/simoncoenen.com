@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.5" />
+<meta name="generator" content="Jekyll v3.8.6" />
 <meta property="og:title" content="Pak files - Virtual file system" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"datePublished":"2019-07-10T00:00:00+01:00","dateModified":"2019-07-10T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Virtual file system using pak files","@type":"BlogPosting","headline":"Pak files - Virtual file system","@context":"https://schema.org"}</script>
+{"headline":"Pak files - Virtual file system","dateModified":"2019-07-10T00:00:00+01:00","datePublished":"2019-07-10T00:00:00+01:00","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"author":{"@type":"Person","name":"Simon Coenen"},"description":"Virtual file system using pak files","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -112,6 +112,8 @@
   
   </div>
   <div class="text-right col-sm-6">
+  
+    <a class="next" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
   
   </div>
 </div>
@@ -333,7 +335,7 @@ Some files like config files are very small and don’t benefit from compression
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMountPoint</span>
 <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="nl">public:</span>
 	<span class="n">IMountPoint</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">physicalPath</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">order</span> <span class="o">=</span> <span class="n">INT_MAX</span><span class="p">);</span>
 	<span class="k">virtual</span> <span class="o">~</span><span class="n">IMountPoint</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 	<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">OnMount</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -344,7 +346,7 @@ Some files like config files are very small and don’t benefit from compression
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">File</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IOStream</span>
 <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
+<span class="nl">public:</span>
     <span class="k">explicit</span> <span class="n">File</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">fileName</span><span class="p">);</span>
     <span class="k">virtual</span> <span class="o">~</span><span class="n">File</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 
@@ -439,6 +441,8 @@ Some files like config files are very small and don’t benefit from compression
   </div>
   <div class="text-right col-sm-6">
   
+    <a class="next" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
+  
   </div>
 </div>
 
@@ -470,6 +474,13 @@ Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">
                     <a href="/feed.xml" class="fa fa-rss"> RSS</a>
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link active" href="/blog/programming/PakFiles.html">
