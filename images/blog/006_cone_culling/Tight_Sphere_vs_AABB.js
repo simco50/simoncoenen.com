@@ -38,7 +38,16 @@ function TestSphereVsABBB(origin, radius, aabbCenter, aabbExtents) {
   return distanceSq <= radius * radius;
 }
 
+function skipDraw() {
+  if (window.parent.innerWidth <= 960)
+    return true;
+  return false;
+}
+
 function draw() {
+  if (skipDraw()) {
+    return;
+  }
   let fov = 50 * Math.PI / 180 / 2;
   let angle = spotlightAngleSlider.value() * Math.PI / 180 / 2;
   let range = spotlightRangeSlider.value();
@@ -112,17 +121,17 @@ function draw() {
         let isCulled = false;
 
 
-          if (angle > PI / 4) {
-            let radius = range * tan(angle);
-            let circlePositionX = lightPos.x + cos(spotlightAngle) * range
-            let circlePositionY = lightPos.y + sin(spotlightAngle) * range;
-            isCulled = TestSphereVsABBB(createVector(circlePositionX, circlePositionY), radius, center, extents);
-          } else {
-            let radius = range * 0.5 / pow(cos(angle), 2);
-            let circlePositionX = lightPos.x + cos(spotlightAngle) * radius
-            let circlePositionY = lightPos.y + sin(spotlightAngle) * radius;
-            isCulled = TestSphereVsABBB(createVector(circlePositionX, circlePositionY), radius, center, extents);
-          }
+        if (angle > PI / 4) {
+          let radius = range * tan(angle);
+          let circlePositionX = lightPos.x + cos(spotlightAngle) * range
+          let circlePositionY = lightPos.y + sin(spotlightAngle) * range;
+          isCulled = TestSphereVsABBB(createVector(circlePositionX, circlePositionY), radius, center, extents);
+        } else {
+          let radius = range * 0.5 / pow(cos(angle), 2);
+          let circlePositionX = lightPos.x + cos(spotlightAngle) * radius
+          let circlePositionY = lightPos.y + sin(spotlightAngle) * radius;
+          isCulled = TestSphereVsABBB(createVector(circlePositionX, circlePositionY), radius, center, extents);
+        }
 
 
 
@@ -144,24 +153,24 @@ function draw() {
       }
     }
 
-   
-      if (debugViewCheckbox.checked() == true) {
-        if (angle > PI / 4) {
-          let radius = range * tan(angle);
-          let positionX = lightPos_s.x + cos(spotlightAngle) * range
-          let positionY = lightPos_s.y + sin(spotlightAngle) * range;
-          
-          stroke(255, 0, 0, 255);
-          circle(positionX, positionY, radius * 2);
-        } else {
-          let radius = range * 0.5 / pow(cos(angle), 2);
-          let positionX = lightPos_s.x + cos(spotlightAngle) * radius;
-          let positionY = lightPos_s.y + sin(spotlightAngle) * radius;
 
-          stroke(255, 0, 0, 255);
-          circle(positionX, positionY, radius * 2);
-        }
+    if (debugViewCheckbox.checked() == true) {
+      if (angle > PI / 4) {
+        let radius = range * tan(angle);
+        let positionX = lightPos_s.x + cos(spotlightAngle) * range
+        let positionY = lightPos_s.y + sin(spotlightAngle) * range;
+
+        stroke(255, 0, 0, 255);
+        circle(positionX, positionY, radius * 2);
+      } else {
+        let radius = range * 0.5 / pow(cos(angle), 2);
+        let positionX = lightPos_s.x + cos(spotlightAngle) * radius;
+        let positionY = lightPos_s.y + sin(spotlightAngle) * radius;
+
+        stroke(255, 0, 0, 255);
+        circle(positionX, positionY, radius * 2);
       }
+    }
 
     //Draw spotlight
     let yTemp = range * tan(angle);
@@ -184,42 +193,42 @@ function draw() {
     endShape(CLOSE);
   }
 
- //Draw text and controls
- noStroke();
- fill(0);
- textSize(18);
- text('Method: Tight Sphere vs AABB', spotlightRangeSlider.x, 30);
- textSize(16);
+  //Draw text and controls
+  noStroke();
+  fill(0);
+  textSize(18);
+  text('Method: Tight Sphere vs AABB', spotlightRangeSlider.x, 30);
+  textSize(16);
 
- spotlightAngleSlider.position(20, 50);
- text('Spotlight Angle: ' + spotlightAngleSlider.value(), spotlightAngleSlider.x * 2 + spotlightAngleSlider.width, 65);
- spotlightRangeSlider.position(20, 80);
- text('Spotlight Range: ' + zClustersSlider.value(), zClustersSlider.x * 2 + zClustersSlider.width, 95);
- zClustersSlider.position(20, 110);
- text('Cluster Slices: ' + spotlightRangeSlider.value(), spotlightRangeSlider.x * 2 + spotlightRangeSlider.width, 125);
- if (isLightFree) {
-   freeLightButton.hide();
-   text('Click anywhere to lock light in place', 20, 160);
- } else {
-   freeLightButton.show();
- }
- freeLightButton.position(20, 150);
- debugViewCheckbox.position(20, 180);
- text('Mouse wheel to rotate light', 20, 230);
+  spotlightAngleSlider.position(20, 50);
+  text('Spotlight Angle: ' + spotlightAngleSlider.value(), spotlightAngleSlider.x * 2 + spotlightAngleSlider.width, 65);
+  spotlightRangeSlider.position(20, 80);
+  text('Spotlight Range: ' + zClustersSlider.value(), zClustersSlider.x * 2 + zClustersSlider.width, 95);
+  zClustersSlider.position(20, 110);
+  text('Cluster Slices: ' + spotlightRangeSlider.value(), spotlightRangeSlider.x * 2 + spotlightRangeSlider.width, 125);
+  if (isLightFree) {
+    freeLightButton.hide();
+    text('Click anywhere to lock light in place', 20, 160);
+  } else {
+    freeLightButton.show();
+  }
+  freeLightButton.position(20, 150);
+  debugViewCheckbox.position(20, 180);
+  text('Mouse wheel to rotate light', 20, 230);
 }
 
 function mouseWheel(event) {
- spotlightAngle += event.delta;
- //uncomment to block page scrolling
- return false;
+  spotlightAngle += event.delta;
+  //uncomment to block page scrolling
+  return false;
 }
 
 function mouseClicked() {
- if (!(mouseX < 250 && mouseY < 300)) {
-   isLightFree = false;
- }
+  if (!(mouseX < 250 && mouseY < 300)) {
+    isLightFree = false;
+  }
 }
 
 function freeLight() {
- isLightFree = true;
+  isLightFree = true;
 }

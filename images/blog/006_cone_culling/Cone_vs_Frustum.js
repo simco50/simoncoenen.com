@@ -50,7 +50,16 @@ function TestConeFrustum(leftPlane, rightPlane, minZ, maxZ, coneOrigin, coneDire
   return r;
 }
 
+function skipDraw() {
+  if (window.parent.innerWidth <= 960)
+    return true;
+  return false;
+}
+
 function draw() {
+  if (skipDraw()) {
+    return;
+  }
   let fov = 50 * Math.PI / 180 / 2;
   let angle = spotlightAngleSlider.value() * Math.PI / 180 / 2;
   let range = spotlightRangeSlider.value();
