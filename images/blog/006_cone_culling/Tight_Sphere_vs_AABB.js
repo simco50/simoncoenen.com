@@ -136,6 +136,10 @@ function draw() {
           vertex(gridOrigin.x + maxZ, gridOrigin.y + yPosNextZ);
           endShape(CLOSE);
           noFill(0);
+          if (debugViewCheckbox.checked() == true) {
+            stroke(255, 0, 0, 255);
+            rect(gridOrigin.x + center.x, gridOrigin.y + center.y, 2 * extents.x, 2 * extents.y);
+          }
         }
       }
     }
