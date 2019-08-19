@@ -183,9 +183,9 @@ function draw() {
   spotlightAngleSlider.position(20, 50);
   text('Spotlight Angle: ' + spotlightAngleSlider.value(), spotlightAngleSlider.x * 2 + spotlightAngleSlider.width, 65);
   spotlightRangeSlider.position(20, 80);
-  text('Spotlight Range: ' + zClustersSlider.value(), zClustersSlider.x * 2 + zClustersSlider.width, 95);
+  text('Spotlight Range: ' + spotlightRangeSlider.value(), spotlightRangeSlider.x * 2 + spotlightRangeSlider.width, 95);
   zClustersSlider.position(20, 110);
-  text('Cluster Slices: ' + spotlightRangeSlider.value(), spotlightRangeSlider.x * 2 + spotlightRangeSlider.width, 125);
+  text('Cluster Slices: ' + zClustersSlider.value(), zClustersSlider.x * 2 + zClustersSlider.width, 125);
   if (isLightFree) {
     freeLightButton.hide();
     text('Click anywhere to lock light in place', 20, 160);
