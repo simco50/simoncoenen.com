@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Using the DirectXShaderCompiler C++ API
+        
+    </title>
+
+    
+        <meta name="description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html">
+    <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
+    
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Using the DirectXShaderCompiler C++ API" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection." />
+<meta property="og:description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection." />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-04T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using the DirectXShaderCompiler C++ API" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","dateModified":"2020-03-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Using the DirectXShaderCompiler C++ API","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","datePublished":"2020-03-04T00:00:00+00:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+<h1>Using the DirectXShaderCompiler C++ API</h1>
+<p>04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    17 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
+The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
+Microsoft has since introduced their new llvm-based compiler called DirectXShaderCompiler (DXC) which compiles to DXIL.
+It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
+It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
+
+<p>Fxc has existed for quite a long time now and there are guides for it everywhere however Dxc is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering DirectX is generally really well documented.
+Using Dxc’s commandline tools are quite straight forward and self-explanatory however I’ve always like to compile my shaders at runtime because it eventually require no effort when modifying shaders and having to recompile them. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
+
+<p>I’ve found a few articles here and there about the very basic setup for this however most of the were very minimal and didn’t really cover things like compile-arguments, defines, include handling, validation, reflection, debug-data, … which are quite important to know about.</p>
+
+<!--more-->
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">CompileShader</span><span class="p">(</span><span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pFilePath</span><span class="p">,</span> <span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pTarget</span><span class="p">,</span> <span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pEntryPoint</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;&amp;</span> <span class="n">defines</span><span class="p">,</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3DBlob</span><span class="o">&gt;&amp;</span> <span class="n">pOutput</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcLibrary</span><span class="o">&gt;</span> <span class="n">pLibrary</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcLibrary</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pLibrary</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcCompiler</span><span class="o">&gt;</span> <span class="n">pCompiler</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcCompiler</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pCompiler</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pSource</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pLibrary</span><span class="o">-&gt;</span><span class="n">CreateBlobWithEncodingFromPinned</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">source</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+
+	<span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pArgs</span><span class="p">[]</span> <span class="o">=</span>
+	<span class="p">{</span>
+		<span class="s">L"-Zpr"</span><span class="p">,</span>			<span class="c1">//Row-major matrices</span>
+		<span class="s">L"-WX"</span><span class="p">,</span>				<span class="c1">//Warnings as errors</span>
+<span class="cp">#ifdef _DEBUG
+</span>		<span class="s">L"-Zi"</span><span class="p">,</span>				<span class="c1">//Debug info</span>
+		<span class="s">L"-Qembed_debug"</span><span class="p">,</span>	<span class="c1">//Embed debug info into the shader</span>
+		<span class="s">L"-Od"</span><span class="p">,</span>				<span class="c1">//Disable optimization</span>
+<span class="cp">#else
+</span>		<span class="s">L"-O3"</span><span class="p">,</span>				<span class="c1">//Optimization level 3</span>
+<span class="cp">#endif
+</span>	<span class="p">};</span>
+	
+	<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DxcDefine</span><span class="o">&gt;</span> <span class="n">dxcDefines</span><span class="p">(</span><span class="n">defines</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">defines</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">DxcDefine</span><span class="o">&amp;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">dxcDefines</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+		<span class="n">m</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">defines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">first</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+		<span class="n">m</span><span class="p">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">defines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">second</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcOperationResult</span><span class="o">&gt;</span> <span class="n">pCompileResult</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pCompiler</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="n">pSource</span><span class="p">.</span><span class="n">Get</span><span class="p">(),</span> <span class="n">pFileName</span><span class="p">,</span> <span class="n">pEntryPoint</span><span class="p">,</span> <span class="n">pTarget</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pArgs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pArgs</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pArgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dxcDefines</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">dxcDefines</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">pCompileResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+
+	<span class="n">HRESULT</span> <span class="n">hrCompilation</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetStatus</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrCompilation</span><span class="p">));</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">hrCompilation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pPrintBlob</span><span class="p">;</span>
+		<span class="n">HR</span><span class="p">(</span><span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetErrorBuffer</span><span class="p">(</span><span class="n">pPrintBlob</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">wcout</span> <span class="o">&lt;&lt;</span> <span class="n">pPrintBlob</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="n">IDxcBlob</span><span class="o">**</span> <span class="n">pBlob</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">**&gt;</span><span class="p">(</span><span class="n">pOutput</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+	<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetResult</span><span class="p">(</span><span class="n">pBlob</span><span class="p">);</span>
+	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="reflection">Reflection</h2>
+
+<p>Reflection with Dxc output is only slightly different from Fxc, you’ll eventually end up with a ID3D12ShaderReflection reference and from then on you can just do the same as you would usually do.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">DoReflection</span><span class="p">(</span><span class="k">const</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;&amp;</span> <span class="n">pShader</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcContainerReflection</span><span class="o">&gt;</span> <span class="n">pReflection</span><span class="p">;</span>
+	<span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcContainerReflection</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">Load</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">Get</span><span class="p">()));</span>
+	<span class="n">uint32</span> <span class="n">partIndex</span><span class="p">;</span>
+
+<span class="cp">#ifndef MAKEFOURCC
+#define MAKEFOURCC(a, b, c, d) (unsigned int)((unsigned char)(a) | (unsigned char)(b) &lt;&lt; 8 | (unsigned char)(c) &lt;&lt; 16 | (unsigned char)(d) &lt;&lt; 24)
+#endif
+</span>	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">FindFirstPartKind</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">partIndex</span><span class="p">));</span>
+<span class="cp">#undef MAKEFOURCC
+</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12ShaderReflection</span><span class="o">&gt;</span> <span class="n">pShaderReflection</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">GetPartReflection</span><span class="p">(</span><span class="n">partIndex</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+	
+	<span class="c1">//...</span>
+	<span class="n">D3D12_SHADER_DESC</span> <span class="n">shaderDesc</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="o">-&gt;</span><span class="n">GetDesc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">shaderDesc</span><span class="p">));</span>
+	<span class="c1">//...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="stripping-debug-data">Stripping debug data</h2>
+
+<p>In some cases, you might want to compile the shader, process some of the debug data and then strip the debug data before serializing the shader. This can be done using the IDxcContainer. All the parts of a DXIL container are defined in DxilContainer.h and could be stripped however I found that stripping certain parts throw exceptions. It’s also important to know that if you’re not sure the container has a certain part, you have to check it first otherwise the function will fail.</p>
+
+<p>Unfortunately, it doesn’t seem to be possible currently to strip out reflection data. A workaround for that could possibly to compile the shader twice, once with reflection data that can be thrown away and once without. In reality, this won’t really happen because usually shader compilation is done offline but in the case of having to support UGC, this could be an option.</p>
+
+<p>The cool thing about this stripping is that you can separate shader parts into different blobs and serialize them in different ways. That way you could save shader PDBs separate (This can also easily be done with <code class="highlighter-rouge">IDxcCompiler2::CompileWithDebug</code>)</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">StripDebugData</span><span class="p">(</span><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;&amp;</span> <span class="n">pShader</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcContainerBuilder</span><span class="o">&gt;</span> <span class="n">pContainerBuilder</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcContainerBuilder</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">Load</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">Get</span><span class="p">()));</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">RemovePart</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">)));</span> <span class="c1">//DFCC_ShaderDebugInfoDXIL</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">RemovePart</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'N'</span><span class="p">)));</span> <span class="c1">//DFCC_ShaderDebugName</span>
+
+	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcOperationResult</span><span class="o">&gt;</span> <span class="n">pResult</span><span class="p">;</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">SerializeContainer</span><span class="p">(</span><span class="n">pResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+	<span class="c1">//Do status checking</span>
+	<span class="c1">//...</span>
+	<span class="n">HR</span><span class="p">(</span><span class="n">pResult</span><span class="o">-&gt;</span><span class="n">GetResult</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here is a list of all the parts:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">DxilFourCC</span> <span class="p">{</span> 
+   <span class="n">DFCC_Container</span>                <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">,</span> <span class="sc">'C'</span><span class="p">),</span>
+   <span class="n">DFCC_ResourceDef</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'E'</span><span class="p">,</span> <span class="sc">'F'</span><span class="p">),</span> 
+   <span class="n">DFCC_InputSignature</span>           <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
+   <span class="n">DFCC_OutputSignature</span>          <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'O'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
+   <span class="n">DFCC_PatchConstantSignature</span>   <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
+   <span class="n">DFCC_ShaderStatistics</span>         <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'S'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">),</span> 
+   <span class="n">DFCC_ShaderDebugInfoDXIL</span>      <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">),</span> 
+   <span class="n">DFCC_ShaderDebugName</span>          <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'N'</span><span class="p">),</span> 
+   <span class="n">DFCC_FeatureInfo</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'S'</span><span class="p">,</span> <span class="sc">'F'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
+   <span class="n">DFCC_PrivateData</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'R'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'V'</span><span class="p">),</span> 
+   <span class="n">DFCC_RootSignature</span>            <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
+   <span class="n">DFCC_DXIL</span>                     <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">),</span> 
+   <span class="n">DFCC_PipelineStateValidation</span>  <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'V'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
+   <span class="n">DFCC_RuntimeData</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">),</span> 
+   <span class="n">DFCC_ShaderHash</span>               <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'H'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'H'</span><span class="p">),</span> 
+ <span class="p">};</span> 
+</code></pre></div></div>
+
+<h2 id="all-compiler-arguments">All compiler arguments</h2>
+
+<p>I’ve also found it pretty hard to find the compiler options for DXC. When using FXC, most of the compiler options were defines and easy to find because they were all defined together in a unified way. That doesn’t seem to be the case for DXC.</p>
+
+<p>I recently saw a conversation on the <a href="https://discordapp.com/invite/directx">DirectX Discord server</a> about when to use “-“ or “/” for compile argument but if you look at HLSLOptions.td in the <a href="https://github.com/microsoft/DirectXShaderCompiler/blob/master/include/dxc/Support/HLSLOptions.td">DirectXShaderCompiler</a> reposity, you’ll see “-“ works for all arguments while “/” only works for some. So it’s always best to use “-“.</p>
+
+<p>When you execute <code class="highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">General Options:</th>
+      <th style="text-align: left"> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-help</td>
+      <td>Display available options</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-nologo</td>
+      <td>Suppress copyright message</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Qunused-arguments</td>
+      <td>Don’t emit warning for unused driver arguments</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Compilation Options:</th>
+      <th style="text-align: left"> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-all_resources_bound</td>
+      <td>Enables agressive flattening</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-auto-binding-space &lt;value&gt;</td>
+      <td>Set auto binding space - enables auto resource binding in libraries</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Cc</td>
+      <td>Output color coded assembly listings</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-default-linkage &lt;value&gt;</td>
+      <td>Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-denorm &lt;value&gt;</td>
+      <td>select denormal value options (any, preserve, ftz). any is the default.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-D &lt;value&gt;</td>
+      <td>Define macro</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-enable-16bit-types</td>
+      <td>Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-export-shaders-only</td>
+      <td>Only export shaders when compiling a library</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-exports &lt;value&gt;</td>
+      <td>Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-E &lt;value&gt;</td>
+      <td>Entry point name</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fc &lt;file&gt;</td>
+      <td>Output assembly code listing file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fd &lt;file&gt;</td>
+      <td>Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fe &lt;file&gt;</td>
+      <td>Output warnings and errors to the given file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fh &lt;file&gt;</td>
+      <td>Output header file containing object code</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-flegacy-macro-expansion</td>
+      <td>Expand the operands before performing token-pasting operation (fxc behavior)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-flegacy-resource-reservation</td>
+      <td>Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-force_rootsig_ver &lt;profile&gt;</td>
+      <td>force root signature version (rootsig_1_1 if omitted)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fo &lt;file&gt;</td>
+      <td>Output object file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Gec</td>
+      <td>Enable backward compatibility mode</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Ges</td>
+      <td>Enable strict mode</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Gfa</td>
+      <td>Avoid flow control constructs</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Gfp</td>
+      <td>Prefer flow control constructs</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Gis</td>
+      <td>Force IEEE strictness</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-HV &lt;value&gt;</td>
+      <td>HLSL version (2016, 2017, 2018). Default is 2018</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-H</td>
+      <td>Show header includes and nesting depth</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-ignore-line-directives</td>
+      <td>Ignore line directives</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-I &lt;value&gt;</td>
+      <td>Add directory to include search path</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Lx</td>
+      <td>Output hexadecimal literals</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Ni</td>
+      <td>Output instruction numbers in assembly listings</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-no-warnings</td>
+      <td>Suppress warnings</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-not_use_legacy_cbuf_load</td>
+      <td>Do not use legacy cbuffer load</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-No</td>
+      <td>Output instruction byte offsets in assembly listings</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Odump</td>
+      <td>Print the optimizer commands.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Od</td>
+      <td>Disable optimizations</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-pack_optimized</td>
+      <td>Optimize signature packing assuming identical signature provided for each connecting stage</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-pack_prefix_stable</td>
+      <td>(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-recompile</td>
+      <td>recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-res_may_alias</td>
+      <td>Assume that UAVs/SRVs may alias</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-rootsig-define &lt;value&gt;</td>
+      <td>Read root signature from a #define</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-T &lt;profile&gt;</td>
+      <td>Set target profile.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Vd</td>
+      <td>Disable validation</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Vi</td>
+      <td>Display details about the include process.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Vn &lt;name&gt;</td>
+      <td>Use &lt;name&gt; as variable name in header file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-WX</td>
+      <td>Treat warnings as errors</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Zi</td>
+      <td>Enable debug information</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Zpc</td>
+      <td>Pack matrices in column-major order</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Zpr</td>
+      <td>Pack matrices in row-major order</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Zsb</td>
+      <td>Build debug name considering only output binary</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Zss</td>
+      <td>Build debug name considering source information</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Optimization Options:</th>
+      <th style="text-align: left"> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-O0</td>
+      <td>Optimization Level 0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-O1</td>
+      <td>Optimization Level 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-O2</td>
+      <td>Optimization Level 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-O3</td>
+      <td>Optimization Level 3 (Default)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">SPIR-V CodeGen Options:</th>
+      <th style="text-align: left"> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fspv-debug=&lt;value&gt;</td>
+      <td>Specify whitelist of debug info category (file -&gt; source -&gt; line, tool)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fspv-extension=&lt;value&gt;</td>
+      <td>Specify SPIR-V extension permitted to use</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fspv-reflect</td>
+      <td>Emit additional SPIR-V instructions to aid reflection</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fspv-target-env=&lt;value&gt;</td>
+      <td>Specify the target environment: vulkan1.0 (default) or vulkan1.1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-b-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td>Specify Vulkan binding number shift for b-type register</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-bind-globals &lt;binding&gt; &lt;set&gt;</td>
+      <td>Specify Vulkan binding number and set number for the $Globals cbuffer</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-bind-register &lt;type-number&gt; &lt;space&gt; &lt;binding&gt; &lt;set&gt;</td>
+      <td>Specify Vulkan descriptor set and binding for a specific register</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-invert-y</td>
+      <td>Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-s-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td>Specify Vulkan binding number shift for s-type register</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-t-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td>Specify Vulkan binding number shift for t-type register</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-u-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td>Specify Vulkan binding number shift for u-type register</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-use-dx-layout</td>
+      <td>Use DirectX memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-use-dx-position-w</td>
+      <td>Reciprocate SV_Position.w after reading from stage input in PS to accommodate the difference between Vulkan and DirectX</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-use-gl-layout</td>
+      <td>Use strict OpenGL std140/std430 memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-use-scalar-layout</td>
+      <td>Use scalar memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Oconfig=&lt;value&gt;</td>
+      <td>Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">-spirv</td>
+      <td>Generate SPIR-V code</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Utility Options:</th>
+      <th style="text-align: left"> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-dumpbin</td>
+      <td style="text-align: left">Load a binary file rather than compiling</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-extractrootsignature</td>
+      <td style="text-align: left">Extract root signature from shader bytecode (must be used with /Fo &lt;file&gt;)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-getprivate &lt;file&gt;</td>
+      <td style="text-align: left">Save private data from shader blob</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-P &lt;value&gt;</td>
+      <td style="text-align: left">Preprocess to file (must be used alone)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Qembed_debug</td>
+      <td style="text-align: left">Embed PDB in shader container (must be used with /Zi)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Qstrip_debug</td>
+      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode</td>
+      <td>(must be used with /Fo &lt;file&gt;)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Qstrip_priv</td>
+      <td style="text-align: left">Strip private data from shader bytecode</td>
+      <td>(must be used with /Fo &lt;file&gt;)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Qstrip_reflect</td>
+      <td style="text-align: left">Strip reflection data from shader bytecode</td>
+      <td>(must be used with /Fo &lt;file&gt;)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Qstrip_rootsignature Strip root signature data from shader bytecode</td>
+      <td style="text-align: left">(must be used with /Fo &lt;file&gt;)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-setprivate &lt;file&gt;</td>
+      <td style="text-align: left">Private data to add to compiled shader blob</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-setrootsignature &lt;file&gt;</td>
+      <td style="text-align: left">Attach root signature to shader bytecode</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-verifyrootsignature &lt;file&gt;</td>
+      <td style="text-align: left">Verify shader bytecode with root signature</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>## Some great articles that go more in-depth</p>
+
+<ul>
+  <li><a href="https://www.wihlidal.com/blog/pipeline/2018-09-16-dxil-signing-post-compile/">Signing DXIL post-compile - Graham Wihlidal</a></li>
+  <li><a href="http://reedbeta.com/blog/custom-toolchain-with-msbuild/">Using a Custom Toolchain with MSBuild - Nathan Reed</a></li>
+</ul>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+    repo="simco50/simoncoenen.com"
+    issue-term="title"
+    label="utterances-comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/graphics/DxcCompiling.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
+                            <span data-feather="home"></span>
+                            C++ Delegates
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

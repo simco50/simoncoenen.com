@@ -29,11 +29,12 @@
 <link rel="canonical" href="https://www.simoncoenen.com/blog.html" />
 <meta property="og:url" content="https://www.simoncoenen.com/blog.html" />
 <meta property="og:site_name" content="Simon Coenen" />
+<link rel="next" href="https://www.simoncoenen.com/blog/page/2/blog.html" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Blog" />
 <meta name="twitter:site" content="@simon_coenen" />
 <script type="application/ld+json">
-{"headline":"Blog","url":"https://www.simoncoenen.com/blog.html","description":"Simon Coenen - Game Progammer","@type":"WebPage","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"https://www.simoncoenen.com/blog.html","headline":"Blog","description":"Simon Coenen - Game Progammer","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -100,6 +101,31 @@
     <div class="row">
         <div class="col-md-9">
             
+<a class="blacklink" href="/blog/programming/graphics/DxcCompiling.html"><h1>Using the DirectXShaderCompiler C++ API</h1></a>
+<p>04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    17 mins
+  
+</span><span class="far fa-clock"></span>
+</p>
+<p><p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
+The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
+Microsoft has since introduced their new llvm-based compiler called DirectXShaderCompiler (DXC) which compiles to DXIL.
+It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
+It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
+
+<p>Fxc has existed for quite a long time now and there are guides for it everywhere however Dxc is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering DirectX is generally really well documented.
+Using Dxc’s commandline tools are quite straight forward and self-explanatory however I’ve always like to compile my shaders at runtime because it eventually require no effort when modifying shaders and having to recompile them. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
+
+<p>I’ve found a few articles here and there about the very basic setup for this however most of the were very minimal and didn’t really cover things like compile-arguments, defines, include handling, validation, reflection, debug-data, … which are quite important to know about.</p>
+
+</p>
+<a class="btn btn-success sharp" href="/blog/programming/graphics/DxcCompiling.html ">Read More...</a>
+</br>
+</br>
+<hr>
+
 <a class="blacklink" href="/blog/programming/graphics/SpotlightCulling.html"><h1>Optimizing spotlight intersection in tiled/clustered light culling</h1></a>
 <p>17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
@@ -236,38 +262,19 @@ As you might know, it’s not straight forward at all to store and execute a met
 </br>
 <hr>
 
-<a class="blacklink" href="/blog/general/Blog.html"><h1>A blog...?</h1></a>
-<p>06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
-  
-  
-    1 min
-  
-</span><span class="far fa-clock"></span>
-</p>
-<p><p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
-Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
-
-<ul>
-  <li><a href="https://www.jendrikillner.com/post/">Jendryk Illner</a> - Graphics Programming Weekly</li>
-  <li><a href="https://wickedengine.net/">Turánszki János</a> - Wicked Engine Dev Blog</li>
-  <li><a href="http://asawicki.info/news.php5?x=all">Adam Sawicki</a> - General Graphics Programming and opinion blog</li>
-  <li><a href="https://interplayoflight.wordpress.com">Interplay of Light</a> - Various Graphics Programming and misc posts.</li>
-  <li><a href="https://ajweeks.com/blog/">AJ Weeks</a> - General updates on personal engine development</li>
-  <li>Many more…</li>
-</ul>
-
-<p>There are loads of interesting blogs I check out once in a while but I always though making one myself wouldn’t be very interesting because many of the things I could write about are already touched upon many many times in other places and I don’t really feel like I could be committed to maintain it.</p>
-
-<p>However, I’ve been working on <a href="https://github.com/simco50?tab=repositories">a personal game engine and loads of other little projects</a> and other things for a while now but I could never think of a way to present this in a good form to others because those things will never be “finished”. That’s why I thought a blog could be a great way to pick a few interesting things I’ve done and write about it. Besides, implementing something is one thing but by writing about it, you have to comprehend the subject much better as there will be gaps of information that will force me to research more.</p>
-
-<p>I’m hoping for this to be a good little exercise moving forward. If there’s anything you don’t agree with, like to comment on or if you just like to reach out to me, always feel free to reach out to me on <a href="http://www.twitter.com/simon_coenen">Twitter</a>, <a href="mailto:sim2.coenen@gmail.com">email</a> or comment below.</p>
-</p>
-<a class="btn btn-success sharp" href="/blog/general/Blog.html ">Read More...</a>
-</br>
-</br>
-<hr>
 
 
+    <ul class="pagination justify-content-center">
+    
+    
+        <li class="page-item active"><a class="page-link" href="/blog.html" title="Blog">1</a></li>
+    
+        <li class="page-item "><a class="page-link" href="/blog/page/2/blog.html" title="Blog - page 2 of 2">2</a></li>
+    
+    
+        <li class="page-item"><a class="page-link" href="/blog/page/2/blog.html">Older</a></li>
+    
+    </ul>
 
         </div>
 
@@ -277,6 +284,13 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
                     <a href="/feed.xml" class="fa fa-rss"> RSS</a>
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/DxcCompiling.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
@@ -310,13 +324,6 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
                             <a class="nav-link" href="/blog/programming/CPP_Delegates.html">
                             <span data-feather="home"></span>
                             C++ Delegates
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/general/Blog.html">
-                            <span data-feather="home"></span>
-                            A blog...?
                             </a>
                         </li>
                         
