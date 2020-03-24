@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            Using the DirectXShaderCompiler C++ API - Revised
+        
+    </title>
+
+    
+        <meta name="description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html">
+    <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
+    
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.6" />
+<meta property="og:title" content="Using the DirectXShaderCompiler C++ API - Revised" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection." />
+<meta property="og:description" content="The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection." />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-24T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using the DirectXShaderCompiler C++ API - Revised" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","dateModified":"2020-03-24T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Using the DirectXShaderCompiler C++ API - Revised","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","datePublished":"2020-03-24T00:00:00+00:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+<h1>Using the DirectXShaderCompiler C++ API - Revised</h1>
+<p>24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    6 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</p>
+<p>Shortly after my previous post, <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX Developer Day</a> has happened and the DirectX team has shared a great amount of new updates and insights to the world including <a href="https://www.youtube.com/watch?v=tyyKeTsdtmo">new additions to the DirectX Shader Compiler</a>. The main thread is that the API has become a lot easier to use and is streamlined so that both the C++ and CLI interfaces share the same code path. This makes it a lot easier for developers to work with. So now things have changed quite a bit.</p>
+
+<p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
+
+<p>I highly recommend watching all the videos on the <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX’s YouTube channel</a>!</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>At the time of writing this, there is not yet an official release with the new DXC updates however the latest build binaries can be <a href="https://ci.appveyor.com/project/antiagainst/directxshadercompiler/branch/master/artifacts">downloaded from the repo’s AppVeyor</a>.</p>
+
+<p>There are quite a lot of binaries in there but to use the C++ API you only need a few:</p>
+<ul>
+  <li><strong>dxcompiler.lib</strong> - The compiler dll link lib</li>
+  <li><strong>dxcompiler.dll</strong> - The compiler’s frontend</li>
+  <li><strong>dxcapi.h</strong> - The header with the interfaces. You only need this single header. <em>(/include/dxc/dxcapi.h)</em></li>
+</ul>
+
+<!--more-->
+
+<h2 id="compiling">Compiling</h2>
+
+<p>The new update comes with a new interface <code class="highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
+<span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pSource</span><span class="p">;</span>
+<span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">pShaderSource</span><span class="p">,</span> <span class="n">shaderSourceSize</span><span class="p">,</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Now introducing <code class="highlighter-rouge">IDxcCompiler3</code>, the <code class="highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="highlighter-rouge">-D</code> argument. Note the use of <code class="highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LPWSTR</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
+<span class="c1">//-E for the entry point (eg. PSMain)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-E"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">entryPoint</span><span class="p">);</span>
+
+<span class="c1">//-T for the target profile (eg. ps_6_2)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-T"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+
+<span class="c1">//Strip reflection data and pdbs (see later)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_debug"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_reflect"</span><span class="p">);</span>
+
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_WARNINGS_ARE_ERRORS</span><span class="p">);</span> <span class="c1">//-WX</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_DEBUG</span><span class="p">);</span> <span class="c1">//-Zi</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_PACK_MATRIX_ROW_MAJOR</span><span class="p">);</span> <span class="c1">//-Zp</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="o">&amp;</span> <span class="n">define</span> <span class="o">:</span> <span class="n">defines</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-D"</span><span class="p">);</span>
+    <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">define</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">DxcBuffer</span> <span class="n">sourceBuffer</span><span class="p">;</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Ptr</span> <span class="o">=</span> <span class="n">pSource</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">();</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">pSource</span><span class="o">-&gt;</span><span class="n">GetBufferSize</span><span class="p">();</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Encoding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcResult</span><span class="o">&gt;</span> <span class="n">pCompileResult</span><span class="p">;</span>
+<span class="n">HR</span><span class="p">(</span><span class="n">pCompiler</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sourceBuffer</span><span class="p">,</span> <span class="n">arguments</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">arguments</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pCompileResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+
+<span class="c1">//Error Handling</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobUtf8</span><span class="o">&gt;</span> <span class="n">pErrors</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_ERRORS</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pErrors</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">pErrors</span> <span class="o">&amp;&amp;</span> <span class="n">pErrors</span><span class="o">-&gt;</span><span class="n">GetStringLength</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">MyLogFunction</span><span class="p">(</span><span class="n">Error</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">pErrors</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>.</p>
+
+<h2 id="stripping-parts">Stripping parts</h2>
+
+<p>I’ve found that previously, stripping debug data or reflection data hasn’t always been doing what I would expect. With the new updates, this becomes a lot easier.</p>
+
+<p>The output of the compiler now is a <code class="highlighter-rouge">IDxcResult</code> (as opposed to <code class="highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
+
+<ul>
+  <li>DXC_OUT_OBJECT</li>
+  <li>DXC_OUT_ERRORS</li>
+  <li>DXC_OUT_PDB</li>
+  <li>DXC_OUT_SHADER_HASH</li>
+  <li>DXC_OUT_DISASSEMBLY</li>
+  <li>DXC_OUT_HLSL</li>
+  <li>DXC_OUT_TEXT</li>
+  <li>DXC_OUT_REFLECTION</li>
+  <li>DXC_OUT_ROOT_SIGNATURE</li>
+</ul>
+
+<p>In the code example above, I added the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="highlighter-rouge">DXC_OUT_PDB</code> and <code class="highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
+
+<p>So now, it’s a lot more clear and easy to specifically get parts of the shader. Getting shader PDBs is done as follows:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pDebugData</span><span class="p">;</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobUtf16</span><span class="o">&gt;</span> <span class="n">pDebugDataPath</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_PDB</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pDebugData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="n">pDebugDataPath</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>The function has one extra argument which can be retrieved as a <code class="highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
+
+<p>For reflection data: <em>(library reflection is similar but with <code class="highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pReflectionData</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_REFLECTION</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflectionData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
+<span class="n">DxcBuffer</span> <span class="n">reflectionBuffer</span><span class="p">;</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Ptr</span> <span class="o">=</span> <span class="n">pReflectionData</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">();</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">pReflectionData</span><span class="o">-&gt;</span><span class="n">GetBufferSize</span><span class="p">();</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Encoding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12ShaderReflection</span><span class="o">&gt;</span> <span class="n">pShaderReflection</span><span class="p">;</span>
+<span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateReflection</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reflectionBuffer</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p>On a last note, as mentioned in the video, <strong>none of the DXC interfaces are thread-safe</strong> and it is advised to have an instance of each interface for each thread. DxcCreateInstance is an exception and is thread-safe.</p>
+
+
+<hr>
+
+<div class="PageNavigation row">
+  <div class="text-left col-sm-6">
+  
+    <a class="prev" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+    repo="simco50/simoncoenen.com"
+    issue-term="title"
+    label="utterances-comment"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+</script>
+
+        </div>
+
+        <div class="col-md-3">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/graphics/DxcRevised.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API - Revised
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/DxcCompiling.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/Natvis.html">
+                            <span data-feather="home"></span>
+                            Natvis in Visual Studio
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+
+                    <h2>Twitter</h2>
+                    <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark">
+        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>
