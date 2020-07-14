@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Using the DirectXShaderCompiler C++ API" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -30,14 +30,16 @@
 <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html" />
 <meta property="og:url" content="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html" />
 <meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:image" content="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-04T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
+<meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" />
 <meta property="twitter:title" content="Using the DirectXShaderCompiler C++ API" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","dateModified":"2020-03-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Using the DirectXShaderCompiler C++ API","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","datePublished":"2020-03-04T00:00:00+00:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html","dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","headline":"Using the DirectXShaderCompiler C++ API","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -135,7 +137,9 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
 <p>I’ve found a few articles here and there about the very basic setup for this however most of the were very minimal and didn’t really cover things like compile-arguments, defines, include handling, validation, reflection, debug-data, … which are quite important to know about.</p>
 
-<h2 id="20032020-directx-developer-day-has-happened-and-theres-been-a-super-good-talk-by-one-of-the-dxc-developers-and-they-gave-a-great-walkthrough-of-the-interface-id-definitely-recommend-watching-that-as-things-described-in-this-post-might-not-all-be-correct-check-it-out-here">(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. <a href="https://youtu.be/tyyKeTsdtmo?t=878">Check it out here!</a></h2>
+<h2 id="20032020-directx-developer-day-has-happened-and-theres-been-a-super-good-talk-by-one-of-the-dxc-developers-and-they-gave-a-great-walkthrough-of-the-interface-id-definitely-recommend-watching-that-as-things-described-in-this-post-might-not-all-be-correct-check-it-out-here">(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. <a href="https://youtu.be/tyyKeTsdtmo?t=878">Check it out here!</a>.</h2>
+
+<h2 id="ive-written-an-updated-article-after-the-event-you-can-read-here">I’ve written an updated article after the event <a href="/blog/programming/graphics/DxcRevised.html">you can read here</a></h2>
 
 <!--more-->
 
@@ -190,7 +194,9 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
 <h2 id="reflection">Reflection</h2>
 
-<p>Reflection with Dxc output is only slightly different from Fxc, you’ll eventually end up with a ID3D12ShaderReflection reference and from then on you can just do the same as you would usually do.</p>
+<p>Reflection with Dxc output is only slightly different from Fxc, you’ll eventually end up with a <strong>ID3D12ShaderReflection</strong> reference and from then on you can just do the same as you would usually do.</p>
+
+<p>For Raytracing shaders, you can use the <strong>ID3D12LibraryReflection</strong> object instead of ID3D12ShaderReflection.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">DoReflection</span><span class="p">(</span><span class="k">const</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;&amp;</span> <span class="n">pShader</span><span class="p">)</span>
 <span class="p">{</span>

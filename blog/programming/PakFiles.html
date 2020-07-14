@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Pak files - Virtual file system" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","dateModified":"2019-07-10T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Pak files - Virtual file system","description":"Virtual file system using pak files","datePublished":"2019-07-10T00:00:00+01:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","dateModified":"2019-07-10T00:00:00+01:00","datePublished":"2019-07-10T00:00:00+01:00","headline":"Pak files - Virtual file system","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","description":"Virtual file system using pak files","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -251,7 +251,7 @@ I came up with the following structure that worked for me:</p>
 
 <p>This translates to the following class layouts:</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">PakHeader</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">PakHeader</span>
 <span class="p">{</span>
     <span class="kt">char</span> <span class="n">ID</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">"PAK"</span> <span class="p">};</span>         <span class="c1">//Used to quickly verify file format</span>
     <span class="kt">char</span> <span class="n">PakVersion</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1">//The version of the format. This should match with the code that parses it</span>
@@ -261,7 +261,7 @@ I came up with the following structure that worked for me:</p>
     <span class="n">uint32</span> <span class="n">NumEntries</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>          <span class="c1">//The number of directories/files</span>
 <span class="p">};</span>
 
-<span class="k">struct</span> <span class="n">PakFileTableEntry</span>
+<span class="k">struct</span> <span class="nc">PakFileTableEntry</span>
 <span class="p">{</span>
     <span class="kt">char</span> <span class="n">FilePath</span><span class="p">[</span><span class="mi">255</span><span class="p">];</span>             <span class="c1">//The path to the file (relative to the pak directory)</span>
     <span class="kt">bool</span> <span class="n">Compressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>        <span class="c1">//True if compressed</span>

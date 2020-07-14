@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="C++ Delegates" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","dateModified":"2019-06-07T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"C++ Delegates","description":"Unreal Engine -like delegates in C++ using templates","datePublished":"2019-06-07T00:00:00+01:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","dateModified":"2019-06-07T00:00:00+01:00","datePublished":"2019-06-07T00:00:00+01:00","headline":"C++ Delegates","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","description":"Unreal Engine -like delegates in C++ using templates","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -187,7 +187,7 @@ What delegates allow you to do, is store a function in an object to execute at a
 
 <p>Below is an example of binding a lambda to a delegate that returns an <code class="highlighter-rouge">int</code> and has a <code class="highlighter-rouge">float</code> as a parameter.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Foo</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Foo</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="n">Bar</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span>
     <span class="p">{</span>
@@ -216,7 +216,7 @@ What makes this so powerful, is that multiple “types” of functions can be bo
 
 <p>Below an example. Because multiple callbacks can be bound to a single MulticastDelegate, it doesn’t make sense for such a delegate to have a return type. Because of that, a function bound to a MulticastDelegate must always have a <code class="highlighter-rouge">void</code> return type.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Foo</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Foo</span>
 <span class="p">{</span>
     <span class="kt">void</span> <span class="n">Bar</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span>
     <span class="p">{</span>
@@ -262,7 +262,7 @@ When working on this, I was reading the book <a href="https://www.amazon.co.uk/E
 <p>The basics of a delegate are fairly simple; It’s a structure that has the address to a function and potentially holds data to pass through when the function is called.
 Because We want to support multiple function types, we must define an interface:</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="o">...</span> <span class="nc">Args</span><span class="p">&gt;</span>
 <span class="k">class</span> <span class="nc">IDelegate</span>
 <span class="p">{</span>
 <span class="nl">public:</span>
@@ -284,7 +284,7 @@ Because We want to support multiple function types, we must define an interface:
 <p>Here, I want to focus on the <strong>LambdaDelegate</strong> because that one will become the most interesting.
 The implementation is pretty straight forward and is also quite simple for the other types.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">TLambda</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="o">...</span> <span class="nc">Args</span><span class="p">&gt;</span>
 <span class="k">class</span> <span class="nc">LambdaDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="nl">public:</span>
@@ -303,20 +303,20 @@ The implementation is pretty straight forward and is also quite simple for the o
 
 <p>Where all the implementations come together is in the final Delegate class. This class has a bunch of functions that allow you to bind all implemented types of delegates. You might notice the dynamic allocation, not great, I’ll address that in the next section.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">RetVal</span><span class="p">,</span> <span class="k">typename</span><span class="o">...</span> <span class="nc">Args</span><span class="p">&gt;</span>
 <span class="k">class</span> <span class="nc">Delegate</span>
 <span class="p">{</span>
 <span class="nl">public:</span>
     <span class="k">using</span> <span class="n">IDelegateT</span> <span class="o">=</span> <span class="n">IDelegate</span><span class="o">&lt;</span><span class="n">RetVal</span><span class="p">,</span> <span class="n">Args</span><span class="p">...</span><span class="o">&gt;</span><span class="p">;</span>
 
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">TLambda</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args2</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">TLambda</span><span class="p">,</span> <span class="k">typename</span><span class="o">...</span> <span class="nc">Args2</span><span class="p">&gt;</span>
     <span class="k">static</span> <span class="n">Delegate</span> <span class="n">CreateLambda</span><span class="p">(</span><span class="n">TLambda</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">Delegate</span> <span class="n">handler</span><span class="p">;</span>
         <span class="n">handler</span><span class="p">.</span><span class="n">m_pAllocator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LambdaDelegate</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="p">,</span> <span class="n">RetVal</span><span class="p">(</span><span class="n">Args</span><span class="p">...)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">TLambda</span><span class="o">&gt;</span><span class="p">(</span><span class="n">lambda</span><span class="p">));</span>
         <span class="k">return</span> <span class="n">handler</span><span class="p">;</span>
     <span class="p">}</span>
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">LambdaType</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Args2</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">LambdaType</span><span class="p">,</span> <span class="k">typename</span><span class="o">...</span> <span class="nc">Args2</span><span class="p">&gt;</span>
     <span class="kr">inline</span> <span class="kt">void</span> <span class="n">BindLambda</span><span class="p">(</span><span class="n">LambdaType</span><span class="o">&amp;&amp;</span> <span class="n">lambda</span><span class="p">,</span> <span class="n">Args2</span><span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="n">Release</span><span class="p">();</span>

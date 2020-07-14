@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Basic compile-time type information using constexpr" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","dateModified":"2019-06-21T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection.html"},"image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","url":"https://www.simoncoenen.com/blog/programming/StaticReflection.html","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Basic compile-time type information using constexpr","description":"Using compile-time string hashing to generate type information in C++","datePublished":"2019-06-21T00:00:00+01:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/StaticReflection.html","dateModified":"2019-06-21T00:00:00+01:00","datePublished":"2019-06-21T00:00:00+01:00","headline":"Basic compile-time type information using constexpr","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","description":"Using compile-time string hashing to generate type information in C++","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -246,7 +246,7 @@ In this case, relevant to reflection, it has the following functions:</p>
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
 <span class="n">T</span><span class="o">*</span> <span class="nf">DynamicCast</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">pObject</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pObject</span><span class="o">-&gt;</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">GetTypeStatic</span><span class="p">()))</span>
