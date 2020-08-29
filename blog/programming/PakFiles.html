@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","dateModified":"2019-07-10T00:00:00+01:00","datePublished":"2019-07-10T00:00:00+01:00","headline":"Pak files - Virtual file system","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","description":"Virtual file system using pak files","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2019-07-10T00:00:00+01:00","datePublished":"2019-07-10T00:00:00+01:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles.html"},"url":"https://www.simoncoenen.com/blog/programming/PakFiles.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"Virtual file system using pak files","headline":"Pak files - Virtual file system","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,16 +104,16 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
   
   </div>
 </div>
@@ -122,9 +122,9 @@
 <p>10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    16 mins
+    15 mins
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
 
@@ -433,35 +433,55 @@ Some files like config files are very small and don’t benefit from compression
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/StaticReflection.html">&laquo; Previous: Basic compile-time type information using constexpr</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/SpotlightCulling.html">Next: Optimizing spotlight intersection in tiled/clustered light culling &raquo;</a>
   
   </div>
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#taking-a-closer-look-at-doom1wad">Taking a closer look at DOOM1.WAD</a></li>
+<li class="toc-entry toc-h2"><a href="#pak-file-implementation">Pak file implementation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#layout">Layout</a></li>
+<li class="toc-entry toc-h3"><a href="#paking-and-compression">Paking and compression</a></li>
+<li class="toc-entry toc-h3"><a href="#reading-and-decompression">Reading and decompression</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#links">Links</a></li>
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -514,7 +534,6 @@ Some files like config files are very small and don’t benefit from compression
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -523,8 +542,8 @@ Some files like config files are very small and don’t benefit from compression
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     

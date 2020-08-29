@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html","dateModified":"2020-03-24T00:00:00+00:00","datePublished":"2020-03-24T00:00:00+00:00","headline":"Using the DirectXShaderCompiler C++ API - Revised","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/008_dxc_revised/cover.jpg","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2020-03-24T00:00:00+00:00","datePublished":"2020-03-24T00:00:00+00:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/008_dxc_revised/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcRevised.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","headline":"Using the DirectXShaderCompiler C++ API - Revised","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,11 +104,11 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
   
   </div>
   <div class="text-right col-sm-6">
@@ -120,9 +120,9 @@
 <p>24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    6 mins
+    5 mins
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>Shortly after my previous post, <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX Developer Day</a> has happened and the DirectX team has shared a great amount of new updates and insights to the world including <a href="https://www.youtube.com/watch?v=tyyKeTsdtmo">new additions to the DirectX Shader Compiler</a>. The main thread is that the API has become a lot easier to use and is streamlined so that both the C++ and CLI interfaces share the same code path. This makes it a lot easier for developers to work with. So now things have changed quite a bit.</p>
 
@@ -243,10 +243,10 @@
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcCompiling.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API</a>
   
   </div>
   <div class="text-right col-sm-6">
@@ -255,21 +255,35 @@
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#getting-started">Getting Started</a></li>
+<li class="toc-entry toc-h2"><a href="#compiling">Compiling</a></li>
+<li class="toc-entry toc-h2"><a href="#stripping-parts">Stripping parts</a></li>
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -322,7 +336,6 @@
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -331,8 +344,8 @@
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     

@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html","dateModified":"2019-08-17T00:00:00+01:00","datePublished":"2019-08-17T00:00:00+01:00","headline":"Optimizing spotlight intersection in tiled/clustered light culling","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg","description":"Optimizing spotlight intersection in tiled/clustered light culling","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2019-08-17T00:00:00+01:00","datePublished":"2019-08-17T00:00:00+01:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"Optimizing spotlight intersection in tiled/clustered light culling","headline":"Optimizing spotlight intersection in tiled/clustered light culling","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,16 +104,16 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/DxcCompiling.html">Next: Using the DirectXShaderCompiler C++ API &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcCompiling.html">Next: Using the DirectXShaderCompiler C++ API &raquo;</a>
   
   </div>
 </div>
@@ -122,9 +122,9 @@
 <p>17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    12 mins
+    10 mins
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
 I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
@@ -393,35 +393,56 @@ However, with tiled light culling having large discontinuities, bounding spheres
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/PakFiles.html">&laquo; Previous: Pak files - Virtual file system</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/DxcCompiling.html">Next: Using the DirectXShaderCompiler C++ API &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcCompiling.html">Next: Using the DirectXShaderCompiler C++ API &raquo;</a>
   
   </div>
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h3"><a href="#first-things-first">First things first</a></li>
+<li class="toc-entry toc-h3"><a href="#cone-vs-frustum">Cone vs Frustum</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#method-1-bounding-sphere-around-cone-simple-sphereaabb">Method 1: Bounding sphere around cone (Simple Sphere/AABB)</a></li>
+<li class="toc-entry toc-h4"><a href="#method-2-tighter-bounding-sphere-around-cone-tight-sphereaabb">Method 2: Tighter bounding sphere around cone (Tight Sphere/AABB)</a></li>
+<li class="toc-entry toc-h4"><a href="#method-3-bounding-spheres-around-aabbs-conesphere">Method 3: Bounding spheres around AABBs (Cone/Sphere)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#wrapping-up">Wrapping up</a></li>
+<li class="toc-entry toc-h3"><a href="#references">References</a></li>
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -474,7 +495,6 @@ However, with tiled light culling having large discontinuities, bounding spheres
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -483,8 +503,8 @@ However, with tiled light culling having large discontinuities, bounding spheres
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     

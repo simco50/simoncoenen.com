@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","dateModified":"2019-06-07T00:00:00+01:00","datePublished":"2019-06-07T00:00:00+01:00","headline":"C++ Delegates","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","description":"Unreal Engine -like delegates in C++ using templates","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2019-06-07T00:00:00+01:00","datePublished":"2019-06-07T00:00:00+01:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html"},"url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"Unreal Engine -like delegates in C++ using templates","headline":"C++ Delegates","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,16 +104,16 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
+    <a class="btn btn-sm sharp" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
   
   </div>
 </div>
@@ -122,9 +122,9 @@
 <p>07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    12 mins
+    11 mins
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
 As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
@@ -384,35 +384,62 @@ An interesting catch is the fact that it’s possible to unbind functions during
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
+    <a class="btn btn-sm sharp" href="/blog/general/Blog.html">&laquo; Previous: A blog...?</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/Natvis.html">Next: Natvis in Visual Studio &raquo;</a>
   
   </div>
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#terminology">Terminology</a></li>
+<li class="toc-entry toc-h2"><a href="#usage">Usage</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#delegate">Delegate</a></li>
+<li class="toc-entry toc-h3"><a href="#multicastdelegate">MulticastDelegate</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#implementation">Implementation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#delegate-1">Delegate</a></li>
+<li class="toc-entry toc-h3"><a href="#optimization-the-inlineallocator">Optimization: The InlineAllocator</a></li>
+<li class="toc-entry toc-h3"><a href="#multicastdelegate-1">MulticastDelegate</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#extra">Extra</a></li>
+<li class="toc-entry toc-h2"><a href="#moving-on">Moving on</a></li>
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -465,7 +492,6 @@ An interesting catch is the fact that it’s possible to unbind functions during
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -474,8 +500,8 @@ An interesting catch is the fact that it’s possible to unbind functions during
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     

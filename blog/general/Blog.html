@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/general/Blog.html","dateModified":"2019-06-06T00:00:00+01:00","datePublished":"2019-06-06T00:00:00+01:00","headline":"A blog…?","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/001_blog/card.jpg","description":"Programming Blog - Simon Coenen","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/general/Blog.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2019-06-06T00:00:00+01:00","datePublished":"2019-06-06T00:00:00+01:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/001_blog/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/general/Blog.html"},"url":"https://www.simoncoenen.com/blog/general/Blog.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"Programming Blog - Simon Coenen","headline":"A blog…?","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,14 +104,14 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/CPP_Delegates.html">Next: C++ Delegates &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/CPP_Delegates.html">Next: C++ Delegates &raquo;</a>
   
   </div>
 </div>
@@ -122,7 +122,7 @@
   
     1 min
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
 Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
@@ -145,33 +145,44 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/CPP_Delegates.html">Next: C++ Delegates &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/CPP_Delegates.html">Next: C++ Delegates &raquo;</a>
   
   </div>
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -224,7 +235,6 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -233,8 +243,8 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     

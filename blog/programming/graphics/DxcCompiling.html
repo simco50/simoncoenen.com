@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html","dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","headline":"Using the DirectXShaderCompiler C++ API","author":{"@type":"Person","name":"Simon Coenen"},"image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html"},"@context":"https://schema.org"}</script>
+{"dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","headline":"Using the DirectXShaderCompiler C++ API","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -104,16 +104,16 @@
 
         <div class="container project-container">
     <div class="row">
-        <div class="col-md-9">
-            <div class="PageNavigation row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/DxcRevised.html">Next: Using the DirectXShaderCompiler C++ API - Revised &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcRevised.html">Next: Using the DirectXShaderCompiler C++ API - Revised &raquo;</a>
   
   </div>
 </div>
@@ -122,9 +122,9 @@
 <p>04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    17 mins
+    15 mins
   
-</span><span class="far fa-clock"></span> - <a href="#disqus_thread">Comments</a>
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 <p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
 The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
@@ -769,35 +769,52 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
 <hr>
 
-<div class="PageNavigation row">
+<div class="PageNavigation row d-print-none">
   <div class="text-left col-sm-6">
   
-    <a class="prev" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/SpotlightCulling.html">&laquo; Previous: Optimizing spotlight intersection in tiled/clustered light culling</a>
   
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="next" href="/blog/programming/graphics/DxcRevised.html">Next: Using the DirectXShaderCompiler C++ API - Revised &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcRevised.html">Next: Using the DirectXShaderCompiler C++ API - Revised &raquo;</a>
   
   </div>
 </div>
 
 
-<script src="https://utteranc.es/client.js"
-    repo="simco50/simoncoenen.com"
-    issue-term="title"
-    label="utterances-comment"
-    theme="github-light"
-    crossorigin="anonymous"
-    async>
-</script>
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
 
         </div>
 
-        <div class="col-md-3">
-            <nav class="d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <a href="/feed.xml" class="fa fa-rss"> RSS</a>
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#20032020-directx-developer-day-has-happened-and-theres-been-a-super-good-talk-by-one-of-the-dxc-developers-and-they-gave-a-great-walkthrough-of-the-interface-id-definitely-recommend-watching-that-as-things-described-in-this-post-might-not-all-be-correct-check-it-out-here">(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. Check it out here!.</a></li>
+<li class="toc-entry toc-h2"><a href="#ive-written-an-updated-article-after-the-event-you-can-read-here">I’ve written an updated article after the event you can read here</a></li>
+<li class="toc-entry toc-h2"><a href="#reflection">Reflection</a></li>
+<li class="toc-entry toc-h2"><a href="#stripping-debug-data">Stripping debug data</a></li>
+<li class="toc-entry toc-h2"><a href="#all-compiler-arguments">All compiler arguments</a></li>
+<li class="toc-entry toc-h2"><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li>
+</ul>
+                    </div>
+                    
+
                     <h3>Recent posts</h3>
                     <ul class="nav flex-column">
                         
@@ -850,7 +867,6 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
                     <h2>Twitter</h2>
                     <a class="twitter-timeline" data-lang="en" data-height="1080" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/simon_coenen?ref_src=twsrc%5Etfw">Tweets by simon_coenen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
             </nav>
         </div>
     </div>
@@ -859,8 +875,8 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div id="footer-content" class="footer bg-dark">
-        <small style="padding-top:10px">Simon Coenen, &copy;2019</small>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
         <div class="text-center">
             
                     
