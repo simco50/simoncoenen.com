@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="Simon, Coenen, Porfolio, Video, Game, Programmer, Graphics, Code, C++, DAE, Howest, Digital Arts">
+
+    <title>
+        
+            DOOM Eternal - Graphics Study
+        
+    </title>
+
+    
+        <meta name="description" content="TODO">
+      
+
+    <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy.html">
+    <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
+    
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="DOOM Eternal - Graphics Study" />
+<meta name="author" content="Simon Coenen" />
+<meta property="og:locale" content="en_GB" />
+<meta name="description" content="TODO" />
+<meta property="og:description" content="TODO" />
+<link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy.html" />
+<meta property="og:url" content="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy.html" />
+<meta property="og:site_name" content="Simon Coenen" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-30T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="DOOM Eternal - Graphics Study" />
+<meta name="twitter:site" content="@simon_coenen" />
+<meta name="twitter:creator" content="@Simon Coenen" />
+<script type="application/ld+json">
+{"dateModified":"2020-08-30T00:00:00+01:00","datePublished":"2020-08-30T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy.html"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy.html","author":{"@type":"Person","name":"Simon Coenen"},"description":"TODO","headline":"DOOM Eternal - Graphics Study","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="/css/main.css" rel="stylesheet">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
+</head>
+    <body>
+        <!-- Navigation -->
+<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/">Professional</a>
+                </li>
+            
+                <li  class="nav-item active" >
+                    <a class="nav-link" href="/blog.html">Blog</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/personalwork.html">Programming</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/3dart.html">Art</a>
+                </li>
+            
+                <li  class="nav-item" >
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+            
+        </ul>
+    </div>
+</nav>
+
+        <div class="container project-container">
+    <div class="row">
+        <div class="col-md-9" id="markdown-content">
+            <div class="PageNavigation row d-print-none">
+  <div class="text-left col-sm-6">
+  
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcRevised.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API - Revised</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+<h1>DOOM Eternal - Graphics Study</h1>
+<p>30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+  
+  
+    22 mins
+  
+</span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
+</p>
+<p><img src="/images/blog/010_doom_eternal_study/image1.jpeg" alt="" class="img-fluid w-100" /></p>
+
+<h2 id="background">Background</h2>
+
+<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
+
+<!--more-->
+
+<p>This frame breakdown is inspired by <a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/">Adrian Courreges’s study on Doom 2016</a>. I believe these graphics studies give a lot of insight into how certain rendering problems are solved in a AAA game and are greatly educational. In this breakdown I aim to stay at a high level and not go too in-depth of each rendering technique/pass. Some passes might not be covered here because they are very similar to Doom 2016 and are well covered in Adrian Courreges’s study.</p>
+
+<p>I do want to stress here that these studies are absolutely nothing more than <strong>educational</strong>. I do not in any way support the reverse engineering for malicious purposes and stealing intellectual property. If you haven’t played the game yet, don’t worry about spoilers! The section I used for this study is in the beginning of the game which doesn’t give away any of the details.</p>
+
+<p>Now, let’s get down to business.</p>
+
+<p>With Id Tech 7, the engine has moved away from OpenGL and is entirely built with a <strong>Vulkan</strong> backend allowing them to make better use of current generation GPU features, bindless resources in particular.</p>
+
+<hr />
+
+<h1 id="a-frame-in-doom-eternal">A frame in Doom Eternal</h1>
+
+<p><img src="/images/blog/010_doom_eternal_study/image2.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p>We’re looking at a section in the game close to the start. It’s an interior with a few enemies and a large portion of volumetric lighting. Just like its predecessor, Doom Eternal is using a <strong>forward rendering</strong> pipeline. Doom 2016 was mostly forward rendered with a thin G-Buffer for screen space reflections. However this time, everything is fully forward rendered omitting the G-Buffer.</p>
+
+<hr />
+
+<h2 id="step-away-from-mega-texture">Step away from Mega-Texture</h2>
+
+<p>With id Tech 5 used in <a href="https://en.wikipedia.org/wiki/Rage_(video_game)">Rage</a>, there was a texture streaming concept introduced called ‘Mega-Texture’ which was also used in the previous Doom installment. This system works by rendering a so called ‘feedback texture’ each frame that contains the information of what texture data was visible, that texture is analysed next frame to determine which textures get streamed in from disk. This has an obvious flaw because once a texture is on screen, it’s basically already too late to load it and this causes blurry textures the first few frames it is on screen. In id Tech 7, id Software has stepped away from this approach.</p>
+
+<hr />
+
+<h2 id="gpu-skinning">GPU Skinning</h2>
+
+<p>The first thing that happens even before anything gets drawn to a texture, is evaluating skinning. This is commonly done in a vertex shader before shading. An alternative approach used here, is to do skinning beforehand in a compute shader which writes out skinned vertices to a buffer. This has a couple of advantages mainly not having to do skinning in the vertex shader for every geometry pass. This results in having less shader permutations because the vertex shader doesn’t have to know about skinning.</p>
+
+<p>Skinning in a compute shader is not much different from in a vertex shader except that the output gets written to an intermediate buffer which can then be consumed in a vertex shader that can treat it as a regular static mesh. Just like in a vertex shader, for each vertex, a compute shader thread retrieves the transform of each bone affecting the vertex, transforms its position with each bone transform and adds up these positions based on the skin weights stored on the vertex.</p>
+
+<p>János Turánszki wrote a wonderful write-up of how it can be implemented using a compute shader:
+<a href="https://wickedengine.net/2017/09/09/skinning-in-compute-shader/">https://wickedengine.net/2017/09/09/skinning-in-compute-shader/</a>.</p>
+
+<p>Another thing that is worth noting here is the use of <strong>Alembic Caches</strong> in Doom Eternal. These caches contain baked animation which get streamed and decompressed at runtime. As <a href="https://www.youtube.com/watch?v=UsmqWSZpgJY">Digital Foundry described in their tech breakdown</a>, this is used for a wide range of animations going from large cinematic pieces to small tentacles on the floor. This is especially useful for animations that are hard to achieve using skinned animation like organics and cloth simulation. You can compare an Alembic Cache with a video that can be played back and is highly compressed by looking ahead. I suggest watching <a href="https://www.youtube.com/watch?v=zlz-7V_XiUA">Axel Gneiting’s talk at Siggraph 2014</a> if you’re interested in learning more.</p>
+
+<hr />
+
+<h2 id="shadow-mapping">Shadow Mapping</h2>
+
+<p>Next up is shadow rendering. There doesn’t seem to be any large changes in how shadow maps are approached in id Tech 7 compared to its predecessor.</p>
+
+<p>As seen below, shadows get rendered in a large 4096x8096px 24-bit depth texture which may vary across quality levels. The texture is persistent across frames and as described in “Devil is in the Details” at Siggraph 2016, the static geometry in the shadow map is cached to save having to redraw the shadow maps each frame. The technique is fairly simple: as long as nothing in the view of the light moves, there is no need to update the shadows. If a dynamic object in the frustum moves, a ‘cached’ shadow map is copied into the actual shadow map and the dynamic geometry is re-drawn on top. This cached shadow map is the same shadow map but only with static geometry because you can make the assumption that these will never change. This saves having to draw the entire scene in the frustum every time it needs to update. Of course, when the light moves, the entire scene has to be redrawn from scratch.</p>
+
+<p>When sampling the shadow map during lighting, a 3x3 PCF sampling approach is used to smoothen the shadow edges. For the sun light, <strong>cascaded shadow maps</strong> are used to distribute the quality better as it covers such a large portion of the environment.</p>
+
+<p>Here is a closer look at the shadow atlas. A light with higher importance, larger screen area or that is closer to the camera, will get a larger portion of the atlas assigned for better resolution. These heuristics are evaluated dynamically.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image3.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</h2>
+
+<p>Opaque geometry gets rendered to a depth-only target starting with the player’s gun, then static geometry, and finally dynamic geometry. A depth pre-pass is common to avoid unnecessary pixel shader calculations later down the pipeline where geometry overlaps. A depth pre-pass is especially important in a forward renderer where redundant pixel calculations are extremely wasteful due to pixel overdraw. With a depth pre-pass, the actual forward lighting pixel shader can reject pixels by comparing with the depth buffer before execution, saving a lot of performance.</p>
+
+<div id="prepassCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#prepassCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#prepassCarousel" data-slide-to="1"></li>
+    <li data-target="#prepassCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/Prepass0.png" />
+      <div class="carousel-caption d-none d-md-block">
+            <p>First person gun</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/Prepass1.png" />
+            <div class="carousel-caption d-none d-md-block">
+            <p>Static objects</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/Prepass2.png" />
+            <div class="carousel-caption d-none d-md-block">
+            <p>Dynamic objects</p>
+        </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#prepassCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#prepassCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<p>Besides rendering depth, the pre-pass also renders to another color target. For dynamic geometry, the velocity is rendered using motion vectors which is the position of the current position subtracted from the position of the pixel in the previous frame. We only need the motion on the X and Y axis so the motion is stored in the red and green channel of a 16-bit floating point render target. This information is later used in post processing for applying motion blur and reprojection for temporal anti-aliasing. The image below is exaggerated because this snapshot doesn’t have a lot of motion. Static geometry does not need motion vectors as their motion can be derived from the camera motion because they have only “moved” relative to the camera.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image6.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="hierarchical-z-depth">Hierarchical-Z Depth</h2>
+
+<p>Next up, a hierarchical mip chain of the depth buffer is generated which is similar to a mip map but instead of averaging 4 neighboring pixels, the maximum is taken. This is commonly done in graphics for various purposes like accelerating screen space reflections and occlusion culling. In this case, this mip chain is used to accelerate the light and decal culling which is covered later. More recently, mip generation is done in a single pass by writing into multiple mips at once. In Doom Eternal, it still traditionally does a dispatch for every mip separately.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image7.gif" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="mesh-decals">Mesh Decals</h2>
+
+<p>Up until what I’ve covered so far, there haven’t been many noticeable changes compared to Doom 2016. However, “mesh decals” is an addition to the mesh rendering pipeline introduced in Doom Eternal. Unlike the common decal workflow - which are placed freely in the environment - a mesh decal is placed during the mesh authoring pipeline by artists and so belong to the mesh. Before, Doom heavily relied on decals and stepped it up with the addition of so called “mesh decals” in this game for even better detailing and flexibility. “Mesh decals” are small decals like bolts, grills, bumps, stickers, … Just like a traditional decal, it can modify any property of the underlying surface like the normal, roughness, base color, …</p>
+
+<p>To achieve this, the following geometry pass renders each of the decals’s ID into an 8-bit render target. Later during shading, this texture is sampled to retrieve the ID which is used to retrieve a projection matrix bound with each draw call. The matrix projects the pixel’s position from world space into texture space. These coordinates are then used to sample the decal and blend with the underlying material. This is extremely fast and allows artists to go crazy with massive amounts of decals. Because the IDs are rendered to an 8-bit texture, the maximum amount of decals per mesh would theoretically be 255.</p>
+
+<p>One requirement for this, is that all decals are bound to the pipeline when drawing meshes. Doom Eternal uses a fully bindless render pipeline which allows them to bind all decal textures at once and dynamically index them in the shader. More on this bindless pipeline later as this is important to pull off other tricks they’ve done in this game.</p>
+
+<p>Below, the mesh decal texture. The different IDs are coloured to visualize it better.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image8.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="light-and-decal-culling">Light and Decal culling</h2>
+
+<p>Lights in Doom Eternal are all dynamic and there can be hundreds of lights in a view at a time. Besides this, as mentioned before, decals are of great importance in the game. In Doom 2016, this was already the case and the decal count can go up to thousands of them. This asks for a really solid culling approach to avoid massive pixel shader cost during shading later.</p>
+
+<p>In Doom 2016, a CPU variant of clustered light culling was used to bucket lights and decals into frustum-shaped ‘froxels’ which are later read during shading by determining the cluster index from the pixel’s location. Each cluster has a screen size of 256px and 24 slices separated logarithmically to ensure a square-ish shape. This has become a common approach and similar approaches are used in many games like Detroit: Become Human and Just Cause.</p>
+
+<p>Considering the increase in dynamic lights (hundreds) and decals (thousands) in Doom Eternal, the CPU clustered light culling didn’t suffice because the voxels are too coarse. For id Tech 7, a different approach was designed. They created a software rasterizer using compute shaders that executes in different stages. First, decals and lights are bound by hexahedra - A shape with 6 faces - and sent to the compute rasterizer pipeline. This projects the vertices into screen space. Next, a second compute shader clips the triangles against the screen bounds and buckets them into 256x256px screen tiles. At the same time, the light and decal entities are written into froxels just like in a traditional clustered culling approach. A following compute shader does similar work but at smaller 32x32px sized tiles. In each tile, entities that pass the depth test are marked in a bitfield. The last compute shader resolves these bitfields into the light lists which are eventually consumed by the lighting pass. What’s interesting is that the entity indices are still written into 256x256px sized 3D ‘froxels’ like the traditional clustered approach. Where there are large depth discontinuities, the minimum count of both the new light list and the clustered light list is used to determine to number of lights in each tile.</p>
+
+<p>The above is a very condensed explanation of the process and probably doesn’t make much sense if you’re not very familiar with traditional rasterization. If you’d like to get a better understanding of this, I suggest doing some research into how this process works. <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/overview-rasterization-algorithm">Scratchapixel has a great explanation</a> of how the process works.</p>
+
+<p>Besides lights and decals, so called “Visibility Boxes” also get culled using this system which are used for gameplay visibility queries. Because the software rasterization is a long process for compute threads, occupancy is likely low and adding these extra visibility boxes has almost no extra cost. Considering this, the light culling is likely done asynchronously and thus has a very little net performance impact.</p>
+
+<hr />
+
+<h2 id="screen-space-ambient-occlusion">Screen Space Ambient Occlusion</h2>
+
+<p>Ambient occlusion is calculated in half resolution in a fairly standard way. 16 random rays are shot from each pixel’s position in the hemisphere. Using the depth buffer, the rays that intersect with geometry are determined. The more of these rays hitting geometry, the more occlusion.</p>
+
+<p>Because the effect is computed in half resolution, the result is rather noisy. A bilateral blur is applied using the depth buffer to improve quality. Ambient occlusion is usually rather low frequency so it’s not that noticeable that it’s blurry.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image9.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="opaque-forward-pass">Opaque Forward pass</h2>
+
+<p>This is the pass where a lot of things come together. Compared to Doom 2016, here everything is fully forward rendered with only a handful of massive uber shaders. The entire game supposedly has about ~500 pipeline states and a dozen descriptor layouts. The first-person gun is rendered first, followed by the dynamic objects and then the static objects. Notice that the order doesn’t matter that much because we already have a depth buffer from the depth prepass that can reject pixels early that don’t match the depth in the depth buffer.</p>
+
+<div id="basePassCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#basePassCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#basePassCarousel" data-slide-to="1"></li>
+    <li data-target="#basePassCarousel" data-slide-to="2"></li>
+    <li data-target="#basePassCarousel" data-slide-to="3"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image10.jpeg" />
+      <div class="carousel-caption d-none d-md-block">
+            <p>First person gun</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image11.jpeg" />
+        <div class="carousel-caption d-none d-md-block">
+            <p>Dynamic objects</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image12.jpeg" />
+        <div class="carousel-caption d-none d-md-block">
+            <p>Static objects 1</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image13.jpeg" />
+        <div class="carousel-caption d-none d-md-block">
+            <p>Static objects 2</p>
+        </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#basePassCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#basePassCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<p>Much of the static geometry and characters have common shaders. This is where id Tech is quite different from any other AAA game. Many AAA game engines have shader graphs and static shader features that allow content creators to be very creative and go crazy with different kinds of materials. All these different materials each generate their own unique shader. The result is an explosion of shader permutations for all combinations of possible features. In id Tech, instead, almost all materials and features are combined into very few massive “uber shaders”. This allows the graphics pipeline to merge geometry more aggressively which can significantly improve performance. I will come back to this below.</p>
+
+<h3 id="bindless-resources">Bindless resources</h3>
+
+<p>An interesting observation is that the entire graphics pipeline embraces the concept of ‘bindless resources’. This means that instead of binding e.g. a diffuse, specular, roughness, … textures before every draw call, the entire list of textures in the scene is bound at once. The textures in the list are accessed dynamically in the shader by means of indices that are passed to the shader using uniforms/constants. This means that any texture is accessible from any draw call and allows for many interesting optimizations, one of which I will describe next.</p>
+
+<p><a href="/images/blog/010_doom_eternal_study/BindlessExample.png" data-lightbox="doom-study">
+    <img src="/images/blog/010_doom_eternal_study/BindlessExample.png" class="img-fluid img-thumbnail w-100" alt="" />
+</a></p>
+
+<h3 id="dynamic-draw-call-merging">Dynamic draw call merging</h3>
+
+<p>On top of a fully bindless resource architecture, all geometry data is allocated from <strong>a single large buffer/pool</strong>. All geometry simply has an offset in this buffer.</p>
+
+<p>Where these things come together, is the most interesting tech in id Tech 7: <strong>dynamic draw call merging</strong>. This relies on both the bindless architecture and the unified vertex memory. Before any rendering happens, a compute shader dynamically creates a new ‘indirect’ index buffer to effectively merge geometry from unrelated meshes into a single indirect draw call. This would never be achievable without bindless resources because this draw call merging can work across geometry that doesn’t share the same material properties. Merging geometry like this massively reduces draw calls and CPU submission time. The dynamic index buffer can get reused for both the depth prepass and lighting pass.</p>
+
+<h3 id="screen-space-reflections">Screen Space Reflections</h3>
+
+<p>Screen space reflections are most commonly done in a compute shader by raymarching from the pixel in world space in a reflected direction that depends on the roughness of the reflecting surface. This was no different in Doom 2016 which wrote a thin G-Buffer as part of the forward pass. However in Doom Eternal, this G-Buffer is no longer written. What’s curious about the uber shader in here, is that even the <strong>screen space reflections are computed directly in the forward shader</strong> as opposed to separately in a compute shader. I’m interested to understand the performance impact caused by such divergence in the pixel shader. It seems like they’ve tried to reduce memory bandwidth by reducing the amount of render targets at the cost of higher register pressure.</p>
+
+<p>Effects done with screen space textures often suffer from visual artifacts when the information required is not available in the texture. This is especially noticeable with screen space reflections where reflected objects that are not visible, can’t be reflected. This problem is solved using static specular cube maps as a fallback which is also a very traditional approach.</p>
+
+<p>As Doom Eternal is no longer using Mega-Texture, the feedback texture is also no longer created.</p>
+
+<hr />
+
+<h2 id="particles">Particles</h2>
+
+<h3 id="simulation">Simulation</h3>
+
+<p>In Doom Eternal, a part of GPU particle simulation is done on compute shaders. Some particle systems have dependencies on screen space information like the depth buffer to do things like collision. These simulations need to run after the depth prepass, other particle systems can run as early as possible in the frame and can usually be run on async compute. 
+What’s interesting is that, as opposed to traditional compute shader particle simulation, simulation happens by executing a sequence of ‘commands’ defined in a command buffer in a compute shader. Each compute shader thread iterates through every command which each can contain several commands like ‘kill’, ‘emit’ or modify a parameter of the particle. It’s like a bytecode machine written in a shader. I don’t understand a huge amount of how this works in detail but this is based on <a href="http://advances.realtimerendering.com/s2017/index.html">“The Destiny Particle Architecture” by Brandon Whitley at Siggraph 2017</a> which uses a very similar approach and is used in many other games. I believe this is also similar to how the Niagara particle system works in Unreal Engine 4.</p>
+
+<h3 id="lighting">Lighting</h3>
+
+<p>Like in Doom 2016 and described in the 2016 Siggraph talk, <strong>particle lighting resolution is decoupled from the actual screen resolution</strong>. This allows them to control the resolution of each particle system depending on quality, screen size and manual control. For low frequency effects, lighting can usually be done at a much lower resolution without noticeable difference compared to e.g. sparks which would require a higher resolution. The lighting and dominant light direction are stored in 2 2048x2048px atlases which are accessible in all passes like any other texture in a table using bindless resources. Later down the pipeline, simple geometry is drawn sampling this particle atlas to render the particles.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image14.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p><em>Zoomed in section of the lighting atlas.</em></p>
+
+<hr />
+
+<h2 id="sky-and-scattering">Sky and scattering</h2>
+
+<p>This section covers the <strong>volumetric lighting</strong>. This consists of 4 passes starting with generating a 3D LUT texture for the <strong>sky’s atmosphere</strong> by raymarching through the sky and towards the light.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image15.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p>It might not immediately make sense from the image what this texture represents but if we rotate it 90 degrees and stretch it horizontally, it becomes clear that this represents the atmosphere’s scattering. Because there is more variance/frequency vertically than horizontally, there is more vertical resolution allocated. The atmosphere is represented as a sphere so the horizontal rotation is commonly called ‘longitude’ and the vertical is ‘latitude’. The atmospheric scattering is calculated in a hemisphere covering 360 degrees of the longitude and 180 degrees of latitude for the upper half of the sphere. The LUT has 32 depth slices to cover different distances from the viewer. Instead of recomputing the sky data every frame, the computation cost is amortized over 32 frames.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/SkyLUT_Rotated.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p>Using this LUT, the next pass computes light scattering per view ‘froxel’ similar to the clustered light culling froxels but smaller. A few slices of these can be seen here (front to back).</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image16.gif" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p>In the third pass, for each cell, the scattering data is propagated into each following cell towards the view, written into another 3D texture.</p>
+
+<p>Finally, the volumetric lighting is composed on top of the rendered image by sampling the previously generated 3D texture based on the pixel depth.</p>
+
+<div id="volumetricLightsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#volumetricLightsCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#volumetricLightsCarousel" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image17.png" />
+        <div class="carousel-caption d-none d-md-block">
+            <p>Before</p>
+        </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 img-thumbnail" src="/images/blog/010_doom_eternal_study/image18.png" />
+        <div class="carousel-caption d-none d-md-block">
+            <p>After</p>
+        </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#volumetricLightsCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#volumetricLightsCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<p>The actual ‘visible’ sky is rendered on a half sphere if it is visible. In this scene, the sky isn’t visible but below is an example of the sky in an outdoor scene.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/SkyTexture.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="transparency">Transparency</h2>
+
+<p>Transparency is achieved similarly to how it’s done in Doom 2016. It’s rendered in a forward pass after the opaque geometry and when the light scattering data is available. The scene texture is downsampled. Based on the surface smoothness, an appropriate mip level is selected to ‘fake’ the transparent surface. The light scattering data is also used to get good looking scattering inside the surface.</p>
+
+<p>Below is an example mip-chain of the scene texture from another scene where there’s more transparent surfaces in view.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/ColorMipsGif.gif" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p><em>Only the relevant pixels seem to get downsampled for the transparency</em></p>
+
+<hr />
+
+<h2 id="ui">UI</h2>
+
+<p>The User Interface is usually the last geometry pass in a frame. As commonly done, the UI is rendered into a secondary LDR (8-bit) full resolution render target and the color is <strong>pre-multiplied with the alpha</strong>. The UI gets composited with the HDR texture during the tone mapping phase. Generally, it’s not trivial to compose UI with the rest of the frame to work well with the HDR content. During tone mapping, the UI intensity usually gets scaled by a magic number to boost it so it looks balanced compared to the 3D content.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image19.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="post-processing">Post processing</h2>
+
+<p><strong>Motion blur</strong> comes first which is a 2-pass effect that reads from the color texture and a customized velocity buffer. One pass takes 4 taps/samples along the vertical axis and the second pass takes 4 along the horizontal axis. The color samples get mixed based on the given motion of the pixel. The customized velocity buffer makes sure there is little ghosting and the player gun is excluded to prevent smearing.</p>
+
+<p>Next up, the <strong>target exposure</strong> is computed by sequentially down sampling the color texture and getting the average luminance of each group of pixels. The result is a 1x1 RG texture containing the average luminance of the entire frame. This is a common technique to achieve the effect of eye adaption like in real life where your eyes automatically adapt to bright and dark environments. The average luminance is used to compute the exposure during tone mapping.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image20.gif" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<p>After this, <strong>Bloom</strong> is computed, also in a traditional way which is by extracting all color information above a certain threshold and sequentially downsampling that texture to blur it. In this scene in particular, there isn’t much bloom so it’s hard to get a good visualization of that, unfortunately.</p>
+
+<p><strong>Tone mapping</strong> is where all of the above comes together. A single compute shader does all this work:</p>
+
+<ul>
+  <li><strong>Distortion</strong> is applied</li>
+  <li><strong>Bloom texture</strong> is rendered on top</li>
+  <li>Vignetting, camera dirt, chromatic aberration, lens flares and miscellaneous effects are computed</li>
+  <li><strong>Exposure value</strong> is derived from the average luminance</li>
+  <li><strong>Tone mapping</strong> brings the HDR color into the correct range for either LDR or HDR by using a custom tone map operator.</li>
+</ul>
+
+<p>Finally, the UI is composited on top.</p>
+
+<p><strong>Distortion</strong> is achieved by generating a distortion texture which was rendered before the post processing pass. Geometry that generated distortion like heat haze from particle effects, is rendered into a new quarter-resolution render target which stores distortion data into the Red and Green channel and occlusion in Blue. The tone mapping step uses this texture to distort the image.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/image21.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
+
+<hr />
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This concludes the high-level breakdown of a frame in Doom Eternal. I’m sure there are several things that I didn’t cover here and had an impact on the look of the game. Doom Eternal is in my opinion a great success and the team of id Software have managed to up the bar even further. I believe this game is something to look up to and learn from as id Software prove that a game with such high quality can be created with clever thinking and engineering. I look forward what id Software has to bring in the future.</p>
+
+<p><em>Rip and tear, until it is done.</em></p>
+
+<hr />
+
+<h1 id="reading-material-and-references">Reading material and references</h1>
+
+<ul>
+  <li><a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study">Doom 2016 Graphics Study</a></li>
+  <li><a href="https://youtu.be/HhEREBb6_5k?t=224">Devil is in the Details - Siggraph 2016</a></li>
+  <li><a href="https://www.youtube.com/watch?v=UsmqWSZpgJY">Doom Eternal – Digital Foundry Tech Review</a></li>
+  <li><a href="https://mynameismjp.wordpress.com/2016/03/25/bindless-texturing-for-deferred-rendering-and-decals/">MJP - Bindless Texturing for Deferred Rendering and Decals</a></li>
+</ul>
+
+
+<hr>
+
+<div class="PageNavigation row d-print-none">
+  <div class="text-left col-sm-6">
+  
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcRevised.html">&laquo; Previous: Using the DirectXShaderCompiler C++ API - Revised</a>
+  
+  </div>
+  <div class="text-right col-sm-6">
+  
+  </div>
+</div>
+
+
+<div class="d-print-none" id="comment-section">
+    <script src="https://utteranc.es/client.js"
+        repo="simco50/simoncoenen.com"
+        issue-term="title"
+        label="utterances-comment"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
+
+        </div>
+
+        <div class="col-md-3 d-print-none">
+            <nav class="sticky-top d-none d-md-block">
+                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+                    
+                    
+                    <a class="btn btn-sm sharp fa fa-print" onclick="javascript:window.print()" href="#"> Print</a>
+                    <h4>Contents</h4>
+                    <div id="table-of-contents">
+                        <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#background">Background</a></li>
+<li class="toc-entry toc-h1"><a href="#a-frame-in-doom-eternal">A frame in Doom Eternal</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#step-away-from-mega-texture">Step away from Mega-Texture</a></li>
+<li class="toc-entry toc-h2"><a href="#gpu-skinning">GPU Skinning</a></li>
+<li class="toc-entry toc-h2"><a href="#shadow-mapping">Shadow Mapping</a></li>
+<li class="toc-entry toc-h2"><a href="#depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</a></li>
+<li class="toc-entry toc-h2"><a href="#hierarchical-z-depth">Hierarchical-Z Depth</a></li>
+<li class="toc-entry toc-h2"><a href="#mesh-decals">Mesh Decals</a></li>
+<li class="toc-entry toc-h2"><a href="#light-and-decal-culling">Light and Decal culling</a></li>
+<li class="toc-entry toc-h2"><a href="#screen-space-ambient-occlusion">Screen Space Ambient Occlusion</a></li>
+<li class="toc-entry toc-h2"><a href="#opaque-forward-pass">Opaque Forward pass</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#bindless-resources">Bindless resources</a></li>
+<li class="toc-entry toc-h3"><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li>
+<li class="toc-entry toc-h3"><a href="#screen-space-reflections">Screen Space Reflections</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#particles">Particles</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#simulation">Simulation</a></li>
+<li class="toc-entry toc-h3"><a href="#lighting">Lighting</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#sky-and-scattering">Sky and scattering</a></li>
+<li class="toc-entry toc-h2"><a href="#transparency">Transparency</a></li>
+<li class="toc-entry toc-h2"><a href="#ui">UI</a></li>
+<li class="toc-entry toc-h2"><a href="#post-processing">Post processing</a></li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#reading-material-and-references">Reading material and references</a></li>
+</ul>
+                    </div>
+                    
+
+                    <h3>Recent posts</h3>
+                    <ul class="nav flex-column">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/blog/programming/graphics/DoomEternalStudy.html">
+                            <span data-feather="home"></span>
+                            DOOM Eternal - Graphics Study
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/DxcRevised.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API - Revised
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/DxcCompiling.html">
+                            <span data-feather="home"></span>
+                            Using the DirectXShaderCompiler C++ API
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
+                            <span data-feather="home"></span>
+                            Optimizing spotlight intersection in tiled/clustered light culling
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/PakFiles.html">
+                            <span data-feather="home"></span>
+                            Pak files - Virtual file system
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
+                            <span data-feather="home"></span>
+                            Basic compile-time type information using constexpr
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_index.html">More...</a>
+                        </li>
+                    </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+        <!-- /.container -->
+        <!--Footer-->
+<footer>
+    <div id="footer-content" class="footer bg-dark d-print-none">
+        <small style="padding-top:10px">Simon Coenen, &copy;2020</small>
+        <div class="text-center">
+            
+                    
+                        <a href="https://www.github.com/simco50" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-github"></span>
+                    Github
+                </a>
+            
+                    
+                        <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fab fa-linkedin"></span>
+                    LinkedIn
+                </a>
+            
+                    
+                        <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="btn btn-sm btn-dark sharp">
+                    
+                    <span class="fas fa-paperclip"></span>
+                    Resume
+                </a>
+            
+        </div>
+    </div>
+</footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>
