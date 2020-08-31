@@ -338,11 +338,13 @@
 
 <p>Where these things come together, is the most interesting tech in id Tech 7: <strong>dynamic draw call merging</strong>. This relies on both the bindless architecture and the unified vertex memory. Before any rendering happens, a compute shader dynamically creates a new ‘indirect’ index buffer to effectively merge geometry from unrelated meshes into a single indirect draw call. This would never be achievable without bindless resources because this draw call merging can work across geometry that doesn’t share the same material properties. Merging geometry like this massively reduces draw calls and CPU submission time. The dynamic index buffer can get reused for both the depth prepass and lighting pass.</p>
 
-<h3 id="screen-space-reflections">Screen Space Reflections</h3>
+<h3 id="reflections">Reflections</h3>
 
 <p>Screen space reflections are most commonly done in a compute shader by raymarching from the pixel in world space in a reflected direction that depends on the roughness of the reflecting surface. This was no different in Doom 2016 which wrote a thin G-Buffer as part of the forward pass. However in Doom Eternal, this G-Buffer is no longer written. What’s curious about the uber shader in here, is that even the <strong>screen space reflections are computed directly in the forward shader</strong> as opposed to separately in a compute shader. I’m interested to understand the performance impact caused by such divergence in the pixel shader. It seems like they’ve tried to reduce memory bandwidth by reducing the amount of render targets at the cost of higher register pressure.</p>
 
 <p>Effects done with screen space textures often suffer from visual artifacts when the information required is not available in the texture. This is especially noticeable with screen space reflections where reflected objects that are not visible, can’t be reflected. This problem is solved using static specular cube maps as a fallback which is also a very traditional approach.</p>
+
+<p><img src="/images/blog/010_doom_eternal_study/ReflectionCube.png" alt="" class="img-fluid img-thumbnail w-100" /></p>
 
 <p>As Doom Eternal is no longer using Mega-Texture, the feedback texture is also no longer created.</p>
 
@@ -535,7 +537,7 @@ What’s interesting is that, as opposed to traditional compute shader particle 
 <ul>
 <li class="toc-entry toc-h3"><a href="#bindless-resources">Bindless resources</a></li>
 <li class="toc-entry toc-h3"><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li>
-<li class="toc-entry toc-h3"><a href="#screen-space-reflections">Screen Space Reflections</a></li>
+<li class="toc-entry toc-h3"><a href="#reflections">Reflections</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#particles">Particles</a>
