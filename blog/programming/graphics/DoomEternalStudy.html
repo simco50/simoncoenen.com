@@ -120,7 +120,7 @@
 <p>30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    22 mins
+    23 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
@@ -267,11 +267,9 @@
 
 <h2 id="screen-space-ambient-occlusion">Screen Space Ambient Occlusion</h2>
 
-<p>Ambient occlusion is calculated in half resolution in a fairly standard way. 16 random rays are shot from each pixel’s position in the hemisphere. Using the depth buffer, the rays that intersect with geometry are determined. The more of these rays hitting geometry, the more occlusion.</p>
+<p>Ambient occlusion is calculated in half resolution in a fairly standard way. 16 random rays are shot from each pixel’s position in the hemisphere. Using the depth buffer, the rays that intersect with geometry are determined. The more of these rays hit geometry, the more occlusion. The occlusion technique used here is called “Screen Space Directional Occlusion” or SSDO which is nicely <a href="https://kayru.org/articles/dssdo/">described by Yuriy O’Donnell</a>. Instead of traditionally storing the occlusion value in a single channel texture, directional occlusion is stored in a 3 component texture. The final occlusion can be evaluated with a dot product with the world normal of the pixel.</p>
 
 <p>Because the effect is computed in half resolution, the result is rather noisy. A bilateral blur is applied using the depth buffer to improve quality. Ambient occlusion is usually rather low frequency so it’s not that noticeable that it’s blurry.</p>
-
-<p>The occlusion technique used is called “Screen Space Directional Occlusion” which is nicely <a href="https://kayru.org/articles/dssdo/">described by Yuriy O’Donnell</a></p>
 
 <p><img src="/images/blog/010_doom_eternal_study/image9.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
 
@@ -487,6 +485,10 @@ What’s interesting is that, as opposed to traditional compute shader particle 
   <li><a href="https://mynameismjp.wordpress.com/2016/03/25/bindless-texturing-for-deferred-rendering-and-decals/">MJP - Bindless Texturing for Deferred Rendering and Decals</a></li>
 </ul>
 
+<h1 id="updates">Updates</h1>
+
+<p>02/09/2020 - Update Ambient Occlusion description</p>
+
 
 <hr>
 
@@ -556,6 +558,7 @@ What’s interesting is that, as opposed to traditional compute shader particle 
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#reading-material-and-references">Reading material and references</a></li>
+<li class="toc-entry toc-h1"><a href="#updates">Updates</a></li>
 </ul>
                     </div>
                     
