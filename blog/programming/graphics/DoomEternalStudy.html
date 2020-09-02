@@ -173,7 +173,7 @@
 
 <p>Next up is shadow rendering. There doesn’t seem to be any large changes in how shadow maps are approached in id Tech 7 compared to its predecessor.</p>
 
-<p>As seen below, shadows get rendered in a large 4096x8096px 24-bit depth texture which may vary across quality levels. The texture is persistent across frames and as described in “Devil is in the Details” at Siggraph 2016, the static geometry in the shadow map is cached to save having to redraw the shadow maps each frame. The technique is fairly simple: as long as nothing in the view of the light moves, there is no need to update the shadows. If a dynamic object in the frustum moves, a ‘cached’ shadow map is copied into the actual shadow map and the dynamic geometry is re-drawn on top. This cached shadow map is the same shadow map but only with static geometry because you can make the assumption that these will never change. This saves having to draw the entire scene in the frustum every time it needs to update. Of course, when the light moves, the entire scene has to be redrawn from scratch.</p>
+<p>As seen below, shadows get rendered in a large 4096x8196px 24-bit depth texture which may vary across quality levels. The texture is persistent across frames and as described in “Devil is in the Details” at Siggraph 2016, the static geometry in the shadow map is cached to save having to redraw the shadow maps each frame. The technique is fairly simple: as long as nothing in the view of the light moves, there is no need to update the shadows. If a dynamic object in the frustum moves, a ‘cached’ shadow map is copied into the actual shadow map and the dynamic geometry is re-drawn on top. This cached shadow map is the same shadow map but only with static geometry because you can make the assumption that these will never change. This saves having to draw the entire scene in the frustum every time it needs to update. Of course, when the light moves, the entire scene has to be redrawn from scratch.</p>
 
 <p>When sampling the shadow map during lighting, a 3x3 PCF sampling approach is used to smoothen the shadow edges. For the sun light, <strong>cascaded shadow maps</strong> are used to distribute the quality better as it covers such a large portion of the environment.</p>
 
@@ -270,6 +270,8 @@
 <p>Ambient occlusion is calculated in half resolution in a fairly standard way. 16 random rays are shot from each pixel’s position in the hemisphere. Using the depth buffer, the rays that intersect with geometry are determined. The more of these rays hitting geometry, the more occlusion.</p>
 
 <p>Because the effect is computed in half resolution, the result is rather noisy. A bilateral blur is applied using the depth buffer to improve quality. Ambient occlusion is usually rather low frequency so it’s not that noticeable that it’s blurry.</p>
+
+<p>The occlusion technique used is called “Screen Space Directional Occlusion” which is nicely <a href="https://kayru.org/articles/dssdo/">described by Yuriy O’Donnell</a></p>
 
 <p><img src="/images/blog/010_doom_eternal_study/image9.jpeg" alt="" class="img-fluid img-thumbnail w-100" /></p>
 
