@@ -37,29 +37,29 @@
 <!-- End Jekyll SEO tag -->
 
     
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
     
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-        <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-56553055-2', 'auto');
-        ga('send', 'pageview');
-    </script>
+    ga('create', 'UA-56553055-2', 'auto');
+    ga('send', 'pageview');
+</script>
 </head>
     <body>
         <!-- Navigation -->
@@ -203,60 +203,32 @@
 
         </div>
 
-        <div class="col-md-3 d-print-none">
+        <div class="col-md-3 d-print-none blog-sidebar">
             <nav class="sticky-top d-none d-md-block">
-                    <a class="btn btn-sm sharp fa fa-rss" href="/feed.xml"> RSS</a>
+
+                    <ul class="social-buttons">
+                    <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
                     
+                    </ul>
+
                     
 
                     <h3>Recent posts</h3>
-                    <ul class="nav flex-column">
+                    <ul class="flex-column">
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/graphics/DoomEternalStudy.html">
-                            <span data-feather="home"></span>
-                            DOOM Eternal - Graphics Study
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/graphics/DoomEternalStudy.html">DOOM Eternal - Graphics Study</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/graphics/DxcRevised.html">
-                            <span data-feather="home"></span>
-                            Using the DirectXShaderCompiler C++ API - Revised
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/graphics/DxcRevised.html">Using the DirectXShaderCompiler C++ API - Revised</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/graphics/DxcCompiling.html">
-                            <span data-feather="home"></span>
-                            Using the DirectXShaderCompiler C++ API
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/graphics/DxcCompiling.html">Using the DirectXShaderCompiler C++ API</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/graphics/SpotlightCulling.html">
-                            <span data-feather="home"></span>
-                            Optimizing spotlight intersection in tiled/clustered light culling
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/graphics/SpotlightCulling.html">Optimizing spotlight intersection in tiled/clustered light culling</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/PakFiles.html">
-                            <span data-feather="home"></span>
-                            Pak files - Virtual file system
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/PakFiles.html">Pak files - Virtual file system</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="/blog/programming/StaticReflection.html">
-                            <span data-feather="home"></span>
-                            Basic compile-time type information using constexpr
-                            </a>
-                        </li>
+                            <li class=""><a href="/blog/programming/StaticReflection.html">Basic compile-time type information using constexpr</a></li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/blog_index.html">More...</a>
-                        </li>
+                        <li class=""><a href="/blog_index.html">More...</a></li>
                     </ul>
             </nav>
         </div>
@@ -301,9 +273,9 @@
         </div>
     </div>
 </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
 <script src="/js/main.js"></script>
 
