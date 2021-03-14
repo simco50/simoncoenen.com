@@ -14,20 +14,10 @@ window.onscroll = function () {
 	var currentScrollPos = window.pageYOffset;
 	if (prevScrollPos > currentScrollPos) {
 		document.getElementById("navbar").style.top = "0px";
-		document.getElementById("footer-content").style.bottom = "0px";
 	} 
 	else 
 	{
 		document.getElementById("navbar").style.top = "-100px";
-		
-		if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) 
-		{
-        	document.getElementById("footer-content").style.bottom = "0px";
-		}
-		else
-		{
-			document.getElementById("footer-content").style.bottom = "-50px";
-		}
 	}
 	prevScrollPos = currentScrollPos;
 };
