@@ -141,6 +141,7 @@
 <div class="d-print-none">
     <figure style="
         position:absolute; 
+        top: 0px;
         width:100%; height:400px; 
         background-size: cover; 
         z-index: -100; 
@@ -156,16 +157,20 @@
             <div class="blog-post">
 
 <h1>Basic compile-time type information using constexpr</h1>
-<p>21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style="font-style: italic;">
+    21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     10 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
+
 <p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
 
-<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. The relevant files to look at are:</p>
+<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. 
+<!--more-->
+The relevant files to look at are:</p>
 
 <ul>
   <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Object.h">Object.h</a></li>
@@ -179,8 +184,6 @@
 <p>I mainly started working on this out of curiosity and to see how far I could take it without having to modify loads of files everywhere. I can definitely take it much further but in its current state I can retrieve type information and create instances of classes using string hashes and object factories. Getting type information is compile-time without any runtime cost.</p>
 
 <p>I currently use it for getting game object components, object instantiation, shader variable addressing and general dynamic casting.</p>
-
-<!--more-->
 
 <p>Just these functions are already quite powerful especially for (de)serialization.</p>
 
@@ -367,8 +370,24 @@ In this case, relevant to reflection, it has the following functions:</p>
 
         <div class="col-md-3 d-print-none blog-sidebar">
             <ul class="social-buttons">
-                <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
-                <li><a style="background-color:gray" class="btn btn-sm" onclick="javascript:window.print()" href="#"><i class="fa fa-print"></i></a></li>
+                <li>
+                    <a href="/feed.xml">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewbox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                            <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"></path>
+                        </svg>
+                    </a>
+                </li>
+                
+                <li>
+                    <a onclick="javascript:window.print()" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-printer" viewbox="0 0 16 16">
+                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"></path>
+                            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"></path>
+                        </svg>
+                    </a>
+                </li>
+                
             </ul>
             <nav class="sticky-top d-none d-md-block">
                 

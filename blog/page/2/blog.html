@@ -140,20 +140,16 @@
             
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/Natvis"><h1>Natvis in Visual Studio</h1></a>
-<p>13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     4 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/Natvis"><img class="img-fluid" src="/images/blog/003_natvis/Difference.png"/></a>
 <p><p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
-
-<p>So instead of having to dig through a load of expanders to find what you’re looking for in an object, you can fully customize the window to show only the relevant information of that object. Natvis is a xml-based file that you simply include in your Visual Studio project that <em>Just Works™</em>.</p>
-
-<p>Many of you might already know about this but there’s a small detail that helps you with debugging natvis that you might not know about!</p>
-
-<p><img src="/images/blog/003_natvis/Difference.png" alt="Difference" class="img-fluid" /></p>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/Natvis ">Read More...</a>
@@ -163,32 +159,17 @@
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/CPP_Delegates"><h1>C++ Delegates</h1></a>
-<p>07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     11 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/CPP_Delegates"><img class="img-fluid" src="/images/blog/002_delegates/card.jpg"/></a>
 <p><p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
 As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
-
-<p>Take a look at an extremely simple example of executing a member function with a <code class="highlighter-rouge">int(float)</code> signature. Straight forward right? Well, not really…</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
-
-<span class="c1">// Function pointer. Arrrghh</span>
-<span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">::*</span> <span class="n">pFunctionA</span><span class="p">)(</span><span class="kt">float</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
-<span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="o">*</span><span class="n">pFunctionA</span><span class="p">)(</span><span class="mi">42</span><span class="p">);</span>
-
-<span class="c1">// std::function. Object itself passed as variable (makes kind of sense but extremely awkward!)</span>
-<span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">(</span><span class="n">Foo</span><span class="o">&amp;</span><span class="p">,</span> <span class="kt">float</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">pFunctionB</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">;</span>
-<span class="n">pFunctionB</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
-
-<span class="c1">// Delegate. Elegant and straight forward</span>
-<span class="k">auto</span> <span class="n">pFunctionC</span> <span class="o">=</span> <span class="n">Delegate</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;::</span><span class="n">CreateRaw</span><span class="p">(</span><span class="o">&amp;</span><span class="n">foo</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Foo</span><span class="o">::</span><span class="n">Bar</span><span class="p">);</span>
-<span class="n">pFunctionC</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
-</code></pre></div></div>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/CPP_Delegates ">Read More...</a>
@@ -198,13 +179,15 @@ As you might know, it’s not straight forward at all to store and execute a met
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/general/Blog"><h1>A blog...?</h1></a>
-<p>06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     1 min
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/general/Blog"><img class="img-fluid" src="/images/blog/001_blog/card.jpg"/></a>
 <p><p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
 Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
 
@@ -217,11 +200,6 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
   <li>Many more…</li>
 </ul>
 
-<p>There are loads of interesting blogs I check out once in a while but I always though making one myself wouldn’t be very interesting because many of the things I could write about are already touched upon many many times in other places and I don’t really feel like I could be committed to maintain it.</p>
-
-<p>However, I’ve been working on <a href="https://github.com/simco50?tab=repositories">a personal game engine and loads of other little projects</a> and other things for a while now but I could never think of a way to present this in a good form to others because those things will never be “finished”. That’s why I thought a blog could be a great way to pick a few interesting things I’ve done and write about it. Besides, implementing something is one thing but by writing about it, you have to comprehend the subject much better as there will be gaps of information that will force me to research more.</p>
-
-<p>I’m hoping for this to be a good little exercise moving forward. If there’s anything you don’t agree with, like to comment on or if you just like to reach out to me, always feel free to reach out to me on <a href="http://www.twitter.com/simon_coenen">Twitter</a>, <a href="mailto:sim2.coenen@gmail.com">email</a> or comment below.</p>
 </p>
 <a class="btn btn-success sharp" href="/blog/general/Blog ">Read More...</a>
 </br>
@@ -246,7 +224,14 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
 
         <div class="col-md-3 d-print-none blog-sidebar">
             <ul class="social-buttons">
-                <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
+                <li>
+                    <a href="/feed.xml">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
+                        </svg>
+                    </a>
+                </li>
                 
             </ul>
             <nav class="sticky-top d-none d-md-block">

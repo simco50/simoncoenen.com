@@ -141,6 +141,7 @@
 <div class="d-print-none">
     <figure style="
         position:absolute; 
+        top: 0px;
         width:100%; height:400px; 
         background-size: cover; 
         z-index: -100; 
@@ -156,18 +157,22 @@
             <div class="blog-post">
 
 <h1>Using the DirectXShaderCompiler C++ API</h1>
-<p>04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     15 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
+
 <p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
 The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler called DirectXShaderCompiler (DXC) which compiles to DXIL.
 It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
+
+<!--more-->
 
 <p>Fxc has existed for quite a long time now and there are guides for it everywhere however Dxc is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering DirectX is generally really well documented.
 Using Dxc’s commandline tools are quite straight forward and self-explanatory however I’ve always like to compile my shaders at runtime because it eventually require no effort when modifying shaders and having to recompile them. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
@@ -177,8 +182,6 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 <p><strong>(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. <a href="https://youtu.be/tyyKeTsdtmo?t=878">Check it out here!</a>.</strong></p>
 
 <p><strong>I’ve written an updated article after the event <a href="/blog/programming/graphics/DxcRevised">you can read here</a></strong></p>
-
-<!--more-->
 
 <h2 id="basic-usage">Basic Usage</h2>
 
@@ -839,8 +842,24 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
         <div class="col-md-3 d-print-none blog-sidebar">
             <ul class="social-buttons">
-                <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
-                <li><a style="background-color:gray" class="btn btn-sm" onclick="javascript:window.print()" href="#"><i class="fa fa-print"></i></a></li>
+                <li>
+                    <a href="/feed.xml">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
+                        </svg>
+                    </a>
+                </li>
+                
+                <li>
+                    <a onclick="javascript:window.print()" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg"class="bi bi-printer" viewBox="0 0 16 16">
+                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+                        </svg>
+                    </a>
+                </li>
+                
             </ul>
             <nav class="sticky-top d-none d-md-block">
                 

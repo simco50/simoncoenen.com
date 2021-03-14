@@ -140,16 +140,16 @@
             
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/graphics/DoomEternalStudy"><h1>DOOM Eternal - Graphics Study</h1></a>
-<p>30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     23 mins
   
 </span><span class="far fa-clock"></span>
 </p>
-<p><p><img src="/images/blog/010_doom_eternal_study/image1.jpeg" alt="" class="img-fluid w-100" /></p>
-
-<h2 id="background">Background</h2>
+<a href="/blog/programming/graphics/DoomEternalStudy"><img class="img-fluid" src="/images/blog/010_doom_eternal_study/image1.jpeg"/></a>
+<p><h2 id="background">Background</h2>
 
 <p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
 
@@ -161,29 +161,16 @@
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/graphics/DxcRevised"><h1>Using the DirectXShaderCompiler C++ API - Revised</h1></a>
-<p>24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     5 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/graphics/DxcRevised"><img class="img-fluid" src="/images/blog/008_dxc_revised/cover.jpg"/></a>
 <p><p>Shortly after my previous post, <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX Developer Day</a> has happened and the DirectX team has shared a great amount of new updates and insights to the world including <a href="https://www.youtube.com/watch?v=tyyKeTsdtmo">new additions to the DirectX Shader Compiler</a>. The main thread is that the API has become a lot easier to use and is streamlined so that both the C++ and CLI interfaces share the same code path. This makes it a lot easier for developers to work with. So now things have changed quite a bit.</p>
-
-<p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
-
-<p>I highly recommend watching all the videos on the <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX’s YouTube channel</a>!</p>
-
-<h2 id="getting-started">Getting Started</h2>
-
-<p>At the time of writing this, there is not yet an official release with the new DXC updates however the latest build binaries can be <a href="https://ci.appveyor.com/project/antiagainst/directxshadercompiler/branch/master/artifacts">downloaded from the repo’s AppVeyor</a>.</p>
-
-<p>There are quite a lot of binaries in there but to use the C++ API you only need a few:</p>
-<ul>
-  <li><strong>dxcompiler.lib</strong> - The compiler dll link lib</li>
-  <li><strong>dxcompiler.dll</strong> - The compiler’s frontend</li>
-  <li><strong>dxcapi.h</strong> - The header with the interfaces. You only need this single header. <em>(/include/dxc/dxcapi.h)</em></li>
-</ul>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/graphics/DxcRevised ">Read More...</a>
@@ -193,27 +180,20 @@
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/graphics/DxcCompiling"><h1>Using the DirectXShaderCompiler C++ API</h1></a>
-<p>04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     15 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/graphics/DxcCompiling"><img class="img-fluid" src="/images/blog/007_dxc/cover.jpg"/></a>
 <p><p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
 The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler called DirectXShaderCompiler (DXC) which compiles to DXIL.
 It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
-
-<p>Fxc has existed for quite a long time now and there are guides for it everywhere however Dxc is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering DirectX is generally really well documented.
-Using Dxc’s commandline tools are quite straight forward and self-explanatory however I’ve always like to compile my shaders at runtime because it eventually require no effort when modifying shaders and having to recompile them. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
-
-<p>I’ve found a few articles here and there about the very basic setup for this however most of the were very minimal and didn’t really cover things like compile-arguments, defines, include handling, validation, reflection, debug-data, … which are quite important to know about.</p>
-
-<p><strong>(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. <a href="https://youtu.be/tyyKeTsdtmo?t=878">Check it out here!</a>.</strong></p>
-
-<p><strong>I’ve written an updated article after the event <a href="/blog/programming/graphics/DxcRevised">you can read here</a></strong></p>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/graphics/DxcCompiling ">Read More...</a>
@@ -223,27 +203,17 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/graphics/SpotlightCulling"><h1>Optimizing spotlight intersection in tiled/clustered light culling</h1></a>
-<p>17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     10 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/graphics/SpotlightCulling"><img class="img-fluid" src="/images/blog/006_cone_culling/cover.jpg"/></a>
 <p><p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
 I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
-
-<p>To give a very brief summary of what <strong>light culling</strong> actually is:</p>
-
-<p>Light culling is an optimization method to reduce the amount of lights that are considered when shading individual pixels by placing lights in either a 2D (tiled) or 3D (clustered) grid based on their position, dimensions and possibly other parameters.
-Before the shading pass, a compute shader splits up the view frustum in buckets and loops over all the lights and places them in the buckets that it intersects with.
-Later during shading, using the pixel position, the appropriate light bucket can be calculated and only the lights in that bucket need to be considered for that pixel. 
-The technique can also be leveraged to accelerate other things like decals, environment probes, …
-This greatly improves shading of a scene with a lot of dynamic lights. It’s a very common technique used in many games and engines.</p>
-
-<p>Spot light culling can be challenging to find a good intersection method for. There are several different approaches to this and depending on how far you think this through, there are some significant optimizations to be made here compared to naive methods.</p>
-
-<p>I’ve gained lots of insight from other articles which really helped me learn about all the methods. One of which is <strong><a href="https://bartwronski.com/2017/04/13/cull-that-cone/">the amazing article of Bartłomiej Wroński</a></strong> and I really recommend checking it out if you want some more in-depth information about this. The others are mentioned below in case you want to learn more about the subject.</p>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/graphics/SpotlightCulling ">Read More...</a>
@@ -253,18 +223,16 @@ This greatly improves shading of a scene with a lot of dynamic lights. It’s a 
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/PakFiles"><h1>Pak files - Virtual file system</h1></a>
-<p>10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     15 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/PakFiles"><img class="img-fluid" src="/images/blog/005_pakfiles/cover.jpg"/></a>
 <p><p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
-
-<p>Today, many game engines have adopted the idea of having large files of binary asset data. Unreal Engine uses <a href="https://github.com/panzi/u4pak"><em>.pak</em> files</a>, Unity uses <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html"><em>.assets</em> files</a>, Anvil uses <a href="https://github.com/Mischa-Alff/broadside/wiki/AnvilNext-%60.forge%60-file-format"><em>.forge</em> files</a>, <a href="https://leagueoflegends.fandom.com/wiki/RAF:_Riot_Archive_File"><em>.raf</em></a> in League of Legends, …</p>
-
-<p>As a small project, I’ve decided to look into creating a similar format. On top of what I’ve described above, the files in a pak file are usually also compressed. This can significantly reduce disk size and possibly even improving performance when disk access is slow and the cost to decompress is low.</p>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/PakFiles ">Read More...</a>
@@ -274,29 +242,18 @@ This greatly improves shading of a scene with a lot of dynamic lights. It’s a 
 
 <div class="blog-post">
 <a class="blacklink" href="/blog/programming/StaticReflection"><h1>Basic compile-time type information using constexpr</h1></a>
-<p>21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     10 mins
   
 </span><span class="far fa-clock"></span>
 </p>
+<a href="/blog/programming/StaticReflection"><img class="img-fluid" src="/images/blog/004_reflection/cover.jpg"/></a>
 <p><p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
 
-<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. The relevant files to look at are:</p>
-
-<ul>
-  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Object.h">Object.h</a></li>
-  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.cpp">TypeInfo.cpp</a></li>
-  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/TypeInfo.h">TypeInfo.h</a></li>
-  <li><a href="https://github.com/simco50/FluxEngine/blob/master/FluxEngine/Core/Context.h">Context.h</a></li>
-</ul>
-
-<h2 id="what-it-does">What it does</h2>
-
-<p>I mainly started working on this out of curiosity and to see how far I could take it without having to modify loads of files everywhere. I can definitely take it much further but in its current state I can retrieve type information and create instances of classes using string hashes and object factories. Getting type information is compile-time without any runtime cost.</p>
-
-<p>I currently use it for getting game object components, object instantiation, shader variable addressing and general dynamic casting.</p>
+<p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>.</p>
 
 </p>
 <a class="btn btn-success sharp" href="/blog/programming/StaticReflection ">Read More...</a>
@@ -322,7 +279,14 @@ This greatly improves shading of a scene with a lot of dynamic lights. It’s a 
 
         <div class="col-md-3 d-print-none blog-sidebar">
             <ul class="social-buttons">
-                <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
+                <li>
+                    <a href="/feed.xml">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
+                        </svg>
+                    </a>
+                </li>
                 
             </ul>
             <nav class="sticky-top d-none d-md-block">

@@ -141,6 +141,7 @@
 <div class="d-print-none">
     <figure style="
         position:absolute; 
+        top: 0px;
         width:100%; height:400px; 
         background-size: cover; 
         z-index: -100; 
@@ -156,14 +157,18 @@
             <div class="blog-post">
 
 <h1>Using the DirectXShaderCompiler C++ API - Revised</h1>
-<p>24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<p style='font-style: italic;'>
+    24 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     5 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
+
 <p>Shortly after my previous post, <a href="https://www.youtube.com/channel/UCiaX2B8XiXR70jaN7NK-FpA">DirectX Developer Day</a> has happened and the DirectX team has shared a great amount of new updates and insights to the world including <a href="https://www.youtube.com/watch?v=tyyKeTsdtmo">new additions to the DirectX Shader Compiler</a>. The main thread is that the API has become a lot easier to use and is streamlined so that both the C++ and CLI interfaces share the same code path. This makes it a lot easier for developers to work with. So now things have changed quite a bit.</p>
+
+<!--more-->
 
 <p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
 
@@ -179,8 +184,6 @@
   <li><strong>dxcompiler.dll</strong> - The compiler’s frontend</li>
   <li><strong>dxcapi.h</strong> - The header with the interfaces. You only need this single header. <em>(/include/dxc/dxcapi.h)</em></li>
 </ul>
-
-<!--more-->
 
 <h2 id="compiling">Compiling</h2>
 
@@ -313,8 +316,24 @@
 
         <div class="col-md-3 d-print-none blog-sidebar">
             <ul class="social-buttons">
-                <li><a style="background-color:orange" class="btn btn-sm" href="/feed.xml"><i class="fa fa-rss"></i></a></li>
-                <li><a style="background-color:gray" class="btn btn-sm" onclick="javascript:window.print()" href="#"><i class="fa fa-print"></i></a></li>
+                <li>
+                    <a href="/feed.xml">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
+                        </svg>
+                    </a>
+                </li>
+                
+                <li>
+                    <a onclick="javascript:window.print()" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg"class="bi bi-printer" viewBox="0 0 16 16">
+                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+                        </svg>
+                    </a>
+                </li>
+                
             </ul>
             <nav class="sticky-top d-none d-md-block">
                 
