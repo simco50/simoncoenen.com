@@ -20,7 +20,7 @@
     <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/CPP_Delegates">
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
 <meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="C++ Delegates" />
 <meta name="author" content="Simon Coenen" />
@@ -39,12 +39,12 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"dateModified":"2019-06-07T00:00:00+01:00","datePublished":"2019-06-07T00:00:00+01:00","@type":"BlogPosting","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates"},"url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates","author":{"@type":"Person","name":"Simon Coenen"},"description":"Unreal Engine -like delegates in C++ using templates","headline":"C++ Delegates","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/CPP_Delegates"},"url":"https://www.simoncoenen.com/blog/programming/CPP_Delegates","image":"https://www.simoncoenen.com/images/blog/002_delegates/card.jpg","author":{"@type":"Person","name":"Simon Coenen"},"headline":"C++ Delegates","dateModified":"2019-06-07T00:00:00+01:00","description":"Unreal Engine -like delegates in C++ using templates","datePublished":"2019-06-07T00:00:00+01:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="/css/main.css" rel="stylesheet">
     
@@ -69,7 +69,7 @@
 </head>
     <body>
         <!-- Navigation -->
-<nav id="navbar" class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+<nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="/">Simon Coenen<small>Game Programmer</small></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -101,36 +101,36 @@
                     
                         <a href="https://twitter.com/simon_coenen" target="_blank" class="nav-link">
                     
-                    <span class="fab fa-twitter"></span>
-                    Twitter
-                </a>
+                            
+                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-twitter"></span>Twitter</span>
+                    </a>
                 </li>
             
                 <li class="nav-item">
                     
                         <a href="https://www.github.com/simco50" target="_blank" class="nav-link">
                     
-                    <span class="fab fa-github"></span>
-                    Github
-                </a>
+                            
+                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-github"></span>Github</span>
+                    </a>
                 </li>
             
                 <li class="nav-item">
                     
                         <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="nav-link">
                     
-                    <span class="fab fa-linkedin"></span>
-                    LinkedIn
-                </a>
+                            
+                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-linkedin"></span>LinkedIn</span>
+                    </a>
                 </li>
             
                 <li class="nav-item">
                     
                         <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="nav-link">
                     
-                    <span class="fas fa-paperclip"></span>
-                    Resume
-                </a>
+                            
+                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fas fa-paperclip"></span>Resume</span>
+                    </a>
                 </li>
             
         </ul>
@@ -145,9 +145,11 @@
         width:100%; height:400px; 
         background-size: cover; 
         z-index: -100; 
-        background-image: linear-gradient(rgba(0,0,0,0) 8vh, rgba(39, 39, 41)), url('/images/blog/002_delegates/card.jpg');">
+        justify-content: center;
+        background-position: center center;
+        background-image: linear-gradient(rgba(39, 39, 41, 0.7) 10%, rgba(0,0,0,0) 8vh, rgba(39, 39, 41)), url('/images/blog/002_delegates/card.jpg');">
     </figure>
-    <div style="height:200px"></div>
+    <div style="height:12vh"></div>
 </div>
 
 
@@ -479,7 +481,7 @@ An interesting catch is the fact that it’s possible to unbind functions during
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul class="section-nav">
+                    <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h2"><a href="#terminology">Terminology</a></li>
 <li class="toc-entry toc-h2"><a href="#usage">Usage</a>
 <ul>
@@ -530,10 +532,10 @@ An interesting catch is the fact that it’s possible to unbind functions during
     <div class="footer bg-dark d-print-none">
     </div>
 </footer>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.0/js/lightbox.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
 <script src="/js/main.js"></script>
 
     </body>
