@@ -1,0 +1,102 @@
+[
+  
+    {
+      "title"         : "DOOM Eternal - Graphics Study",
+      "category"      : "graphics",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/graphics/DoomEternalStudy",
+      "date"          : "30 Aug 2020",
+      "reading_time"  : "23",
+      "description"   : "A graphics study of Doom Eternal",
+      "image"         : "/images/blog/010_doom_eternal_study/image1.jpeg"
+    } ,
+  
+    {
+      "title"         : "Using the DirectXShaderCompiler C++ API - Revised",
+      "category"      : "graphics",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/graphics/DxcRevised",
+      "date"          : "24 Mar 2020",
+      "reading_time"  : "5",
+      "description"   : "The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.",
+      "image"         : "/images/blog/008_dxc_revised/cover.jpg"
+    } ,
+  
+    {
+      "title"         : "Using the DirectXShaderCompiler C++ API",
+      "category"      : "graphics",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/graphics/DxcCompiling",
+      "date"          : "04 Mar 2020",
+      "reading_time"  : "15",
+      "description"   : "The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.",
+      "image"         : "/images/blog/007_dxc/cover.jpg"
+    } ,
+  
+    {
+      "title"         : "Optimizing spotlight intersection in tiled/clustered light culling",
+      "category"      : "graphics",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/graphics/SpotlightCulling",
+      "date"          : "17 Aug 2019",
+      "reading_time"  : "10",
+      "description"   : "Optimizing spotlight intersection in tiled/clustered light culling",
+      "image"         : "/images/blog/006_cone_culling/cover.jpg"
+    } ,
+  
+    {
+      "title"         : "Pak files - Virtual file system",
+      "category"      : "programming",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/PakFiles",
+      "date"          : "10 Jul 2019",
+      "reading_time"  : "15",
+      "description"   : "Virtual file system using pak files",
+      "image"         : "/images/blog/005_pakfiles/cover.jpg"
+    } ,
+  
+    {
+      "title"         : "Basic compile-time type information using constexpr",
+      "category"      : "programming",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/StaticReflection",
+      "date"          : "21 Jun 2019",
+      "reading_time"  : "10",
+      "description"   : "Using compile-time string hashing to generate type information in C++",
+      "image"         : "/images/blog/004_reflection/cover.jpg"
+    } ,
+  
+    {
+      "title"         : "Natvis in Visual Studio",
+      "category"      : "programming",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/Natvis",
+      "date"          : "13 Jun 2019",
+      "reading_time"  : "4",
+      "description"   : "Modifying watch window in Visual Studio using Natvis",
+      "image"         : "/images/blog/003_natvis/Difference.png"
+    } ,
+  
+    {
+      "title"         : "C++ Delegates",
+      "category"      : "programming",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/programming/CPP_Delegates",
+      "date"          : "07 Jun 2019",
+      "reading_time"  : "11",
+      "description"   : "Unreal Engine -like delegates in C++ using templates",
+      "image"         : "/images/blog/002_delegates/card.jpg"
+    } ,
+  
+    {
+      "title"         : "A blog...?",
+      "category"      : "General",
+      "author"        : "Simon Coenen",
+      "url"           : "/blog/general/Blog",
+      "date"          : "06 Jun 2019",
+      "reading_time"  : "1",
+      "description"   : "Programming Blog - Simon Coenen",
+      "image"         : "/images/blog/001_blog/card.jpg"
+    } 
+  
+]

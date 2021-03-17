@@ -37,6 +37,23 @@
 {"@type":"WebPage","url":"https://www.simoncoenen.com/blog/page/2/blog.html","headline":"Blog - page 2 of 2","description":"Simon Coenen - Game Progammer","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+            }
+        });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
@@ -141,10 +158,73 @@
 <div class="container project-container">
     <div class="row">
         <div class="col-print-12 col-md-9" id="markdown-content">
-            
+            <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
+    <!-- Html Elements for Search -->
+    <div id="search-container" class="align-items-center">
+        <i class="fas fa-search fa-fw"></i>
+        <input style="width: 100%;" type="text" id="search-input" placeholder="Search...">
+        <i class="fa fa-times-circle fa-fw" id="search-clear"></i>
+    </div>
+
+    <ul class="search-results" id="results-container"></ul>
+    <br>
+
+<!-- Configuration -->
+<script>
+$(document).ready(function() {
+    SimpleJekyllSearch({
+        fuzzy: true,
+        searchInput: document.getElementById('search-input'),
+        resultsContainer: document.getElementById('results-container'),
+        json: '/search.json',
+        searchResultTemplate: `
+        <li>
+            <a href="{url}" style="text-decoration: none; color:white">
+                <div class="media blog-index-entry">
+                    <img class="d-none d-md-block align-self-center mr-3" style="width:120px" src="{image}"/>
+                    <div class="media-body">
+                        <h6>{title}</h6>
+                        <p style='font-style: italic;'>
+                            {date} - {author} - Reading Time: {reading_time} mins<span class="far fa-clock">
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </li>
+        `
+    });
+
+    function onChanged() {
+        if($("#search-input").val() == "")
+        {
+            $("#search-clear").addClass('d-none');
+            $("#results-container").addClass('d-none');
+        }
+        else
+        {
+            $("#search-clear").removeClass('d-none');
+            $("#results-container").removeClass('d-none');
+        }
+    }
+
+    $("#search-input").on("keyup", function() {
+        onChanged();
+    });
+
+    $("#search-clear").on("click", function() {
+        $("#search-input").val("");
+        onChanged();
+    });
+    onChanged();
+});
+</script>
+
+<div id="blog-posts">
+
 <div class="blog-post">
     <a class="blacklink" href="/blog/programming/Natvis">
-        <h1>Natvis in Visual Studio</h1>
+        <h2 class="word-wrap-dots">Natvis in Visual Studio</h2>
     </a>
     <p style='font-style: italic;'>
     13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
@@ -159,15 +239,17 @@
         <img class="img-fluid" src="/images/blog/003_natvis/Difference.png"/>
     </a>
     
+    <div class="word-wrap-dots">
     <p><p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
 
 </p>
+    </div>
 </div>
 <hr>
 
 <div class="blog-post">
     <a class="blacklink" href="/blog/programming/CPP_Delegates">
-        <h1>C++ Delegates</h1>
+        <h2 class="word-wrap-dots">C++ Delegates</h2>
     </a>
     <p style='font-style: italic;'>
     07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
@@ -182,16 +264,18 @@
         <img class="img-fluid" src="/images/blog/002_delegates/card.jpg"/>
     </a>
     
+    <div class="word-wrap-dots">
     <p><p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
 As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
 
 </p>
+    </div>
 </div>
 <hr>
 
 <div class="blog-post">
     <a class="blacklink" href="/blog/general/Blog">
-        <h1>A blog...?</h1>
+        <h2 class="word-wrap-dots">A blog...?</h2>
     </a>
     <p style='font-style: italic;'>
     06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
@@ -206,6 +290,7 @@ As you might know, it’s not straight forward at all to store and execute a met
         <img class="img-fluid" src="/images/blog/001_blog/card.jpg"/>
     </a>
     
+    <div class="word-wrap-dots">
     <p><p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
 Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
 
@@ -219,9 +304,11 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
 </ul>
 
 </p>
+    </div>
 </div>
 <hr>
 
+</div>
 
 
     <ul class="pagination justify-content-center">
@@ -242,7 +329,7 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
             <ul class="social-buttons">
                 <li>
                     <a href="/feed.xml">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-rss" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
                         </svg>
@@ -283,21 +370,5 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
     <div class="footer bg-dark d-print-none">
     </div>
 </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
-<script src="/js/main.js"></script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        processEscapes: true
-        }
-    });
-</script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
     </body>
 </html>
