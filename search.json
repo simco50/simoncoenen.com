@@ -12,23 +12,12 @@
     } ,
   
     {
-      "title"         : "Using the DirectXShaderCompiler C++ API - Revised",
-      "category"      : "graphics",
-      "author"        : "Simon Coenen",
-      "url"           : "/blog/programming/graphics/DxcRevised",
-      "date"          : "24 Mar 2020",
-      "reading_time"  : "5",
-      "description"   : "The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.",
-      "image"         : "/images/blog/008_dxc_revised/cover.jpg"
-    } ,
-  
-    {
       "title"         : "Using the DirectXShaderCompiler C++ API",
       "category"      : "graphics",
       "author"        : "Simon Coenen",
       "url"           : "/blog/programming/graphics/DxcCompiling",
       "date"          : "04 Mar 2020",
-      "reading_time"  : "15",
+      "reading_time"  : "14",
       "description"   : "The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.",
       "image"         : "/images/blog/007_dxc/cover.jpg"
     } ,

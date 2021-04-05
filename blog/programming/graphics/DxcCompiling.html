@@ -174,152 +174,135 @@
     04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    15 mins
+    14 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
 
 <p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
 The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
-Microsoft has since introduced their new llvm-based compiler called DirectXShaderCompiler (DXC) which compiles to DXIL.
+Microsoft has since introduced their new llvm-based compiler DirectXShaderCompiler (DXC) which compiles to DXIL (whereas FXC compiles to DXBC).
 It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
 
 <!--more-->
 
-<p>Fxc has existed for quite a long time now and there are guides for it everywhere however Dxc is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering DirectX is generally really well documented.
-Using Dxc’s commandline tools are quite straight forward and self-explanatory however I’ve always like to compile my shaders at runtime because it eventually require no effort when modifying shaders and having to recompile them. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
+<p>FXC has existed for quite a long time now and there are guides for it everywhere however DXC is quite a bit younger and I didn’t find too much about it. The documentation for it is quite minimal and incomplete which is surprising considering D3D is generally really well documented.
+Using DXC’s commandline tools are quite straight forward and self-explanatory however I’ve always liked to compile my shaders at runtime because it makes it easier to recompile on the fly. Unfortunately, I didn’t find too much documentation on the C++ API.</p>
 
 <p>I’ve found a few articles here and there about the very basic setup for this however most of the were very minimal and didn’t really cover things like compile-arguments, defines, include handling, validation, reflection, debug-data, … which are quite important to know about.</p>
 
-<p><strong>(20/03/2020): DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. I’d definitely recommend watching that as things described in this post might not all be correct. <a href="https://youtu.be/tyyKeTsdtmo?t=878">Check it out here!</a>.</strong></p>
+<p><strong>EDIT (20/03/2020)</strong>: DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. <a href="https://youtu.be/tyyKeTsdtmo?t=878">I’d definitely recommend watching that</a>. The general usage is the same but with the latest few updates, it has become a bit easier to use and manipulate.</p>
 
-<p><strong>I’ve written an updated article after the event <a href="/blog/programming/graphics/DxcRevised">you can read here</a></strong></p>
+<p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
 
-<h2 id="basic-usage">Basic Usage</h2>
+<h2 id="getting-started">Getting Started</h2>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">CompileShader</span><span class="p">(</span><span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pFilePath</span><span class="p">,</span> <span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pTarget</span><span class="p">,</span> <span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pEntryPoint</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;&amp;</span> <span class="n">defines</span><span class="p">,</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3DBlob</span><span class="o">&gt;&amp;</span> <span class="n">pOutput</span><span class="p">)</span>
+<p>At the time of writing this, there is not yet an official release with the new DXC updates however the latest build binaries can be <a href="https://ci.appveyor.com/project/antiagainst/directxshadercompiler/branch/master/artifacts">downloaded from the repo’s AppVeyor</a>.</p>
+
+<p>There are quite a lot of binaries in there but to use the C++ API you only need a few:</p>
+<ul>
+  <li><strong>dxcompiler.lib</strong> - The compiler dll link lib</li>
+  <li><strong>dxcompiler.dll</strong> - The compiler’s frontend</li>
+  <li><strong>dxcapi.h</strong> - The header with the interfaces. You only need this single header. <em>(/include/dxc/dxcapi.h)</em></li>
+</ul>
+
+<h2 id="compiling">Compiling</h2>
+
+<p>The new update comes with a new interface <code class="highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
+<span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pSource</span><span class="p">;</span>
+<span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">pShaderSource</span><span class="p">,</span> <span class="n">shaderSourceSize</span><span class="p">,</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Now introducing <code class="highlighter-rouge">IDxcCompiler3</code>, the <code class="highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="highlighter-rouge">-D</code> argument. Note the use of <code class="highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LPWSTR</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
+<span class="c1">//-E for the entry point (eg. PSMain)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-E"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">entryPoint</span><span class="p">);</span>
+
+<span class="c1">//-T for the target profile (eg. ps_6_2)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-T"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+
+<span class="c1">//Strip reflection data and pdbs (see later)</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_debug"</span><span class="p">);</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_reflect"</span><span class="p">);</span>
+
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_WARNINGS_ARE_ERRORS</span><span class="p">);</span> <span class="c1">//-WX</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_DEBUG</span><span class="p">);</span> <span class="c1">//-Zi</span>
+<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_PACK_MATRIX_ROW_MAJOR</span><span class="p">);</span> <span class="c1">//-Zp</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="o">&amp;</span> <span class="n">define</span> <span class="o">:</span> <span class="n">defines</span><span class="p">)</span>
 <span class="p">{</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcLibrary</span><span class="o">&gt;</span> <span class="n">pLibrary</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcLibrary</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pLibrary</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcCompiler</span><span class="o">&gt;</span> <span class="n">pCompiler</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcCompiler</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pCompiler</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pSource</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pLibrary</span><span class="o">-&gt;</span><span class="n">CreateBlobWithEncodingFromPinned</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">source</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+    <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-D"</span><span class="p">);</span>
+    <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">define</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
 
-	<span class="kt">wchar_t</span><span class="o">*</span> <span class="n">pArgs</span><span class="p">[]</span> <span class="o">=</span>
-	<span class="p">{</span>
-		<span class="s">L"-Zpr"</span><span class="p">,</span>			<span class="c1">//Row-major matrices</span>
-		<span class="s">L"-WX"</span><span class="p">,</span>				<span class="c1">//Warnings as errors</span>
-<span class="cp">#ifdef _DEBUG
-</span>		<span class="s">L"-Zi"</span><span class="p">,</span>				<span class="c1">//Debug info</span>
-		<span class="s">L"-Qembed_debug"</span><span class="p">,</span>	<span class="c1">//Embed debug info into the shader</span>
-		<span class="s">L"-Od"</span><span class="p">,</span>				<span class="c1">//Disable optimization</span>
-<span class="cp">#else
-</span>		<span class="s">L"-O3"</span><span class="p">,</span>				<span class="c1">//Optimization level 3</span>
-<span class="cp">#endif
-</span>	<span class="p">};</span>
-	
-	<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DxcDefine</span><span class="o">&gt;</span> <span class="n">dxcDefines</span><span class="p">(</span><span class="n">defines</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
-	<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">defines</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="n">DxcDefine</span><span class="o">&amp;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">dxcDefines</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-		<span class="n">m</span><span class="p">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">defines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">first</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
-		<span class="n">m</span><span class="p">.</span><span class="n">Value</span> <span class="o">=</span> <span class="n">defines</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">second</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
-	<span class="p">}</span>
+<span class="n">DxcBuffer</span> <span class="n">sourceBuffer</span><span class="p">;</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Ptr</span> <span class="o">=</span> <span class="n">pSource</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">();</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">pSource</span><span class="o">-&gt;</span><span class="n">GetBufferSize</span><span class="p">();</span>
+<span class="n">sourceBuffer</span><span class="p">.</span><span class="n">Encoding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcOperationResult</span><span class="o">&gt;</span> <span class="n">pCompileResult</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pCompiler</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="n">pSource</span><span class="p">.</span><span class="n">Get</span><span class="p">(),</span> <span class="n">pFileName</span><span class="p">,</span> <span class="n">pEntryPoint</span><span class="p">,</span> <span class="n">pTarget</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pArgs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pArgs</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pArgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dxcDefines</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">dxcDefines</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">pCompileResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcResult</span><span class="o">&gt;</span> <span class="n">pCompileResult</span><span class="p">;</span>
+<span class="n">HR</span><span class="p">(</span><span class="n">pCompiler</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sourceBuffer</span><span class="p">,</span> <span class="n">arguments</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">arguments</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pCompileResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
 
-	<span class="n">HRESULT</span> <span class="n">hrCompilation</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetStatus</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hrCompilation</span><span class="p">));</span>
-
-	<span class="k">if</span> <span class="p">(</span><span class="n">hrCompilation</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
-	<span class="p">{</span>
-		<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pPrintBlob</span><span class="p">;</span>
-		<span class="n">HR</span><span class="p">(</span><span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetErrorBuffer</span><span class="p">(</span><span class="n">pPrintBlob</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
-		<span class="n">std</span><span class="o">::</span><span class="n">wcout</span> <span class="o">&lt;&lt;</span> <span class="n">pPrintBlob</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-		<span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-	<span class="p">}</span>
-	<span class="n">IDxcBlob</span><span class="o">**</span> <span class="n">pBlob</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">**&gt;</span><span class="p">(</span><span class="n">pOutput</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
-	<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetResult</span><span class="p">(</span><span class="n">pBlob</span><span class="p">);</span>
-	<span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="c1">//Error Handling</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobUtf8</span><span class="o">&gt;</span> <span class="n">pErrors</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_ERRORS</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pErrors</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">pErrors</span> <span class="o">&amp;&amp;</span> <span class="n">pErrors</span><span class="o">-&gt;</span><span class="n">GetStringLength</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">MyLogFunction</span><span class="p">(</span><span class="n">Error</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">pErrors</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="reflection">Reflection</h2>
+<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>.</p>
 
-<p>Reflection with Dxc output is only slightly different from Fxc, you’ll eventually end up with a <strong>ID3D12ShaderReflection</strong> reference and from then on you can just do the same as you would usually do.</p>
+<h2 id="stripping-parts">Stripping parts</h2>
 
-<p>For Raytracing shaders, you can use the <strong>ID3D12LibraryReflection</strong> object instead of ID3D12ShaderReflection.</p>
+<p>I’ve found that previously, stripping debug data or reflection data hasn’t always been doing what I would expect. With the new updates, this becomes a lot easier.</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">DoReflection</span><span class="p">(</span><span class="k">const</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;&amp;</span> <span class="n">pShader</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcContainerReflection</span><span class="o">&gt;</span> <span class="n">pReflection</span><span class="p">;</span>
-	<span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcContainerReflection</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">Load</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">Get</span><span class="p">()));</span>
-	<span class="n">uint32</span> <span class="n">partIndex</span><span class="p">;</span>
+<p>The output of the compiler now is a <code class="highlighter-rouge">IDxcResult</code> (as opposed to <code class="highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
 
-<span class="cp">#ifndef MAKEFOURCC
-#define MAKEFOURCC(a, b, c, d) (unsigned int)((unsigned char)(a) | (unsigned char)(b) &lt;&lt; 8 | (unsigned char)(c) &lt;&lt; 16 | (unsigned char)(d) &lt;&lt; 24)
-#endif
-</span>	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">FindFirstPartKind</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">partIndex</span><span class="p">));</span>
-<span class="cp">#undef MAKEFOURCC
-</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12ShaderReflection</span><span class="o">&gt;</span> <span class="n">pShaderReflection</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pReflection</span><span class="o">-&gt;</span><span class="n">GetPartReflection</span><span class="p">(</span><span class="n">partIndex</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
-	
-	<span class="c1">//...</span>
-	<span class="n">D3D12_SHADER_DESC</span> <span class="n">shaderDesc</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="o">-&gt;</span><span class="n">GetDesc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">shaderDesc</span><span class="p">));</span>
-	<span class="c1">//...</span>
-<span class="p">}</span>
+<ul>
+  <li>DXC_OUT_OBJECT</li>
+  <li>DXC_OUT_ERRORS</li>
+  <li>DXC_OUT_PDB</li>
+  <li>DXC_OUT_SHADER_HASH</li>
+  <li>DXC_OUT_DISASSEMBLY</li>
+  <li>DXC_OUT_HLSL</li>
+  <li>DXC_OUT_TEXT</li>
+  <li>DXC_OUT_REFLECTION</li>
+  <li>DXC_OUT_ROOT_SIGNATURE</li>
+</ul>
+
+<p>In the code example above, I added the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="highlighter-rouge">DXC_OUT_PDB</code> and <code class="highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
+
+<p>So now, it’s a lot more clear and easy to specifically get parts of the shader. Getting shader PDBs is done as follows:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pDebugData</span><span class="p">;</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobUtf16</span><span class="o">&gt;</span> <span class="n">pDebugDataPath</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_PDB</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pDebugData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="n">pDebugDataPath</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
 </code></pre></div></div>
 
-<h2 id="stripping-debug-data">Stripping debug data</h2>
+<p>The function has one extra argument which can be retrieved as a <code class="highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
 
-<p>In some cases, you might want to compile the shader, process some of the debug data and then strip the debug data before serializing the shader. This can be done using the IDxcContainer. All the parts of a DXIL container are defined in DxilContainer.h and could be stripped however I found that stripping certain parts throw exceptions. It’s also important to know that if you’re not sure the container has a certain part, you have to check it first otherwise the function will fail.</p>
+<p>For reflection data: <em>(library reflection is similar but with <code class="highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
 
-<p>Unfortunately, it doesn’t seem to be possible currently to strip out reflection data. A workaround for that could possibly to compile the shader twice, once with reflection data that can be thrown away and once without. In reality, this won’t really happen because usually shader compilation is done offline but in the case of having to support UGC, this could be an option.</p>
-
-<p>The cool thing about this stripping is that you can separate shader parts into different blobs and serialize them in different ways. That way you could save shader PDBs separate (This can also easily be done with <code class="highlighter-rouge">IDxcCompiler2::CompileWithDebug</code>)</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">StripDebugData</span><span class="p">(</span><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;&amp;</span> <span class="n">pShader</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcContainerBuilder</span><span class="o">&gt;</span> <span class="n">pContainerBuilder</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcContainerBuilder</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">Load</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">Get</span><span class="p">()));</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">RemovePart</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">)));</span> <span class="c1">//DFCC_ShaderDebugInfoDXIL</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">RemovePart</span><span class="p">(</span><span class="n">MAKEFOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'N'</span><span class="p">)));</span> <span class="c1">//DFCC_ShaderDebugName</span>
-
-	<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcOperationResult</span><span class="o">&gt;</span> <span class="n">pResult</span><span class="p">;</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pContainerBuilder</span><span class="o">-&gt;</span><span class="n">SerializeContainer</span><span class="p">(</span><span class="n">pResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
-	<span class="c1">//Do status checking</span>
-	<span class="c1">//...</span>
-	<span class="n">HR</span><span class="p">(</span><span class="n">pResult</span><span class="o">-&gt;</span><span class="n">GetResult</span><span class="p">(</span><span class="n">pShader</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
-<span class="p">}</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pReflectionData</span><span class="p">;</span>
+<span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_REFLECTION</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflectionData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
+<span class="n">DxcBuffer</span> <span class="n">reflectionBuffer</span><span class="p">;</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Ptr</span> <span class="o">=</span> <span class="n">pReflectionData</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">();</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">pReflectionData</span><span class="o">-&gt;</span><span class="n">GetBufferSize</span><span class="p">();</span>
+<span class="n">reflectionBuffer</span><span class="p">.</span><span class="n">Encoding</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">ID3D12ShaderReflection</span><span class="o">&gt;</span> <span class="n">pShaderReflection</span><span class="p">;</span>
+<span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateReflection</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reflectionBuffer</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
 </code></pre></div></div>
 
-<p>Here is a list of all the parts:</p>
-
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">DxilFourCC</span> <span class="p">{</span> 
-   <span class="n">DFCC_Container</span>                <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">,</span> <span class="sc">'C'</span><span class="p">),</span>
-   <span class="n">DFCC_ResourceDef</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'E'</span><span class="p">,</span> <span class="sc">'F'</span><span class="p">),</span> 
-   <span class="n">DFCC_InputSignature</span>           <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
-   <span class="n">DFCC_OutputSignature</span>          <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'O'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
-   <span class="n">DFCC_PatchConstantSignature</span>   <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'G'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">),</span> 
-   <span class="n">DFCC_ShaderStatistics</span>         <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'S'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">),</span> 
-   <span class="n">DFCC_ShaderDebugInfoDXIL</span>      <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">),</span> 
-   <span class="n">DFCC_ShaderDebugName</span>          <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'N'</span><span class="p">),</span> 
-   <span class="n">DFCC_FeatureInfo</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'S'</span><span class="p">,</span> <span class="sc">'F'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
-   <span class="n">DFCC_PrivateData</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'R'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'V'</span><span class="p">),</span> 
-   <span class="n">DFCC_RootSignature</span>            <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
-   <span class="n">DFCC_DXIL</span>                     <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'D'</span><span class="p">,</span> <span class="sc">'X'</span><span class="p">,</span> <span class="sc">'I'</span><span class="p">,</span> <span class="sc">'L'</span><span class="p">),</span> 
-   <span class="n">DFCC_PipelineStateValidation</span>  <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'P'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'V'</span><span class="p">,</span> <span class="sc">'0'</span><span class="p">),</span> 
-   <span class="n">DFCC_RuntimeData</span>              <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'R'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'T'</span><span class="p">),</span> 
-   <span class="n">DFCC_ShaderHash</span>               <span class="o">=</span> <span class="n">DXIL_FOURCC</span><span class="p">(</span><span class="sc">'H'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'S'</span><span class="p">,</span> <span class="sc">'H'</span><span class="p">),</span> 
- <span class="p">};</span> 
-</code></pre></div></div>
+<p>On a last note, as mentioned in the video, <strong>none of the DXC interfaces are thread-safe</strong> and it is advised to have an instance of each interface for each thread. DxcCreateInstance is an exception and is thread-safe.</p>
 
 <h2 id="all-compiler-arguments">All compiler arguments</h2>
 
@@ -834,7 +817,7 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
   </div>
   <div class="text-right col-sm-6">
   
-    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DxcRevised">Next: Using the DirectXShaderCompiler C++ API - Revised &raquo;</a>
+    <a class="btn btn-sm sharp" href="/blog/programming/graphics/DoomEternalStudy">Next: DOOM Eternal - Graphics Study &raquo;</a>
   
   </div>
 </div>
@@ -879,9 +862,9 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
                     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#basic-usage">Basic Usage</a></li>
-<li class="toc-entry toc-h2"><a href="#reflection">Reflection</a></li>
-<li class="toc-entry toc-h2"><a href="#stripping-debug-data">Stripping debug data</a></li>
+<li class="toc-entry toc-h2"><a href="#getting-started">Getting Started</a></li>
+<li class="toc-entry toc-h2"><a href="#compiling">Compiling</a></li>
+<li class="toc-entry toc-h2"><a href="#stripping-parts">Stripping parts</a></li>
 <li class="toc-entry toc-h2"><a href="#all-compiler-arguments">All compiler arguments</a></li>
 <li class="toc-entry toc-h2"><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li>
 </ul>
@@ -894,8 +877,6 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
                     
                         <li class=""><a href="/blog/programming/graphics/DoomEternalStudy">DOOM Eternal - Graphics Study</a></li>
                     
-                        <li class=""><a href="/blog/programming/graphics/DxcRevised">Using the DirectXShaderCompiler C++ API - Revised</a></li>
-                    
                         <li class=""><a href="/blog/programming/graphics/DxcCompiling">Using the DirectXShaderCompiler C++ API</a></li>
                     
                         <li class=""><a href="/blog/programming/graphics/SpotlightCulling">Optimizing spotlight intersection in tiled/clustered light culling</a></li>
@@ -903,6 +884,8 @@ Using Dxc’s commandline tools are quite straight forward and self-explanatory 
                         <li class=""><a href="/blog/programming/PakFiles">Pak files - Virtual file system</a></li>
                     
                         <li class=""><a href="/blog/programming/StaticReflection">Basic compile-time type information using constexpr</a></li>
+                    
+                        <li class=""><a href="/blog/programming/Natvis">Natvis in Visual Studio</a></li>
                     
                     <li class=""><a href="/blog_index">More...</a></li>
                 </ul>
