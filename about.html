@@ -161,7 +161,7 @@
 
 <script>
     var themeSwitch = $("#theme-switch");
-    var isDarkTheme = localStorage.getItem('theme') == 'dark';
+    var isDarkTheme = localStorage.getItem('theme') != 'light';
     onChanged(isDarkTheme);
 
     themeSwitch.click('change', function(event) { 
