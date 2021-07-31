@@ -151,41 +151,10 @@
 
         
 <div class="d-print-none">
-    <figure id="top-banner" style="
-        position:absolute; 
-        top: 0px;
-        width:100%; 
-        height: 25em; 
-        background-size: cover; 
-        z-index: -100; 
-        justify-content: center;
-        background-position: center center;
-        ">
+    <img src="/images/blog/001_blog/card.jpg" class="top-banner" style="height: 25em;"/>
     </figure>
     <div style="height:12vh"></div>
 </div>
-
-<script>
-    var themeSwitch = $("#theme-switch");
-    var isDarkTheme = localStorage.getItem('theme') != 'light';
-    onChanged(isDarkTheme);
-
-    themeSwitch.click('change', function(event) { 
-    	onChanged(event.currentTarget.checked);
-    });
-    
-    function onChanged(isDarkTheme) {
-        if(isDarkTheme)
-        {
-            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(39, 39, 41)), url('/images/blog/001_blog/card.jpg')");
-        }
-        else
-        {
-            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(223, 223, 223)), url('/images/blog/001_blog/card.jpg')");
-        }
-    }
-</script>
-
 
 
 <div class="container project-container">
@@ -310,9 +279,6 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div class="footer bg-dark d-print-none">
-    </div>
-
     <script src="/js/main.js"></script>
 </footer>
     </body>

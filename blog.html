@@ -52,7 +52,7 @@
             }
         });
     </script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -183,7 +183,7 @@ $(document).ready(function() {
         json: '/search.json',
         searchResultTemplate: `
         <li>
-            <a href="{url}" style="text-decoration: none; color:white">
+            <a href="{url}" style="text-decoration: none;">
                 <div class="media blog-index-entry">
                     <img class="d-none d-md-block align-self-center mr-3" style="width:120px" src="{image}"/>
                     <div class="media-body">
@@ -443,9 +443,6 @@ I wanted to write up something about my entire culling implementation but then I
         <!-- /.container -->
         <!--Footer-->
 <footer>
-    <div class="footer bg-dark d-print-none">
-    </div>
-
     <script src="/js/main.js"></script>
 </footer>
     </body>

@@ -3,6 +3,8 @@ var isDarkTheme = localStorage.getItem('theme') != 'light';
 var themeSwitch = $("#theme-switch");
 themeSwitch[0].checked = isDarkTheme;
 
+console.log(themeSwitch);
+
 themeSwitch.click('change', function(event) { 
 	var mode = event.currentTarget.checked ? 'dark' : 'light';
 	document.documentElement.setAttribute('data-theme', mode);
@@ -35,16 +37,13 @@ window.onscroll = function () {
 };
 
 //Table of content highlighting
-$(document).ready(function() {
-	
+$("#table-of-contents a").removeClass("current")
+currentAnchor().addClass("current")
+
+$(window).scroll(function() {
 	$("#table-of-contents a").removeClass("current")
 	currentAnchor().addClass("current")
-
-	$(window).scroll(function() {
-	  $("#table-of-contents a").removeClass("current")
-	  currentAnchor().addClass("current")
-	})
-});
+})
   
 function tocItem(anchor) {
 return $("[href=\"" + anchor + "\"]")
