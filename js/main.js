@@ -1,16 +1,24 @@
-// Play video on hover
-$(document).ready(function() {
-	
-	$(".video-overlay").hover(hoverVideo, hideVideo);
+// Dark theme switch
+var isDarkTheme = localStorage.getItem('theme') != 'light';
+var themeSwitch = $("#theme-switch");
+themeSwitch[0].checked = isDarkTheme;
 
-	function hoverVideo(e) {
-		$('video', this).get(0).currentTime = 0;
-		$('video', this).get(0).play();
-	}
-	function hideVideo(e) {
-		$('video', this).get(0).pause();
-	}
+themeSwitch.click('change', function(event) { 
+	var mode = event.currentTarget.checked ? 'dark' : 'light';
+	document.documentElement.setAttribute('data-theme', mode);
+	localStorage.setItem('theme', mode);
 });
+
+// Video hover
+$(".video-overlay").hover(hoverVideo, hideVideo);
+
+function hoverVideo(e) {
+	$('video', this).get(0).currentTime = 0;
+	$('video', this).get(0).play();
+}
+function hideVideo(e) {
+	$('video', this).get(0).pause();
+}
 
 // Hide navbar when scrolling down
 var prevScrollPos = window.pageYOffset;

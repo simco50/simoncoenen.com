@@ -47,7 +47,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main_head.js"></script>
     
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -110,8 +110,7 @@
                     
                         <a href="https://twitter.com/simon_coenen" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-twitter"></span>Twitter</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-twitter fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -119,8 +118,7 @@
                     
                         <a href="https://www.github.com/simco50" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-github"></span>Github</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-github fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -128,8 +126,7 @@
                     
                         <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-linkedin"></span>LinkedIn</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-linkedin fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -137,18 +134,24 @@
                     
                         <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fas fa-paperclip"></span>Resume</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fas fa-paperclip fa-lg"></span></span>
                     </a>
                 </li>
             
+            <li class="nav-item" style="padding-left: 10px; padding-top: 3px;">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-switch">
+                    <span></span>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
 
+
         
 <div class="d-print-none">
-    <figure style="
+    <figure id="top-banner" style="
         position:absolute; 
         top: 0px;
         width:100%; 
@@ -157,11 +160,32 @@
         z-index: -100; 
         justify-content: center;
         background-position: center center;
-        background-image: linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(39, 39, 41)), url('/images/blog/006_cone_culling/cover.jpg');
         ">
     </figure>
     <div style="height:12vh"></div>
 </div>
+
+<script>
+    var themeSwitch = $("#theme-switch");
+    var isDarkTheme = localStorage.getItem('theme') == 'dark';
+    onChanged(isDarkTheme);
+
+    themeSwitch.click('change', function(event) { 
+    	onChanged(event.currentTarget.checked);
+    });
+    
+    function onChanged(isDarkTheme) {
+        if(isDarkTheme)
+        {
+            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(39, 39, 41)), url('/images/blog/006_cone_culling/cover.jpg')");
+        }
+        else
+        {
+            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(223, 223, 223)), url('/images/blog/006_cone_culling/cover.jpg')");
+        }
+    }
+</script>
+
 
 
 <div class="container project-container">
@@ -544,6 +568,8 @@ However, with tiled light culling having large discontinuities, bounding spheres
 <footer>
     <div class="footer bg-dark d-print-none">
     </div>
+
+    <script src="/js/main.js"></script>
 </footer>
     </body>
 </html>

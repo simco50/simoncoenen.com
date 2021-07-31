@@ -47,7 +47,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main_head.js"></script>
     
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -110,8 +110,7 @@
                     
                         <a href="https://twitter.com/simon_coenen" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-twitter"></span>Twitter</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-twitter fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -119,8 +118,7 @@
                     
                         <a href="https://www.github.com/simco50" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-github"></span>Github</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-github fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -128,8 +126,7 @@
                     
                         <a href="https://www.linkedin.com/in/simon-coenen-906a58a3/" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-linkedin"></span>LinkedIn</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fab fa-linkedin fa-lg"></span></span>
                     </a>
                 </li>
             
@@ -137,18 +134,24 @@
                     
                         <a href="/downloads/SimonCoenen_Resume.pdf" target="_blank" class="nav-link">
                     
-                            
-                            <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fas fa-paperclip"></span>Resume</span>
+                        <span style="display:inline"><span style="display:inline; padding-right: 5px" class="fas fa-paperclip fa-lg"></span></span>
                     </a>
                 </li>
             
+            <li class="nav-item" style="padding-left: 10px; padding-top: 3px;">
+                <div class="theme-switcher">
+                    <input type="checkbox" id="theme-switch">
+                    <span></span>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
 
+
         
 <div class="d-print-none">
-    <figure style="
+    <figure id="top-banner" style="
         position:absolute; 
         top: 0px;
         width:100%; 
@@ -157,11 +160,32 @@
         z-index: -100; 
         justify-content: center;
         background-position: center center;
-        background-image: linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(39, 39, 41)), url('/images/blog/007_dxc/cover.jpg');
         ">
     </figure>
     <div style="height:12vh"></div>
 </div>
+
+<script>
+    var themeSwitch = $("#theme-switch");
+    var isDarkTheme = localStorage.getItem('theme') == 'dark';
+    onChanged(isDarkTheme);
+
+    themeSwitch.click('change', function(event) { 
+    	onChanged(event.currentTarget.checked);
+    });
+    
+    function onChanged(isDarkTheme) {
+        if(isDarkTheme)
+        {
+            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(39, 39, 41)), url('/images/blog/007_dxc/cover.jpg')");
+        }
+        else
+        {
+            $("#top-banner").css("background-image", "linear-gradient(rgba(39, 39, 41, 0.5) 5vh, rgba(0,0,0,0) 15vh, rgba(223, 223, 223)), url('/images/blog/007_dxc/cover.jpg')");
+        }
+    }
+</script>
+
 
 
 <div class="container project-container">
@@ -174,7 +198,7 @@
     04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    14 mins
+    16 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
@@ -315,26 +339,22 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">General Options:</th>
+      <th style="text-align: left">Common Options:</th>
       <th style="text-align: left"> </th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-help</td>
-      <td>Display available options</td>
+      <td style="text-align: left">Display available options</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-nologo</td>
-      <td>Suppress copyright message</td>
+      <td style="text-align: left">Suppress copyright message</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Qunused-arguments</td>
-      <td>Don’t emit warning for unused driver arguments</td>
+      <td style="text-align: left">Don’t emit warning for unused driver arguments</td>
     </tr>
   </tbody>
 </table>
@@ -344,254 +364,240 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
     <tr>
       <th style="text-align: left">Compilation Options:</th>
       <th style="text-align: left"> </th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-all_resources_bound</td>
-      <td>Enables agressive flattening</td>
+      <td style="text-align: left">-all-resources-bound</td>
+      <td style="text-align: left">Enables agressive flattening</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-auto-binding-space &lt;value&gt;</td>
-      <td>Set auto binding space - enables auto resource binding in libraries</td>
+      <td style="text-align: left">Set auto binding space - enables auto resource binding in libraries</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Cc</td>
-      <td>Output color coded assembly listings</td>
+      <td style="text-align: left">Output color coded assembly listings</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-default-linkage &lt;value&gt;</td>
-      <td>Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
+      <td style="text-align: left">Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-denorm &lt;value&gt;</td>
-      <td>select denormal value options (any, preserve, ftz). any is the default.</td>
+      <td style="text-align: left">select denormal value options (any, preserve, ftz). any is the default.</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-disable-payload-qualifiers</td>
+      <td style="text-align: left">Disables support for payload access qualifiers for raytracing payloads in SM 6.7.</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-D &lt;value&gt;</td>
-      <td>Define macro</td>
+      <td style="text-align: left">Define macro</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-enable-16bit-types</td>
-      <td>Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
+      <td style="text-align: left">Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-enable-lifetime-markers</td>
+      <td style="text-align: left">Enable generation of lifetime markers</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-enable-payload-qualifiers</td>
+      <td style="text-align: left">Enables support for payload access qualifiers for raytracing payloads in SM 6.6.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-encoding &lt;value&gt;</td>
+      <td style="text-align: left">Set default encoding for text outputs (utf8|utf16) default=utf8</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-export-shaders-only</td>
-      <td>Only export shaders when compiling a library</td>
+      <td style="text-align: left">Only export shaders when compiling a library</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-exports &lt;value&gt;</td>
-      <td>Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
+      <td style="text-align: left">Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-E &lt;value&gt;</td>
-      <td>Entry point name</td>
+      <td style="text-align: left">Entry point name</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Fc &lt;file&gt;</td>
-      <td>Output assembly code listing file</td>
+      <td style="text-align: left">Output assembly code listing file</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fdiagnostics-show-option</td>
+      <td style="text-align: left">Print option name with mappable diagnostics</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-Fd &lt;file&gt;</td>
-      <td>Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
+      <td style="text-align: left">Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Fe &lt;file&gt;</td>
-      <td>Output warnings and errors to the given file</td>
+      <td style="text-align: left">Output warnings and errors to the given file</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Fh &lt;file&gt;</td>
-      <td>Output header file containing object code</td>
+      <td style="text-align: left">Output header file containing object code</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-flegacy-macro-expansion</td>
-      <td>Expand the operands before performing token-pasting operation (fxc behavior)</td>
+      <td style="text-align: left">Expand the operands before performing token-pasting operation (fxc behavior)</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-flegacy-resource-reservation</td>
-      <td>Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
+      <td style="text-align: left">Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-force_rootsig_ver &lt;profile&gt;</td>
-      <td>force root signature version (rootsig_1_1 if omitted)</td>
+      <td style="text-align: left">-fno-diagnostics-show-option</td>
+      <td style="text-align: left">Do not print option name with mappable diagnostics</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-force-rootsig-ver &lt;profile&gt;</td>
+      <td style="text-align: left">force root signature version (rootsig_1_1 if omitted)</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-Fo &lt;file&gt;</td>
-      <td>Output object file</td>
+      <td style="text-align: left">Output object file</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-Fre &lt;file&gt;</td>
+      <td style="text-align: left">Output reflection to the given file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Frs &lt;file&gt;</td>
+      <td style="text-align: left">Output root signature to the given file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Fsh &lt;file&gt;</td>
+      <td style="text-align: left">Output shader hash to the given file</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-Gec</td>
-      <td>Enable backward compatibility mode</td>
+      <td style="text-align: left">Enable backward compatibility mode</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Ges</td>
-      <td>Enable strict mode</td>
+      <td style="text-align: left">Enable strict mode</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Gfa</td>
-      <td>Avoid flow control constructs</td>
+      <td style="text-align: left">Avoid flow control constructs</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Gfp</td>
-      <td>Prefer flow control constructs</td>
+      <td style="text-align: left">Prefer flow control constructs</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Gis</td>
-      <td>Force IEEE strictness</td>
+      <td style="text-align: left">Force IEEE strictness</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-HV &lt;value&gt;</td>
-      <td>HLSL version (2016, 2017, 2018). Default is 2018</td>
+      <td style="text-align: left">HLSL version (2016, 2017, 2018). Default is 2018</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-H</td>
-      <td>Show header includes and nesting depth</td>
+      <td style="text-align: left">Show header includes and nesting depth</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-ignore-line-directives</td>
-      <td>Ignore line directives</td>
+      <td style="text-align: left">Ignore line directives</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-I &lt;value&gt;</td>
-      <td>Add directory to include search path</td>
+      <td style="text-align: left">Add directory to include search path</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Lx</td>
-      <td>Output hexadecimal literals</td>
+      <td style="text-align: left">Output hexadecimal literals</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Ni</td>
-      <td>Output instruction numbers in assembly listings</td>
+      <td style="text-align: left">Output instruction numbers in assembly listings</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-no-legacy-cbuf-layout</td>
+      <td style="text-align: left">Do not use legacy cbuffer load</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-no-warnings</td>
-      <td>Suppress warnings</td>
+      <td style="text-align: left">Suppress warnings</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-not_use_legacy_cbuf_load</td>
-      <td>Do not use legacy cbuffer load</td>
-    </tr>
-    <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-No</td>
-      <td>Output instruction byte offsets in assembly listings</td>
+      <td style="text-align: left">Output instruction byte offsets in assembly listings</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Odump</td>
-      <td>Print the optimizer commands.</td>
+      <td style="text-align: left">Print the optimizer commands.</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Od</td>
-      <td>Disable optimizations</td>
+      <td style="text-align: left">Disable optimizations</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-pack_optimized</td>
-      <td>Optimize signature packing assuming identical signature provided for each connecting stage</td>
+      <td style="text-align: left">-pack-optimized</td>
+      <td style="text-align: left">Optimize signature packing assuming identical signature provided for each connecting stage</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-pack_prefix_stable</td>
-      <td>(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
+      <td style="text-align: left">-pack-prefix-stable</td>
+      <td style="text-align: left">(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-recompile</td>
-      <td>recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
+      <td style="text-align: left">recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-res_may_alias</td>
-      <td>Assume that UAVs/SRVs may alias</td>
+      <td style="text-align: left">-res-may-alias</td>
+      <td style="text-align: left">Assume that UAVs/SRVs may alias</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-rootsig-define &lt;value&gt;</td>
-      <td>Read root signature from a #define</td>
+      <td style="text-align: left">Read root signature from a #define</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-T &lt;profile&gt;</td>
-      <td>Set target profile.</td>
+      <td style="text-align: left">Set target profile.</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Vd</td>
-      <td>Disable validation</td>
+      <td style="text-align: left">Disable validation</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Vi</td>
-      <td>Display details about the include process.</td>
+      <td style="text-align: left">Display details about the include process.</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">-Vn &lt;name&gt;</td>
-      <td>Use &lt;name&gt; as variable name in header file</td>
+      <td style="text-align: left">-Vn</td>
+      <td style="text-align: left">&lt;name&gt; Use &lt;name&gt; as variable name in header file</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-WX</td>
-      <td>Treat warnings as errors</td>
+      <td style="text-align: left">Treat warnings as errors</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Zi</td>
-      <td>Enable debug information</td>
+      <td style="text-align: left">Enable debug information</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Zpc</td>
-      <td>Pack matrices in column-major order</td>
+      <td style="text-align: left">Pack matrices in column-major order</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Zpr</td>
-      <td>Pack matrices in row-major order</td>
+      <td style="text-align: left">Pack matrices in row-major order</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Zsb</td>
-      <td>Build debug name considering only output binary</td>
+      <td style="text-align: left">Compute Shader Hash considering only output binary</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Zss</td>
-      <td>Build debug name considering source information</td>
+      <td style="text-align: left">Compute Shader Hash considering source information</td>
     </tr>
   </tbody>
 </table>
@@ -601,29 +607,71 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
     <tr>
       <th style="text-align: left">Optimization Options:</th>
       <th style="text-align: left"> </th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-O0</td>
-      <td>Optimization Level 0</td>
+      <td style="text-align: left">Optimization Level 0</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-O1</td>
-      <td>Optimization Level 1</td>
+      <td style="text-align: left">Optimization Level 1</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-O2</td>
-      <td>Optimization Level 2</td>
+      <td style="text-align: left">Optimization Level 2</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-O3</td>
-      <td>Optimization Level 3 (Default)</td>
+      <td style="text-align: left">Optimization Level 3 (Default)</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rewriter Options:</th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-extract-entry-uniforms</td>
+      <td style="text-align: left">Move uniform parameters from entry point to global scope</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-global-extern-by-default</td>
+      <td style="text-align: left">Set extern on non-static globals</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-keep-user-macro</td>
+      <td style="text-align: left">Write out user defines after rewritten HLSL</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-line-directive</td>
+      <td style="text-align: left">Add line directive</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-remove-unused-functions</td>
+      <td style="text-align: left">Remove unused functions and types</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-remove-unused-globals</td>
+      <td style="text-align: left">Remove unused static globals and functions</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-skip-fn-body</td>
+      <td style="text-align: left">Translate function definitions to declarations</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-skip-static</td>
+      <td style="text-align: left">Remove static functions and globals when used with -skip-fn-body</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-unchanged</td>
+      <td style="text-align: left">Rewrite HLSL, without changes.</td>
     </tr>
   </tbody>
 </table>
@@ -633,94 +681,88 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
     <tr>
       <th style="text-align: left">SPIR-V CodeGen Options:</th>
       <th style="text-align: left"> </th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fspv-debug=&lt;value&gt;</td>
-      <td>Specify whitelist of debug info category (file -&gt; source -&gt; line, tool)</td>
+      <td style="text-align: left">Specify whitelist of debug info category (file -&gt; source -&gt; line, tool)</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fspv-extension=&lt;value&gt;</td>
-      <td>Specify SPIR-V extension permitted to use</td>
+      <td style="text-align: left">Specify SPIR-V extension permitted to use</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fspv-flatten-resource-arrays</td>
+      <td style="text-align: left">Flatten arrays of resources so each array element takes one binding number</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-fspv-reflect</td>
-      <td>Emit additional SPIR-V instructions to aid reflection</td>
+      <td style="text-align: left">Emit additional SPIR-V instructions to aid reflection</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fspv-target-env=&lt;value&gt;</td>
-      <td>Specify the target environment: vulkan1.0 (default) or vulkan1.1</td>
+      <td style="text-align: left">Specify the target environment: vulkan1.0 (default) or vulkan1.1</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-auto-shift-bindings</td>
+      <td style="text-align: left">Apply fvk-*-shift to resources without an explicit register assignment.</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-fvk-b-shift &lt;shift&gt; &lt;space&gt;</td>
-      <td>Specify Vulkan binding number shift for b-type register</td>
+      <td style="text-align: left">Specify Vulkan binding number shift for b-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-bind-globals &lt;binding&gt; &lt;set&gt;</td>
-      <td>Specify Vulkan binding number and set number for the $Globals cbuffer</td>
+      <td style="text-align: left">Specify Vulkan binding number and set number for the $Globals cbuffer</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-bind-register &lt;type-number&gt; &lt;space&gt; &lt;binding&gt; &lt;set&gt;</td>
-      <td>Specify Vulkan descriptor set and binding for a specific register</td>
+      <td style="text-align: left">Specify Vulkan descriptor set and binding for a specific register</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-invert-y</td>
-      <td>Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
+      <td style="text-align: left">Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-s-shift &lt;shift&gt; &lt;space&gt;</td>
-      <td>Specify Vulkan binding number shift for s-type register</td>
+      <td style="text-align: left">Specify Vulkan binding number shift for s-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">-fvk-support-nonzero-base-instance</td>
+      <td style="text-align: left">Follow Vulkan spec to use gl_BaseInstance as the first vertex instance, which makes SV_InstanceID = gl_InstanceIndex - gl_BaseInstance (without this option, SV_InstanceID = gl_InstanceIndex)</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-fvk-t-shift &lt;shift&gt; &lt;space&gt;</td>
-      <td>Specify Vulkan binding number shift for t-type register</td>
+      <td style="text-align: left">Specify Vulkan binding number shift for t-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-u-shift &lt;shift&gt; &lt;space&gt;</td>
-      <td>Specify Vulkan binding number shift for u-type register</td>
+      <td style="text-align: left">Specify Vulkan binding number shift for u-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-use-dx-layout</td>
-      <td>Use DirectX memory layout for Vulkan resources</td>
+      <td style="text-align: left">Use DirectX memory layout for Vulkan resources</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-use-dx-position-w</td>
-      <td>Reciprocate SV_Position.w after reading from stage input in PS to accommodate the difference between Vulkan and DirectX</td>
+      <td style="text-align: left">Reciprocate SV_Position.w after reading from stage input in PS to accommodate the difference between Vulkan and DirectX</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-use-gl-layout</td>
-      <td>Use strict OpenGL std140/std430 memory layout for Vulkan resources</td>
+      <td style="text-align: left">Use strict OpenGL std140/std430 memory layout for Vulkan resources</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-fvk-use-scalar-layout</td>
-      <td>Use scalar memory layout for Vulkan resources</td>
+      <td style="text-align: left">Use scalar memory layout for Vulkan resources</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-Oconfig=&lt;value&gt;</td>
-      <td>Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
+      <td style="text-align: left">Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
     </tr>
     <tr>
-      <td style="text-align: left"> </td>
       <td style="text-align: left">-spirv</td>
-      <td>Generate SPIR-V code</td>
+      <td style="text-align: left">Generate SPIR-V code</td>
     </tr>
   </tbody>
 </table>
@@ -730,72 +772,86 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
     <tr>
       <th style="text-align: left">Utility Options:</th>
       <th style="text-align: left"> </th>
-      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left">-dumpbin</td>
       <td style="text-align: left">Load a binary file rather than compiling</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-extractrootsignature</td>
       <td style="text-align: left">Extract root signature from shader bytecode (must be used with /Fo &lt;file&gt;)</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-getprivate &lt;file&gt;</td>
       <td style="text-align: left">Save private data from shader blob</td>
-      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-link</td>
+      <td style="text-align: left">Link list of libraries provided in &lt;inputs&gt; argument separated by ‘;’</td>
     </tr>
     <tr>
       <td style="text-align: left">-P &lt;value&gt;</td>
       <td style="text-align: left">Preprocess to file (must be used alone)</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Qembed_debug</td>
       <td style="text-align: left">Embed PDB in shader container (must be used with /Zi)</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_debug</td>
-      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode</td>
-      <td>(must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_priv</td>
-      <td style="text-align: left">Strip private data from shader bytecode</td>
-      <td>(must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip private data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_reflect</td>
-      <td style="text-align: left">Strip reflection data from shader bytecode</td>
-      <td>(must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip reflection data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qstrip_rootsignature Strip root signature data from shader bytecode</td>
-      <td style="text-align: left">(must be used with /Fo &lt;file&gt;)</td>
-      <td> </td>
+      <td style="text-align: left">-Qstrip_rootsignature</td>
+      <td style="text-align: left">Strip root signature data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
     </tr>
     <tr>
       <td style="text-align: left">-setprivate &lt;file&gt;</td>
       <td style="text-align: left">Private data to add to compiled shader blob</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-setrootsignature &lt;file&gt;</td>
       <td style="text-align: left">Attach root signature to shader bytecode</td>
-      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-verifyrootsignature &lt;file&gt;</td>
       <td style="text-align: left">Verify shader bytecode with root signature</td>
-      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Zs</td>
+      <td style="text-align: left">Generate small PDB with just sources and compile options.</td>
     </tr>
   </tbody>
 </table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Warning Options:</th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">-W[no-]&lt;warning&gt;</td>
+      <td style="text-align: left">Enable/Disable the specified warning</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="updates">Updates</h2>
+
+<p><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support</p>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
 
@@ -866,6 +922,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <li class="toc-entry toc-h2"><a href="#compiling">Compiling</a></li>
 <li class="toc-entry toc-h2"><a href="#stripping-parts">Stripping parts</a></li>
 <li class="toc-entry toc-h2"><a href="#all-compiler-arguments">All compiler arguments</a></li>
+<li class="toc-entry toc-h2"><a href="#updates">Updates</a></li>
 <li class="toc-entry toc-h2"><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li>
 </ul>
                 </div>
@@ -900,6 +957,8 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <footer>
     <div class="footer bg-dark d-print-none">
     </div>
+
+    <script src="/js/main.js"></script>
 </footer>
     </body>
 </html>
