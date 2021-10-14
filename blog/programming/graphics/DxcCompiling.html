@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","author":{"@type":"Person","name":"Simon Coenen"},"headline":"Using the DirectXShaderCompiler C++ API","dateModified":"2020-03-04T00:00:00+00:00","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","datePublished":"2020-03-04T00:00:00+00:00","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","headline":"Using the DirectXShaderCompiler C++ API","dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -167,7 +167,7 @@
     04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    16 mins
+    18 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
@@ -296,6 +296,62 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 </code></pre></div></div>
 
 <p>On a last note, as mentioned in the video, <strong>none of the DXC interfaces are thread-safe</strong> and it is advised to have an instance of each interface for each thread. DxcCreateInstance is an exception and is thread-safe.</p>
+
+<h2 id="custom-include-handler">Custom include handler</h2>
+
+<p>I’ve found no good examples of implementing a custom include handler and it’s really not straight forward at first.
+This is useful if you want to add some custom include logic or if you want to know which files were included to do some kind of shader hot-reloading.
+Here’s an example implementation that correctly loads include sources and makes sure not to include the same file twice.
+To add include directories, use the <code class="highlighter-rouge">-I</code> argument like for example <code class="highlighter-rouge">-I /Resources/Shaders</code>.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
+<span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcIncludeHandler</span><span class="o">&gt;</span> <span class="n">pDefaultIncludeHandler</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">pUtils</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">VERIFY_HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
+    <span class="n">VERIFY_HR</span><span class="p">(</span><span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateDefaultIncludeHandler</span><span class="p">(</span><span class="n">pDefaultIncludeHandler</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">CustomIncludeHandler</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IDxcIncludeHandler</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">HRESULT</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">LoadSource</span><span class="p">(</span><span class="n">_In_</span> <span class="n">LPCWSTR</span> <span class="n">pFilename</span><span class="p">,</span> <span class="n">_COM_Outptr_result_maybenull_</span> <span class="n">IDxcBlob</span><span class="o">**</span> <span class="n">ppIncludeSource</span><span class="p">)</span> <span class="k">override</span>
+    <span class="p">{</span>
+        <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobEncoding</span><span class="o">&gt;</span> <span class="n">pEncoding</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Paths</span><span class="o">::</span><span class="n">Normalize</span><span class="p">(</span><span class="n">UNICODE_TO_MULTIBYTE</span><span class="p">(</span><span class="n">pFilename</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">IncludedFiles</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">!=</span> <span class="n">IncludedFiles</span><span class="p">.</span><span class="n">end</span><span class="p">())</span>
+        <span class="p">{</span>
+            <span class="c1">// Return empty string blob if this file has been included before</span>
+            <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">nullStr</span><span class="p">[]</span> <span class="o">=</span> <span class="s">" "</span><span class="p">;</span>
+            <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">nullStr</span><span class="p">,</span> <span class="n">ARRAYSIZE</span><span class="p">(</span><span class="n">nullStr</span><span class="p">),</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+            <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">Detach</span><span class="p">();</span>
+            <span class="k">return</span> <span class="n">S_OK</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">HRESULT</span> <span class="n">hr</span> <span class="o">=</span> <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">LoadFile</span><span class="p">(</span><span class="n">pFilename</span><span class="p">,</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">SUCCEEDED</span><span class="p">(</span><span class="n">hr</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">IncludedFiles</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+            <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">Detach</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">hr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">HRESULT</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">QueryInterface</span><span class="p">(</span><span class="n">REFIID</span> <span class="n">riid</span><span class="p">,</span> <span class="n">_COM_Outptr_</span> <span class="kt">void</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">ppvObject</span><span class="p">)</span> <span class="k">override</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pDefaultIncludeHandler</span><span class="o">-&gt;</span><span class="n">QueryInterface</span><span class="p">(</span><span class="n">riid</span><span class="p">,</span> <span class="n">ppvObject</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">ULONG</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">AddRef</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">ULONG</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">Release</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">IncludedFiles</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
 
 <h2 id="all-compiler-arguments">All compiler arguments</h2>
 
@@ -820,7 +876,8 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 
 <h2 id="updates">Updates</h2>
 
-<p><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support</p>
+<p><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support
+<strong>14/10/2021:</strong> Add custom include handler example</p>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
 
@@ -890,6 +947,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <li class="toc-entry toc-h2"><a href="#getting-started">Getting Started</a></li>
 <li class="toc-entry toc-h2"><a href="#compiling">Compiling</a></li>
 <li class="toc-entry toc-h2"><a href="#stripping-parts">Stripping parts</a></li>
+<li class="toc-entry toc-h2"><a href="#custom-include-handler">Custom include handler</a></li>
 <li class="toc-entry toc-h2"><a href="#all-compiler-arguments">All compiler arguments</a></li>
 <li class="toc-entry toc-h2"><a href="#updates">Updates</a></li>
 <li class="toc-entry toc-h2"><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li>
