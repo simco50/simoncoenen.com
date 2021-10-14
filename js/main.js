@@ -3,8 +3,6 @@ var isDarkTheme = localStorage.getItem('theme') != 'light';
 var themeSwitch = $("#theme-switch");
 themeSwitch[0].checked = isDarkTheme;
 
-console.log(themeSwitch);
-
 themeSwitch.click('change', function(event) { 
 	var mode = event.currentTarget.checked ? 'dark' : 'light';
 	document.documentElement.setAttribute('data-theme', mode);
@@ -15,11 +13,24 @@ themeSwitch.click('change', function(event) {
 $(".video-overlay").hover(hoverVideo, hideVideo);
 
 function hoverVideo(e) {
-	$('video', this).get(0).currentTime = 0;
-	$('video', this).get(0).play();
+	var vid = $('video', this).get(0);
+	try {
+		vid.play();
+	}
+	catch(err) {
+		console.log(err);
+	}
 }
+
 function hideVideo(e) {
-	$('video', this).get(0).pause();
+	var vid = $('video', this).get(0);
+	try {
+		vid.pause();
+		vid.currentTime = 0;
+	}
+	catch(err) {
+		console.log(err);
+	}
 }
 
 // Hide navbar when scrolling down
