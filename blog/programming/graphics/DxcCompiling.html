@@ -168,7 +168,7 @@
     04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    18 mins
+    19 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
@@ -362,6 +362,9 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
 
 <p>When you execute <code class="highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
 
+<p>dxcompiler.dll: 1.6 - 1.6.2112.12 (770ac0cc1)
+dxil.dll: 1.6(101.6.2112.2)</p>
+
 <table>
   <thead>
     <tr>
@@ -382,6 +385,10 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">-Qunused-arguments</td>
       <td style="text-align: left">Don’t emit warning for unused driver arguments</td>
     </tr>
+    <tr>
+      <td style="text-align: left">–version</td>
+      <td style="text-align: left">Display compiler version information</td>
+    </tr>
   </tbody>
 </table>
 
@@ -390,240 +397,304 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
     <tr>
       <th style="text-align: left">Compilation Options:</th>
       <th style="text-align: left"> </th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left">-all-resources-bound</td>
       <td style="text-align: left">Enables agressive flattening</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-auto-binding-space &lt;value&gt;</td>
+      <td style="text-align: left">-auto-binding-space <value></value></td>
       <td style="text-align: left">Set auto binding space - enables auto resource binding in libraries</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Cc</td>
       <td style="text-align: left">Output color coded assembly listings</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-default-linkage &lt;value&gt;</td>
+      <td style="text-align: left">-default-linkage <value></value></td>
       <td style="text-align: left">Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-denorm &lt;value&gt;</td>
+      <td style="text-align: left">-denorm <value></value></td>
       <td style="text-align: left">select denormal value options (any, preserve, ftz). any is the default.</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-disable-payload-qualifiers</td>
       <td style="text-align: left">Disables support for payload access qualifiers for raytracing payloads in SM 6.7.</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-D &lt;value&gt;</td>
+      <td style="text-align: left">-D <value></value></td>
       <td style="text-align: left">Define macro</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-enable-16bit-types</td>
       <td style="text-align: left">Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-enable-lifetime-markers</td>
       <td style="text-align: left">Enable generation of lifetime markers</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-enable-payload-qualifiers</td>
       <td style="text-align: left">Enables support for payload access qualifiers for raytracing payloads in SM 6.6.</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-encoding &lt;value&gt;</td>
-      <td style="text-align: left">Set default encoding for text outputs (utf8|utf16) default=utf8</td>
+      <td style="text-align: left">-encoding <value></value></td>
+      <td style="text-align: left">Set default encoding for text outputs (utf8</td>
+      <td>utf16) default=utf8</td>
     </tr>
     <tr>
       <td style="text-align: left">-export-shaders-only</td>
       <td style="text-align: left">Only export shaders when compiling a library</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-exports &lt;value&gt;</td>
+      <td style="text-align: left">-exports <value></value></td>
       <td style="text-align: left">Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-E &lt;value&gt;</td>
+      <td style="text-align: left">-E <value></value></td>
       <td style="text-align: left">Entry point name</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fc &lt;file&gt;</td>
+      <td style="text-align: left">-Fc <file></file></td>
       <td style="text-align: left">Output assembly code listing file</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-fdiagnostics-show-option</td>
       <td style="text-align: left">Print option name with mappable diagnostics</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fd &lt;file&gt;</td>
+      <td style="text-align: left">-Fd <file></file></td>
       <td style="text-align: left">Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fe &lt;file&gt;</td>
+      <td style="text-align: left">-Fe <file></file></td>
       <td style="text-align: left">Output warnings and errors to the given file</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fh &lt;file&gt;</td>
+      <td style="text-align: left">-Fh <file></file></td>
       <td style="text-align: left">Output header file containing object code</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-flegacy-macro-expansion</td>
       <td style="text-align: left">Expand the operands before performing token-pasting operation (fxc behavior)</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-flegacy-resource-reservation</td>
       <td style="text-align: left">Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-fno-diagnostics-show-option</td>
       <td style="text-align: left">Do not print option name with mappable diagnostics</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-force-rootsig-ver &lt;profile&gt;</td>
+      <td style="text-align: left">-force-rootsig-ver <profile></profile></td>
       <td style="text-align: left">force root signature version (rootsig_1_1 if omitted)</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fo &lt;file&gt;</td>
+      <td style="text-align: left">-Fo <file></file></td>
       <td style="text-align: left">Output object file</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fre &lt;file&gt;</td>
+      <td style="text-align: left">-Fre <file></file></td>
       <td style="text-align: left">Output reflection to the given file</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Frs &lt;file&gt;</td>
+      <td style="text-align: left">-Frs <file></file></td>
       <td style="text-align: left">Output root signature to the given file</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fsh &lt;file&gt;</td>
+      <td style="text-align: left">-Fsh <file></file></td>
       <td style="text-align: left">Output shader hash to the given file</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Gec</td>
       <td style="text-align: left">Enable backward compatibility mode</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Ges</td>
       <td style="text-align: left">Enable strict mode</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Gfa</td>
       <td style="text-align: left">Avoid flow control constructs</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Gfp</td>
       <td style="text-align: left">Prefer flow control constructs</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Gis</td>
       <td style="text-align: left">Force IEEE strictness</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-HV &lt;value&gt;</td>
-      <td style="text-align: left">HLSL version (2016, 2017, 2018). Default is 2018</td>
+      <td style="text-align: left">-HV <value></value></td>
+      <td style="text-align: left">HLSL version (2016, 2017, 2018, 2021). Default is 2018</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-H</td>
       <td style="text-align: left">Show header includes and nesting depth</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-ignore-line-directives</td>
       <td style="text-align: left">Ignore line directives</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-I &lt;value&gt;</td>
+      <td style="text-align: left">-I <value></value></td>
       <td style="text-align: left">Add directory to include search path</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Lx</td>
       <td style="text-align: left">Output hexadecimal literals</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Ni</td>
       <td style="text-align: left">Output instruction numbers in assembly listings</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-no-legacy-cbuf-layout</td>
       <td style="text-align: left">Do not use legacy cbuffer load</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-no-warnings</td>
       <td style="text-align: left">Suppress warnings</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-No</td>
       <td style="text-align: left">Output instruction byte offsets in assembly listings</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Odump</td>
       <td style="text-align: left">Print the optimizer commands.</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Od</td>
       <td style="text-align: left">Disable optimizations</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-pack-optimized</td>
       <td style="text-align: left">Optimize signature packing assuming identical signature provided for each connecting stage</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-pack-prefix-stable</td>
       <td style="text-align: left">(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-recompile</td>
       <td style="text-align: left">recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-res-may-alias</td>
       <td style="text-align: left">Assume that UAVs/SRVs may alias</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-rootsig-define &lt;value&gt;</td>
+      <td style="text-align: left">-rootsig-define <value></value></td>
       <td style="text-align: left">Read root signature from a #define</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-T &lt;profile&gt;</td>
+      <td style="text-align: left">-T <profile></profile></td>
       <td style="text-align: left">Set target profile.</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Vd</td>
       <td style="text-align: left">Disable validation</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Vi</td>
       <td style="text-align: left">Display details about the include process.</td>
+      <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Vn</td>
-      <td style="text-align: left">&lt;name&gt; Use &lt;name&gt; as variable name in header file</td>
+      <td style="text-align: left">-Vn <name></name></td>
+      <td style="text-align: left">Use <name> as variable name in header file</name></td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-WX</td>
       <td style="text-align: left">Treat warnings as errors</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Zi</td>
-      <td style="text-align: left">Enable debug information</td>
+      <td style="text-align: left">Enable debug information. Cannot be used together with -Zs</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Zpc</td>
       <td style="text-align: left">Pack matrices in column-major order</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Zpr</td>
       <td style="text-align: left">Pack matrices in row-major order</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Zsb</td>
       <td style="text-align: left">Compute Shader Hash considering only output binary</td>
+      <td> </td>
     </tr>
     <tr>
       <td style="text-align: left">-Zss</td>
       <td style="text-align: left">Compute Shader Hash considering source information</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">-Zs</td>
+      <td style="text-align: left">Generate small PDB with just sources and compile options. Cannot be used together with -Zi</td>
+      <td> </td>
     </tr>
   </tbody>
 </table>
@@ -663,6 +734,10 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td style="text-align: left">-decl-global-cb</td>
+      <td style="text-align: left">Collect all global constants outside cbuffer declarations into cbuffer GlobalCB { … }. Still experimental, not all dependency scenarios handled.</td>
+    </tr>
     <tr>
       <td style="text-align: left">-extract-entry-uniforms</td>
       <td style="text-align: left">Move uniform parameters from entry point to global scope</td>
@@ -711,11 +786,11 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-fspv-debug=&lt;value&gt;</td>
+      <td style="text-align: left">-fspv-debug=<value></value></td>
       <td style="text-align: left">Specify whitelist of debug info category (file -&gt; source -&gt; line, tool)</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-extension=&lt;value&gt;</td>
+      <td style="text-align: left">-fspv-extension=<value></value></td>
       <td style="text-align: left">Specify SPIR-V extension permitted to use</td>
     </tr>
     <tr>
@@ -723,11 +798,15 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">Flatten arrays of resources so each array element takes one binding number</td>
     </tr>
     <tr>
+      <td style="text-align: left">-fspv-reduce-load-size</td>
+      <td style="text-align: left">Replaces loads of composite objects to reduce memory pressure for the loads</td>
+    </tr>
+    <tr>
       <td style="text-align: left">-fspv-reflect</td>
       <td style="text-align: left">Emit additional SPIR-V instructions to aid reflection</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-target-env=&lt;value&gt;</td>
+      <td style="text-align: left">-fspv-target-env=<value></value></td>
       <td style="text-align: left">Specify the target environment: vulkan1.0 (default) or vulkan1.1</td>
     </tr>
     <tr>
@@ -735,15 +814,15 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">Apply fvk-*-shift to resources without an explicit register assignment.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-b-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td style="text-align: left">-fvk-b-shift <shift> <space></space></shift></td>
       <td style="text-align: left">Specify Vulkan binding number shift for b-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-bind-globals &lt;binding&gt; &lt;set&gt;</td>
+      <td style="text-align: left">-fvk-bind-globals <binding> <set></set></binding></td>
       <td style="text-align: left">Specify Vulkan binding number and set number for the $Globals cbuffer</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-bind-register &lt;type-number&gt; &lt;space&gt; &lt;binding&gt; &lt;set&gt;</td>
+      <td style="text-align: left">-fvk-bind-register <type-number> <space> <binding> <set></set></binding></space></type-number></td>
       <td style="text-align: left">Specify Vulkan descriptor set and binding for a specific register</td>
     </tr>
     <tr>
@@ -751,7 +830,7 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-s-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td style="text-align: left">-fvk-s-shift <shift> <space></space></shift></td>
       <td style="text-align: left">Specify Vulkan binding number shift for s-type register</td>
     </tr>
     <tr>
@@ -759,11 +838,11 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">Follow Vulkan spec to use gl_BaseInstance as the first vertex instance, which makes SV_InstanceID = gl_InstanceIndex - gl_BaseInstance (without this option, SV_InstanceID = gl_InstanceIndex)</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-t-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td style="text-align: left">-fvk-t-shift <shift> <space></space></shift></td>
       <td style="text-align: left">Specify Vulkan binding number shift for t-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-u-shift &lt;shift&gt; &lt;space&gt;</td>
+      <td style="text-align: left">-fvk-u-shift <shift> <space></space></shift></td>
       <td style="text-align: left">Specify Vulkan binding number shift for u-type register</td>
     </tr>
     <tr>
@@ -783,7 +862,7 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
       <td style="text-align: left">Use scalar memory layout for Vulkan resources</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Oconfig=&lt;value&gt;</td>
+      <td style="text-align: left">-Oconfig=<value></value></td>
       <td style="text-align: left">Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
     </tr>
     <tr>
@@ -807,18 +886,18 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
     </tr>
     <tr>
       <td style="text-align: left">-extractrootsignature</td>
-      <td style="text-align: left">Extract root signature from shader bytecode (must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Extract root signature from shader bytecode (must be used with /Fo <file>)</file></td>
     </tr>
     <tr>
-      <td style="text-align: left">-getprivate &lt;file&gt;</td>
+      <td style="text-align: left">-getprivate <file></file></td>
       <td style="text-align: left">Save private data from shader blob</td>
     </tr>
     <tr>
       <td style="text-align: left">-link</td>
-      <td style="text-align: left">Link list of libraries provided in &lt;inputs&gt; argument separated by ‘;’</td>
+      <td style="text-align: left">Link list of libraries provided in <inputs> argument separated by ';'</inputs></td>
     </tr>
     <tr>
-      <td style="text-align: left">-P &lt;value&gt;</td>
+      <td style="text-align: left">-P <value></value></td>
       <td style="text-align: left">Preprocess to file (must be used alone)</td>
     </tr>
     <tr>
@@ -827,35 +906,31 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_debug</td>
-      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode (must be used with /Fo <file>)</file></td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_priv</td>
-      <td style="text-align: left">Strip private data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip private data from shader bytecode (must be used with /Fo <file>)</file></td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_reflect</td>
-      <td style="text-align: left">Strip reflection data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip reflection data from shader bytecode (must be used with /Fo <file>)</file></td>
     </tr>
     <tr>
       <td style="text-align: left">-Qstrip_rootsignature</td>
-      <td style="text-align: left">Strip root signature data from shader bytecode  (must be used with /Fo &lt;file&gt;)</td>
+      <td style="text-align: left">Strip root signature data from shader bytecode (must be used with /Fo <file>)</file></td>
     </tr>
     <tr>
-      <td style="text-align: left">-setprivate &lt;file&gt;</td>
+      <td style="text-align: left">-setprivate <file></file></td>
       <td style="text-align: left">Private data to add to compiled shader blob</td>
     </tr>
     <tr>
-      <td style="text-align: left">-setrootsignature &lt;file&gt;</td>
+      <td style="text-align: left">-setrootsignature <file></file></td>
       <td style="text-align: left">Attach root signature to shader bytecode</td>
     </tr>
     <tr>
-      <td style="text-align: left">-verifyrootsignature &lt;file&gt;</td>
+      <td style="text-align: left">-verifyrootsignature <file></file></td>
       <td style="text-align: left">Verify shader bytecode with root signature</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-Zs</td>
-      <td style="text-align: left">Generate small PDB with just sources and compile options.</td>
     </tr>
   </tbody>
 </table>
@@ -869,7 +944,7 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-W[no-]&lt;warning&gt;</td>
+      <td style="text-align: left">-W[no-]<warning></warning></td>
       <td style="text-align: left">Enable/Disable the specified warning</td>
     </tr>
   </tbody>
@@ -877,7 +952,8 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
 
 <h2 id="updates">Updates</h2>
 
-<p><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support
+<p><strong>15/12/2021:</strong> Update DXC cheat sheet with options from DXC 1.6.2112.12
+<strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support
 <strong>14/10/2021:</strong> Add custom include handler example</p>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
