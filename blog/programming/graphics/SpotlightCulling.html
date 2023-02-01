@@ -20,7 +20,7 @@
     <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling">
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
-    <!-- Begin Jekyll SEO tag v2.7.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Optimizing spotlight intersection in tiled/clustered light culling" />
 <meta name="author" content="Simon Coenen" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"url":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling","image":"https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg","headline":"Optimizing spotlight intersection in tiled/clustered light culling","dateModified":"2019-08-17T00:00:00+01:00","datePublished":"2019-08-17T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling"},"description":"Optimizing spotlight intersection in tiled/clustered light culling","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-08-17T00:00:00+01:00","datePublished":"2019-08-17T00:00:00+01:00","description":"Optimizing spotlight intersection in tiled/clustered light culling","headline":"Optimizing spotlight intersection in tiled/clustered light culling","image":"https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling"},"url":"https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -79,7 +79,7 @@
     <body>
         <!-- Navigation -->
 <nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark">
-    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Graphics Programmer</small></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
     <span class="navbar-toggler-icon"></span>
@@ -244,14 +244,14 @@ canvas {
     <span class="k">return</span> <span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="n">plane</span><span class="p">.</span><span class="n">DistanceToOrigin</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">bool</span> <span class="nf">ConeBehindPlane</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Plane</span> <span class="n">plane</span><span class="p">)</span>
+<span class="kt">bool</span> <span class="n">ConeBehindPlane</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Plane</span> <span class="n">plane</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">float3</span> <span class="n">furthestPointDirection</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">cross</span><span class="p">(</span><span class="n">plane</span><span class="p">.</span><span class="n">Normal</span><span class="p">,</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span><span class="p">),</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span><span class="p">);</span>
     <span class="n">float3</span> <span class="n">furthestPointOnCircle</span> <span class="o">=</span> <span class="n">cone</span><span class="p">.</span><span class="n">Tip</span> <span class="o">+</span> <span class="n">cone</span><span class="p">.</span><span class="n">Direction</span> <span class="o">*</span> <span class="n">cone</span><span class="p">.</span><span class="n">Height</span> <span class="o">-</span> <span class="n">furthestPointDirection</span> <span class="o">*</span> <span class="n">cone</span><span class="p">.</span><span class="n">Radius</span><span class="p">;</span>
     <span class="k">return</span> <span class="n">PointBehindPlane</span><span class="p">(</span><span class="n">cone</span><span class="p">.</span><span class="n">Tip</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">PointBehindPlane</span><span class="p">(</span><span class="n">furthestPointOnCircle</span><span class="p">,</span> <span class="n">plane</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kt">bool</span> <span class="nf">ConeInFrustum</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Frustum</span> <span class="n">frustum</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zNear</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zFar</span><span class="p">)</span>
+<span class="kt">bool</span> <span class="n">ConeInFrustum</span><span class="p">(</span><span class="n">Cone</span> <span class="n">cone</span><span class="p">,</span> <span class="n">Frustum</span> <span class="n">frustum</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zNear</span><span class="p">,</span> <span class="kt">float</span> <span class="n">zFar</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">Plane</span> <span class="n">nearPlane</span><span class="p">,</span> <span class="n">farPlane</span><span class="p">;</span>
     <span class="n">nearPlane</span><span class="p">.</span><span class="n">Normal</span> <span class="o">=</span> <span class="n">float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>

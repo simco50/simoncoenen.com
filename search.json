@@ -17,7 +17,7 @@
       "author"        : "Simon Coenen",
       "url"           : "/blog/programming/graphics/DxcCompiling",
       "date"          : "04 Mar 2020",
-      "reading_time"  : "19",
+      "reading_time"  : "18",
       "description"   : "The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.",
       "image"         : "/images/blog/007_dxc/cover.jpg"
     } ,

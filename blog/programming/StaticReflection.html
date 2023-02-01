@@ -20,7 +20,7 @@
     <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/StaticReflection">
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
-    <!-- Begin Jekyll SEO tag v2.7.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Basic compile-time type information using constexpr" />
 <meta name="author" content="Simon Coenen" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"url":"https://www.simoncoenen.com/blog/programming/StaticReflection","image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","headline":"Basic compile-time type information using constexpr","dateModified":"2019-06-21T00:00:00+01:00","datePublished":"2019-06-21T00:00:00+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection"},"description":"Using compile-time string hashing to generate type information in C++","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-06-21T00:00:00+01:00","datePublished":"2019-06-21T00:00:00+01:00","description":"Using compile-time string hashing to generate type information in C++","headline":"Basic compile-time type information using constexpr","image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection"},"url":"https://www.simoncoenen.com/blog/programming/StaticReflection"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -79,7 +79,7 @@
     <body>
         <!-- Navigation -->
 <nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark">
-    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Graphics Programmer</small></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
     <span class="navbar-toggler-icon"></span>
@@ -215,10 +215,10 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">val_const</span><span class="p">{</span> <span class="mh">0xcbf29ce484222325</span> <span class="p">};</span>
 <span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">prime_const</span><span class="p">{</span> <span class="mh">0x100000001b3</span> <span class="p">};</span>
 
-<span class="k">constexpr</span> <span class="kt">size_t</span> <span class="nf">Hash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">value</span><span class="p">)</span> <span class="k">noexcept</span>
+<span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">Hash</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">str</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">value</span><span class="p">)</span> <span class="k">noexcept</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'\0'</span><span class="p">)</span> <span class="o">?</span> <span class="n">value</span> <span class="o">:</span> <span class="n">Hash</span><span class="p">(</span><span class="o">&amp;</span><span class="n">str</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">value</span> <span class="o">^</span> <span class="kt">size_t</span><span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">*</span> <span class="n">prime_const</span><span class="p">);</span>
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>Like the C++ documentation says, <code class="highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
@@ -244,12 +244,12 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
 In this case, relevant to reflection, it has the following functions:</p>
 
-<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="n">StringHash</span> <span class="nf">GetType</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="err">}</span>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="n">StringHash</span> <span class="nf">GetType</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
 <span class="k">virtual</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">GetTypeName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTypeName</span><span class="p">();</span> <span class="p">}</span>
-<span class="k">virtual</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="nf">GetTypeInfo</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">();</span> <span class="err">}</span>
-<span class="k">static</span> <span class="n">StringHash</span> <span class="nf">GetTypeStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">virtual</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="n">GetTypeInfo</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">();</span> <span class="p">}</span>
+<span class="k">static</span> <span class="n">StringHash</span> <span class="n">GetTypeStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
 <span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">GetTypeNameStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetTypeName</span><span class="p">();</span> <span class="p">}</span>
-<span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="nf">GetTypeInfoStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span> <span class="n">typeInfoStatic</span><span class="p">(</span><span class="s">"Object"</span><span class="p">,</span> <span class="nb">nullptr</span><span class="p">);</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">typeInfoStatic</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span><span class="o">*</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span> <span class="p">{</span> <span class="k">static</span> <span class="k">const</span> <span class="n">TypeInfo</span> <span class="n">typeInfoStatic</span><span class="p">(</span><span class="s">"Object"</span><span class="p">,</span> <span class="nb">nullptr</span><span class="p">);</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">typeInfoStatic</span><span class="p">;</span> <span class="p">}</span>
 <span class="kt">bool</span> <span class="n">IsTypeOf</span><span class="p">(</span><span class="n">StringHash</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div></div>
 
@@ -294,7 +294,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="p">}</span>
 
 <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span>
-<span class="n">T</span><span class="o">*</span> <span class="nf">DynamicCast</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">pObject</span><span class="p">)</span>
+<span class="n">T</span><span class="o">*</span> <span class="n">DynamicCast</span><span class="p">(</span><span class="n">Object</span><span class="o">*</span> <span class="n">pObject</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pObject</span><span class="o">-&gt;</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">GetTypeStatic</span><span class="p">()))</span>
         <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">pObject</span><span class="p">);</span>

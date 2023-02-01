@@ -20,7 +20,7 @@
     <link rel="canonical" href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling">
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
-    <!-- Begin Jekyll SEO tag v2.7.1 -->
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
 <meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="Using the DirectXShaderCompiler C++ API" />
 <meta name="author" content="Simon Coenen" />
@@ -39,7 +39,7 @@
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","headline":"Using the DirectXShaderCompiler C++ API","dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","headline":"Using the DirectXShaderCompiler C++ API","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -79,7 +79,7 @@
     <body>
         <!-- Navigation -->
 <nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark">
-    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Game Programmer</small></a>
+    <a class="navbar-brand mb-0 h1" href="/">Simon Coenen<small>Graphics Programmer</small></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
     <span class="navbar-toggler-icon"></span>
@@ -168,7 +168,7 @@
     04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
   
   
-    19 mins
+    18 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
 </p>
@@ -362,338 +362,489 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
 
 <p>When you execute <code class="highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
 
-<p>dxcompiler.dll: 1.6 - 1.6.2112.12 (770ac0cc1)
-dxil.dll: 1.6(101.6.2112.2)</p>
+<p>Version: dxcompiler.dll: 1.7 - 1.7.2212.12 (8c9d92be7);
+dxil.dll: 1.7(101.7.2212.14)</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Common Options:</th>
-      <th style="text-align: left"> </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">-help</td>
-      <td style="text-align: left">Display available options</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-nologo</td>
-      <td style="text-align: left">Suppress copyright message</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-Qunused-arguments</td>
-      <td style="text-align: left">Don’t emit warning for unused driver arguments</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">–version</td>
-      <td style="text-align: left">Display compiler version information</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Compilation Options:</th>
-      <th style="text-align: left"> </th>
+      <th>Common Options:</th>
       <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-all-resources-bound</td>
-      <td style="text-align: left">Enables agressive flattening</td>
+      <td>-help</td>
+      <td>Display available options</td>
+    </tr>
+    <tr>
+      <td>-Qunused-arguments</td>
+      <td>Don’t emit warning for unused driver arguments</td>
+    </tr>
+    <tr>
+      <td>–version</td>
+      <td>Display compiler version information</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Commpilation Options:</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-all-resources-bound</td>
+      <td>Enables agressive flattening</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-auto-binding-space <value></value></td>
-      <td style="text-align: left">Set auto binding space - enables auto resource binding in libraries</td>
+      <td>-auto-binding-space <value></value></td>
+      <td>Set auto binding space - enables auto resource binding in libraries</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Cc</td>
-      <td style="text-align: left">Output color coded assembly listings</td>
+      <td>-Cc</td>
+      <td>Output color coded assembly listings</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-default-linkage <value></value></td>
-      <td style="text-align: left">Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
+      <td>-default-linkage <value></value></td>
+      <td>Set default linkage for non-shader functions when compiling or linking to a library target (internal, external)</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-denorm <value></value></td>
-      <td style="text-align: left">select denormal value options (any, preserve, ftz). any is the default.</td>
+      <td>-denorm <value></value></td>
+      <td>select denormal value options (any, preserve, ftz). any is the default.</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-disable-payload-qualifiers</td>
-      <td style="text-align: left">Disables support for payload access qualifiers for raytracing payloads in SM 6.7.</td>
+      <td>-disable-payload-qualifiers</td>
+      <td>Disables support for payload access qualifiers for raytracing payloads in SM 6.7.</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-D <value></value></td>
-      <td style="text-align: left">Define macro</td>
+      <td>-D <value></value></td>
+      <td>Define macro</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-enable-16bit-types</td>
-      <td style="text-align: left">Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
+      <td>-enable-16bit-types</td>
+      <td>Enable 16bit types and disable min precision types. Available in HLSL 2018 and shader model 6.2</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-enable-lifetime-markers</td>
-      <td style="text-align: left">Enable generation of lifetime markers</td>
+      <td>-enable-lifetime-markers</td>
+      <td>Enable generation of lifetime markers</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-enable-payload-qualifiers</td>
-      <td style="text-align: left">Enables support for payload access qualifiers for raytracing payloads in SM 6.6.</td>
+      <td>-enable-payload-qualifiers</td>
+      <td>Enables support for payload access qualifiers for raytracing payloads in SM 6.6.</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-encoding <value></value></td>
-      <td style="text-align: left">Set default encoding for text outputs (utf8</td>
-      <td>utf16) default=utf8</td>
+      <td>-encoding <value></value></td>
+      <td>Set default encoding for source inputs and text outputs (utf8</td>
+      <td>utf16(win)</td>
+      <td>utf32(*nix)</td>
+      <td>wide) default=utf8</td>
     </tr>
     <tr>
-      <td style="text-align: left">-export-shaders-only</td>
-      <td style="text-align: left">Only export shaders when compiling a library</td>
+      <td>-export-shaders-only</td>
+      <td>Only export shaders when compiling a library</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-exports <value></value></td>
-      <td style="text-align: left">Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
+      <td>-exports <value></value></td>
+      <td>Specify exports when compiling a library: export1[[,export1_clone,…]=internal_name][;…]</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-E <value></value></td>
-      <td style="text-align: left">Entry point name</td>
+      <td>-E <value></value></td>
+      <td>Entry point name</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fc <file></file></td>
-      <td style="text-align: left">Output assembly code listing file</td>
+      <td>-Fc <file></file></td>
+      <td>Output assembly code listing file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-fdiagnostics-show-option</td>
-      <td style="text-align: left">Print option name with mappable diagnostics</td>
+      <td>-fdiagnostics-show-option</td>
+      <td>Print option name with mappable diagnostics</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fd <file></file></td>
-      <td style="text-align: left">Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
+      <td>-fdisable-loc-tracking</td>
+      <td>Disable source location tracking in IR. This will break diagnostic generation for late validation. (Ignored if /Zi is passed)</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fe <file></file></td>
-      <td style="text-align: left">Output warnings and errors to the given file</td>
+      <td>-Fd <file></file></td>
+      <td>Write debug information to the given file, or automatically named file in directory when ending in ‘'</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fh <file></file></td>
-      <td style="text-align: left">Output header file containing object code</td>
+      <td>-Fe <file></file></td>
+      <td>Output warnings and errors to the given file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-flegacy-macro-expansion</td>
-      <td style="text-align: left">Expand the operands before performing token-pasting operation (fxc behavior)</td>
+      <td>-Fh <file></file></td>
+      <td>Output header file containing object code</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-flegacy-resource-reservation</td>
-      <td style="text-align: left">Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
+      <td>-Fi <file></file></td>
+      <td>Set preprocess output file name (with /P)</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-fno-diagnostics-show-option</td>
-      <td style="text-align: left">Do not print option name with mappable diagnostics</td>
+      <td>-flegacy-macro-expansion</td>
+      <td>Expand the operands before performing token-pasting operation (fxc behavior)</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-force-rootsig-ver <profile></profile></td>
-      <td style="text-align: left">force root signature version (rootsig_1_1 if omitted)</td>
+      <td>-flegacy-resource-reservation</td>
+      <td>Reserve unused explicit register assignments for compatibility with shader model 5.0 and below</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fo <file></file></td>
-      <td style="text-align: left">Output object file</td>
+      <td>-fno-diagnostics-show-option</td>
+      <td>Do not print option name with mappable diagnostics</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fre <file></file></td>
-      <td style="text-align: left">Output reflection to the given file</td>
+      <td>-force-rootsig-ver <profile></profile></td>
+      <td>force root signature version (rootsig_1_1 if omitted)</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Frs <file></file></td>
-      <td style="text-align: left">Output root signature to the given file</td>
+      <td>-Fo <file></file></td>
+      <td>Output object file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Fsh <file></file></td>
-      <td style="text-align: left">Output shader hash to the given file</td>
+      <td>-Fre <file></file></td>
+      <td>Output reflection to the given file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Gec</td>
-      <td style="text-align: left">Enable backward compatibility mode</td>
+      <td>-Frs <file></file></td>
+      <td>Output root signature to the given file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Ges</td>
-      <td style="text-align: left">Enable strict mode</td>
+      <td>-Fsh <file></file></td>
+      <td>Output shader hash to the given file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Gfa</td>
-      <td style="text-align: left">Avoid flow control constructs</td>
+      <td>-ftime-report</td>
+      <td>Print time report</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Gfp</td>
-      <td style="text-align: left">Prefer flow control constructs</td>
+      <td>-ftime-trace=<value></value></td>
+      <td>Print hierchial time tracing to file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Gis</td>
-      <td style="text-align: left">Force IEEE strictness</td>
+      <td>-ftime-trace</td>
+      <td>Print hierchial time tracing to stdout</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-HV <value></value></td>
-      <td style="text-align: left">HLSL version (2016, 2017, 2018, 2021). Default is 2018</td>
+      <td>-Gec</td>
+      <td>Enable backward compatibility mode</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-H</td>
-      <td style="text-align: left">Show header includes and nesting depth</td>
+      <td>-Ges</td>
+      <td>Enable strict mode</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-ignore-line-directives</td>
-      <td style="text-align: left">Ignore line directives</td>
+      <td>-Gfa</td>
+      <td>Avoid flow control constructs</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-I <value></value></td>
-      <td style="text-align: left">Add directory to include search path</td>
+      <td>-Gfp</td>
+      <td>Prefer flow control constructs</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Lx</td>
-      <td style="text-align: left">Output hexadecimal literals</td>
+      <td>-Gis</td>
+      <td>Force IEEE strictness</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Ni</td>
-      <td style="text-align: left">Output instruction numbers in assembly listings</td>
+      <td>-HV <value></value></td>
+      <td>HLSL version (2016, 2017, 2018, 2021). Default is 2018</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-no-legacy-cbuf-layout</td>
-      <td style="text-align: left">Do not use legacy cbuffer load</td>
+      <td>-H</td>
+      <td>Show header includes and nesting depth</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-no-warnings</td>
-      <td style="text-align: left">Suppress warnings</td>
+      <td>-ignore-line-directives</td>
+      <td>Ignore line directives</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-No</td>
-      <td style="text-align: left">Output instruction byte offsets in assembly listings</td>
+      <td>-I <value></value></td>
+      <td>Add directory to include search path</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Odump</td>
-      <td style="text-align: left">Print the optimizer commands.</td>
+      <td>-Lx</td>
+      <td>Output hexadecimal literals</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Od</td>
-      <td style="text-align: left">Disable optimizations</td>
+      <td>-Ni</td>
+      <td>Output instruction numbers in assembly listings</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-pack-optimized</td>
-      <td style="text-align: left">Optimize signature packing assuming identical signature provided for each connecting stage</td>
+      <td>-no-legacy-cbuf-layout</td>
+      <td>Do not use legacy cbuffer load</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-pack-prefix-stable</td>
-      <td style="text-align: left">(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
+      <td>-no-warnings</td>
+      <td>Suppress warnings</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-recompile</td>
-      <td style="text-align: left">recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
+      <td>-No</td>
+      <td>Output instruction byte offsets in assembly listings</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-res-may-alias</td>
-      <td style="text-align: left">Assume that UAVs/SRVs may alias</td>
+      <td>-Odump</td>
+      <td>Print the optimizer commands.</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-rootsig-define <value></value></td>
-      <td style="text-align: left">Read root signature from a #define</td>
+      <td>-Od</td>
+      <td>Disable optimizations</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-T <profile></profile></td>
-      <td style="text-align: left">Set target profile.</td>
+      <td>-pack-optimized</td>
+      <td>Optimize signature packing assuming identical signature provided for each connecting stage</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Vd</td>
-      <td style="text-align: left">Disable validation</td>
+      <td>-pack-prefix-stable</td>
+      <td>(default) Pack signatures preserving prefix-stable property - appended elements will not disturb placement of prior elements</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Vi</td>
-      <td style="text-align: left">Display details about the include process.</td>
+      <td>-recompile</td>
+      <td>recompile from DXIL container with Debug Info or Debug Info bitcode file</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Vn <name></name></td>
-      <td style="text-align: left">Use <name> as variable name in header file</name></td>
+      <td>-res-may-alias</td>
+      <td>Assume that UAVs/SRVs may alias</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-WX</td>
-      <td style="text-align: left">Treat warnings as errors</td>
+      <td>-rootsig-define <value></value></td>
+      <td>Read root signature from a #define</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zi</td>
-      <td style="text-align: left">Enable debug information. Cannot be used together with -Zs</td>
+      <td>-T <profile></profile></td>
+      <td>Set target profile. <profile>: ps_6_0, ps_6_1, ps_6_2, ps_6_3, ps_6_4, ps_6_5, ps_6_6, ps_6_7, vs_6_0, vs_6_1, vs_6_2, vs_6_3, vs_6_4, vs_6_5, vs_6_6, vs_6_7, gs_6_0, gs_6_1, gs_6_2, gs_6_3, gs_6_4, gs_6_5, gs_6_6, gs_6_7, hs_6_0, hs_6_1, hs_6_2, hs_6_3, hs_6_4, hs_6_5, hs_6_6, hs_6_7, ds_6_0, ds_6_1, ds_6_2, ds_6_3, ds_6_4, ds_6_5, ds_6_6, ds_6_7, cs_6_0, cs_6_1, cs_6_2, cs_6_3, cs_6_4, cs_6_5, cs_6_6, cs_6_7, lib_6_1, lib_6_2, lib_6_3, lib_6_4, lib_6_5, lib_6_6, lib_6_7, ms_6_5, ms_6_6, ms_6_7, as_6_5, as_6_6, as_6_7</profile></td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zpc</td>
-      <td style="text-align: left">Pack matrices in column-major order</td>
+      <td>-Vd</td>
+      <td>Disable validation</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zpr</td>
-      <td style="text-align: left">Pack matrices in row-major order</td>
+      <td>-Vi</td>
+      <td>Display details about the include process.</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zsb</td>
-      <td style="text-align: left">Compute Shader Hash considering only output binary</td>
+      <td>-Vn <name></name></td>
+      <td>Use <name> as variable name in header file</name></td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zss</td>
-      <td style="text-align: left">Compute Shader Hash considering source information</td>
+      <td>-WX</td>
+      <td>Treat warnings as errors</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
     <tr>
-      <td style="text-align: left">-Zs</td>
-      <td style="text-align: left">Generate small PDB with just sources and compile options. Cannot be used together with -Zi</td>
+      <td>-Zi</td>
+      <td>Enable debug information. Cannot be used together with -Zs</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-Zpc</td>
+      <td>Pack matrices in column-major order</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-Zpr</td>
+      <td>Pack matrices in row-major order</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-Zsb</td>
+      <td>Compute Shader Hash considering only output binary</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-Zss</td>
+      <td>Compute Shader Hash considering source information</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-Zs</td>
+      <td>Generate small PDB with just sources and compile options. Cannot be used together with -Zi</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
   </tbody>
@@ -702,26 +853,22 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Optimization Options:</th>
-      <th style="text-align: left"> </th>
+      <th>OPTIONS:</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-O0</td>
-      <td style="text-align: left">Optimization Level 0</td>
+      <td>-MD</td>
+      <td>Write a file with .d extension that will contain the list of the compilation target dependencies.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-O1</td>
-      <td style="text-align: left">Optimization Level 1</td>
+      <td>-MF <file></file></td>
+      <td>Write the specfied file that will contain the list of the compilation target dependencies.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-O2</td>
-      <td style="text-align: left">Optimization Level 2</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-O3</td>
-      <td style="text-align: left">Optimization Level 3 (Default)</td>
+      <td>-M</td>
+      <td>Dumps the list of the compilation target dependencies.</td>
     </tr>
   </tbody>
 </table>
@@ -729,50 +876,26 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Rewriter Options:</th>
-      <th style="text-align: left"> </th>
+      <th>Optimization Options:</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-decl-global-cb</td>
-      <td style="text-align: left">Collect all global constants outside cbuffer declarations into cbuffer GlobalCB { … }. Still experimental, not all dependency scenarios handled.</td>
+      <td>-O0</td>
+      <td>Optimization Level 0</td>
     </tr>
     <tr>
-      <td style="text-align: left">-extract-entry-uniforms</td>
-      <td style="text-align: left">Move uniform parameters from entry point to global scope</td>
+      <td>-O1</td>
+      <td>Optimization Level 1</td>
     </tr>
     <tr>
-      <td style="text-align: left">-global-extern-by-default</td>
-      <td style="text-align: left">Set extern on non-static globals</td>
+      <td>-O2</td>
+      <td>Optimization Level 2</td>
     </tr>
     <tr>
-      <td style="text-align: left">-keep-user-macro</td>
-      <td style="text-align: left">Write out user defines after rewritten HLSL</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-line-directive</td>
-      <td style="text-align: left">Add line directive</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-remove-unused-functions</td>
-      <td style="text-align: left">Remove unused functions and types</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-remove-unused-globals</td>
-      <td style="text-align: left">Remove unused static globals and functions</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-skip-fn-body</td>
-      <td style="text-align: left">Translate function definitions to declarations</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-skip-static</td>
-      <td style="text-align: left">Remove static functions and globals when used with -skip-fn-body</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-unchanged</td>
-      <td style="text-align: left">Rewrite HLSL, without changes.</td>
+      <td>-O3</td>
+      <td>Optimization Level 3 (Default)</td>
     </tr>
   </tbody>
 </table>
@@ -780,94 +903,50 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">SPIR-V CodeGen Options:</th>
-      <th style="text-align: left"> </th>
+      <th>Rewriter Options:</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-fspv-debug=<value></value></td>
-      <td style="text-align: left">Specify whitelist of debug info category (file -&gt; source -&gt; line, tool)</td>
+      <td>-decl-global-cb</td>
+      <td>Collect all global constants outside cbuffer declarations into cbuffer GlobalCB { … }. Still experimental, not all dependency scenarios handled.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-extension=<value></value></td>
-      <td style="text-align: left">Specify SPIR-V extension permitted to use</td>
+      <td>-extract-entry-uniforms</td>
+      <td>Move uniform parameters from entry point to global scope</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-flatten-resource-arrays</td>
-      <td style="text-align: left">Flatten arrays of resources so each array element takes one binding number</td>
+      <td>-global-extern-by-default</td>
+      <td>Set extern on non-static globals</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-reduce-load-size</td>
-      <td style="text-align: left">Replaces loads of composite objects to reduce memory pressure for the loads</td>
+      <td>-keep-user-macro</td>
+      <td>Write out user defines after rewritten HLSL</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-reflect</td>
-      <td style="text-align: left">Emit additional SPIR-V instructions to aid reflection</td>
+      <td>-line-directive</td>
+      <td>Add line directive</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fspv-target-env=<value></value></td>
-      <td style="text-align: left">Specify the target environment: vulkan1.0 (default) or vulkan1.1</td>
+      <td>-remove-unused-functions</td>
+      <td>Remove unused functions and types</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-auto-shift-bindings</td>
-      <td style="text-align: left">Apply fvk-*-shift to resources without an explicit register assignment.</td>
+      <td>-remove-unused-globals</td>
+      <td>Remove unused static globals and functions</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-b-shift <shift> <space></space></shift></td>
-      <td style="text-align: left">Specify Vulkan binding number shift for b-type register</td>
+      <td>-skip-fn-body</td>
+      <td>Translate function definitions to declarations</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-bind-globals <binding> <set></set></binding></td>
-      <td style="text-align: left">Specify Vulkan binding number and set number for the $Globals cbuffer</td>
+      <td>-skip-static</td>
+      <td>Remove static functions and globals when used with -skip-fn-body</td>
     </tr>
     <tr>
-      <td style="text-align: left">-fvk-bind-register <type-number> <space> <binding> <set></set></binding></space></type-number></td>
-      <td style="text-align: left">Specify Vulkan descriptor set and binding for a specific register</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-invert-y</td>
-      <td style="text-align: left">Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-s-shift <shift> <space></space></shift></td>
-      <td style="text-align: left">Specify Vulkan binding number shift for s-type register</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-support-nonzero-base-instance</td>
-      <td style="text-align: left">Follow Vulkan spec to use gl_BaseInstance as the first vertex instance, which makes SV_InstanceID = gl_InstanceIndex - gl_BaseInstance (without this option, SV_InstanceID = gl_InstanceIndex)</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-t-shift <shift> <space></space></shift></td>
-      <td style="text-align: left">Specify Vulkan binding number shift for t-type register</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-u-shift <shift> <space></space></shift></td>
-      <td style="text-align: left">Specify Vulkan binding number shift for u-type register</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-use-dx-layout</td>
-      <td style="text-align: left">Use DirectX memory layout for Vulkan resources</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-use-dx-position-w</td>
-      <td style="text-align: left">Reciprocate SV_Position.w after reading from stage input in PS to accommodate the difference between Vulkan and DirectX</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-use-gl-layout</td>
-      <td style="text-align: left">Use strict OpenGL std140/std430 memory layout for Vulkan resources</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-fvk-use-scalar-layout</td>
-      <td style="text-align: left">Use scalar memory layout for Vulkan resources</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-Oconfig=<value></value></td>
-      <td style="text-align: left">Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">-spirv</td>
-      <td style="text-align: left">Generate SPIR-V code</td>
+      <td>-unchanged</td>
+      <td>Rewrite HLSL, without changes.</td>
     </tr>
   </tbody>
 </table>
@@ -875,62 +954,106 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Utility Options:</th>
-      <th style="text-align: left"> </th>
+      <th>SPIR-V CodeGen Options:</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-dumpbin</td>
-      <td style="text-align: left">Load a binary file rather than compiling</td>
+      <td>-fspv-debug=<value></value></td>
+      <td>Specify whitelist of debug info category (file -&gt; source -&gt; line, tool, vulkan-with-source)</td>
     </tr>
     <tr>
-      <td style="text-align: left">-extractrootsignature</td>
-      <td style="text-align: left">Extract root signature from shader bytecode (must be used with /Fo <file>)</file></td>
+      <td>-fspv-entrypoint-name=<value></value></td>
+      <td>Specify the SPIR-V entry point name. Defaults to the HLSL entry point name.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-getprivate <file></file></td>
-      <td style="text-align: left">Save private data from shader blob</td>
+      <td>-fspv-extension=<value></value></td>
+      <td>Specify SPIR-V extension permitted to use</td>
     </tr>
     <tr>
-      <td style="text-align: left">-link</td>
-      <td style="text-align: left">Link list of libraries provided in <inputs> argument separated by ';'</inputs></td>
+      <td>-fspv-flatten-resource-arrays</td>
+      <td>Flatten arrays of resources so each array element takes one binding number</td>
     </tr>
     <tr>
-      <td style="text-align: left">-P <value></value></td>
-      <td style="text-align: left">Preprocess to file (must be used alone)</td>
+      <td>-fspv-print-all</td>
+      <td>Print the SPIR-V module before each pass and after the last one. Useful for debugging SPIR-V legalization and optimization passes.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qembed_debug</td>
-      <td style="text-align: left">Embed PDB in shader container (must be used with /Zi)</td>
+      <td>-fspv-reduce-load-size</td>
+      <td>Replaces loads of composite objects to reduce memory pressure for the loads</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qstrip_debug</td>
-      <td style="text-align: left">Strip debug information from 4_0+ shader bytecode (must be used with /Fo <file>)</file></td>
+      <td>-fspv-reflect</td>
+      <td>Emit additional SPIR-V instructions to aid reflection</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qstrip_priv</td>
-      <td style="text-align: left">Strip private data from shader bytecode (must be used with /Fo <file>)</file></td>
+      <td>-fspv-target-env=<value></value></td>
+      <td>Specify the target environment: vulkan1.0 (default), vulkan1.1, vulkan1.1spirv1.4, vulkan1.2, vulkan1.3, or universal1.5</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qstrip_reflect</td>
-      <td style="text-align: left">Strip reflection data from shader bytecode (must be used with /Fo <file>)</file></td>
+      <td>-fspv-use-legacy-buffer-matrix-order</td>
+      <td>Assume the legacy matrix order (row major) when accessing raw buffers (e.g., ByteAdddressBuffer)</td>
     </tr>
     <tr>
-      <td style="text-align: left">-Qstrip_rootsignature</td>
-      <td style="text-align: left">Strip root signature data from shader bytecode (must be used with /Fo <file>)</file></td>
+      <td>-fvk-auto-shift-bindings</td>
+      <td>Apply fvk-*-shift to resources without an explicit register assignment.</td>
     </tr>
     <tr>
-      <td style="text-align: left">-setprivate <file></file></td>
-      <td style="text-align: left">Private data to add to compiled shader blob</td>
+      <td>-fvk-b-shift <shift> <space></space></shift></td>
+      <td>Specify Vulkan binding number shift for b-type register</td>
     </tr>
     <tr>
-      <td style="text-align: left">-setrootsignature <file></file></td>
-      <td style="text-align: left">Attach root signature to shader bytecode</td>
+      <td>-fvk-bind-globals <binding> <set></set></binding></td>
+      <td>Specify Vulkan binding number and set number for the $Globals cbuffer</td>
     </tr>
     <tr>
-      <td style="text-align: left">-verifyrootsignature <file></file></td>
-      <td style="text-align: left">Verify shader bytecode with root signature</td>
+      <td>-fvk-bind-register <type-number> <space> <binding> <set></set></binding></space></type-number></td>
+      <td>Specify Vulkan descriptor set and binding for a specific register</td>
+    </tr>
+    <tr>
+      <td>-fvk-invert-y</td>
+      <td>Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
+    </tr>
+    <tr>
+      <td>-fvk-s-shift <shift> <space></space></shift></td>
+      <td>Specify Vulkan binding number shift for s-type register</td>
+    </tr>
+    <tr>
+      <td>-fvk-support-nonzero-base-instance</td>
+      <td>Follow Vulkan spec to use gl_BaseInstance as the first vertex instance, which makes SV_InstanceID = gl_InstanceIndex - gl_BaseInstance (without this option, SV_InstanceID = gl_InstanceIndex)</td>
+    </tr>
+    <tr>
+      <td>-fvk-t-shift <shift> <space></space></shift></td>
+      <td>Specify Vulkan binding number shift for t-type register</td>
+    </tr>
+    <tr>
+      <td>-fvk-u-shift <shift> <space></space></shift></td>
+      <td>Specify Vulkan binding number shift for u-type register</td>
+    </tr>
+    <tr>
+      <td>-fvk-use-dx-layout</td>
+      <td>Use DirectX memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td>-fvk-use-dx-position-w</td>
+      <td>Reciprocate SV_Position.w after reading from stage input in PS to accommodate the difference between Vulkan and DirectX</td>
+    </tr>
+    <tr>
+      <td>-fvk-use-gl-layout</td>
+      <td>Use strict OpenGL std140/std430 memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td>-fvk-use-scalar-layout</td>
+      <td>Use scalar memory layout for Vulkan resources</td>
+    </tr>
+    <tr>
+      <td>-Oconfig=<value></value></td>
+      <td>Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
+    </tr>
+    <tr>
+      <td>-spirv</td>
+      <td>Generate SPIR-V code</td>
     </tr>
   </tbody>
 </table>
@@ -938,14 +1061,77 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Warning Options:</th>
-      <th style="text-align: left"> </th>
+      <th>Utility Options:</th>
+      <th> </th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">-W[no-]<warning></warning></td>
-      <td style="text-align: left">Enable/Disable the specified warning</td>
+      <td>-dumpbin</td>
+      <td>Load a binary file rather than compiling</td>
+    </tr>
+    <tr>
+      <td>-extractrootsignature</td>
+      <td>Extract root signature from shader bytecode (must be used with /Fo <file>)</file></td>
+    </tr>
+    <tr>
+      <td>-getprivate <file></file></td>
+      <td>Save private data from shader blob</td>
+    </tr>
+    <tr>
+      <td>-link</td>
+      <td>Link list of libraries provided in <inputs> argument separated by ';'</inputs></td>
+    </tr>
+    <tr>
+      <td>-P</td>
+      <td>Preprocess to file</td>
+    </tr>
+    <tr>
+      <td>-Qembed_debug</td>
+      <td>Embed PDB in shader container (must be used with /Zi)</td>
+    </tr>
+    <tr>
+      <td>-Qstrip_debug</td>
+      <td>Strip debug information from 4_0+ shader bytecode  (must be used with /Fo <file>)</file></td>
+    </tr>
+    <tr>
+      <td>-Qstrip_priv</td>
+      <td>Strip private data from shader bytecode  (must be used with /Fo <file>)</file></td>
+    </tr>
+    <tr>
+      <td>-Qstrip_reflect</td>
+      <td>Strip reflection data from shader bytecode  (must be used with /Fo <file>)</file></td>
+    </tr>
+    <tr>
+      <td>-Qstrip_rootsignature</td>
+      <td>Strip root signature data from shader bytecode  (must be used with /Fo <file>)</file></td>
+    </tr>
+    <tr>
+      <td>-setprivate <file></file></td>
+      <td>Private data to add to compiled shader blob</td>
+    </tr>
+    <tr>
+      <td>-setrootsignature <file></file></td>
+      <td>Attach root signature to shader bytecode</td>
+    </tr>
+    <tr>
+      <td>-verifyrootsignature <file></file></td>
+      <td>Verify shader bytecode with root signature</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Warning Options:</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-W[no-]<warning></warning></td>
+      <td>Enable/Disable the specified warning</td>
     </tr>
   </tbody>
 </table>
@@ -954,7 +1140,8 @@ dxil.dll: 1.6(101.6.2112.2)</p>
 
 <p><strong>15/12/2021:</strong> Update DXC cheat sheet with options from DXC 1.6.2112.12
 <strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support
-<strong>14/10/2021:</strong> Add custom include handler example</p>
+<strong>14/10/2021:</strong> Add custom include handler example
+<strong>01/02/2023:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.7.2212.12)</p>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
 
