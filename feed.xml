@@ -1324,10 +1324,12 @@ dxil.dll: 1.7(101.7.2212.14)</p>
 
 <h2 id="updates">Updates</h2>
 
-<p><strong>15/12/2021:</strong> Update DXC cheat sheet with options from DXC 1.6.2112.12
-<strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support
-<strong>14/10/2021:</strong> Add custom include handler example
-<strong>01/02/2023:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.7.2212.12)</p>
+<ul>
+  <li><strong>15/12/2021:</strong> Update DXC cheat sheet with options from DXC 1.6.2112.12</li>
+  <li><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support</li>
+  <li><strong>14/10/2021:</strong> Add custom include handler example</li>
+  <li><strong>01/02/2023:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.7.2212.12)</li>
+</ul>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
 
