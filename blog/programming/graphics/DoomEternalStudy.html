@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v3.8.7" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="DOOM Eternal - Graphics Study" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="Simon Coenen" />
 <meta property="og:image" content="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-08-30T00:00:00+01:00" />
+<meta property="article:published_time" content="2020-08-30T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" />
 <meta property="twitter:title" content="DOOM Eternal - Graphics Study" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2020-08-30T00:00:00+01:00","datePublished":"2020-08-30T00:00:00+01:00","description":"A graphics study of Doom Eternal","headline":"DOOM Eternal - Graphics Study","image":"https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2020-08-30T00:00:00+02:00","datePublished":"2020-08-30T00:00:00+02:00","description":"A graphics study of Doom Eternal","headline":"DOOM Eternal - Graphics Study","image":"https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -574,41 +574,7 @@ What’s interesting is that, as opposed to traditional compute shader particle 
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#background">Background</a></li>
-<li class="toc-entry toc-h1"><a href="#a-frame-in-doom-eternal">A frame in Doom Eternal</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#step-away-from-mega-texture">Step away from Mega-Texture</a></li>
-<li class="toc-entry toc-h2"><a href="#gpu-skinning">GPU Skinning</a></li>
-<li class="toc-entry toc-h2"><a href="#shadow-mapping">Shadow Mapping</a></li>
-<li class="toc-entry toc-h2"><a href="#depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</a></li>
-<li class="toc-entry toc-h2"><a href="#hierarchical-z-depth">Hierarchical-Z Depth</a></li>
-<li class="toc-entry toc-h2"><a href="#mesh-decals">Mesh Decals</a></li>
-<li class="toc-entry toc-h2"><a href="#light-and-decal-culling">Light and Decal culling</a></li>
-<li class="toc-entry toc-h2"><a href="#screen-space-ambient-occlusion">Screen Space Ambient Occlusion</a></li>
-<li class="toc-entry toc-h2"><a href="#opaque-forward-pass">Opaque Forward pass</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#bindless-resources">Bindless resources</a></li>
-<li class="toc-entry toc-h3"><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li>
-<li class="toc-entry toc-h3"><a href="#reflections">Reflections</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#particles">Particles</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#simulation">Simulation</a></li>
-<li class="toc-entry toc-h3"><a href="#lighting">Lighting</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#sky-and-scattering">Sky and scattering</a></li>
-<li class="toc-entry toc-h2"><a href="#transparency">Transparency</a></li>
-<li class="toc-entry toc-h2"><a href="#ui">UI</a></li>
-<li class="toc-entry toc-h2"><a href="#post-processing">Post processing</a></li>
-<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#reading-material-and-references">Reading material and references</a></li>
-<li class="toc-entry toc-h1"><a href="#updates">Updates</a></li>
-</ul>
+                    <ul><li>DOOM Eternal - Graphics Study<ul><li><a href="#background">Background</a></li></ul></li><li><a href="#a-frame-in-doom-eternal">A frame in Doom Eternal</a><ul><li><a href="#step-away-from-mega-texture">Step away from Mega-Texture</a></li><li><a href="#gpu-skinning">GPU Skinning</a></li><li><a href="#shadow-mapping">Shadow Mapping</a></li><li><a href="#depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</a></li><li><a href="#hierarchical-z-depth">Hierarchical-Z Depth</a></li><li><a href="#mesh-decals">Mesh Decals</a></li><li><a href="#light-and-decal-culling">Light and Decal culling</a></li><li><a href="#screen-space-ambient-occlusion">Screen Space Ambient Occlusion</a></li><li><a href="#opaque-forward-pass">Opaque Forward pass</a><ul><li><a href="#bindless-resources">Bindless resources</a></li><li><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li><li><a href="#reflections">Reflections</a></li></ul></li><li><a href="#particles">Particles</a><ul><li><a href="#simulation">Simulation</a></li><li><a href="#lighting">Lighting</a></li></ul></li><li><a href="#sky-and-scattering">Sky and scattering</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#ui">UI</a></li><li><a href="#post-processing">Post processing</a></li><li><a href="#conclusion">Conclusion</a></li></ul></li><li><a href="#reading-material-and-references">Reading material and references</a></li><li><a href="#updates">Updates</a></li></ul>
                 </div>
                 
 

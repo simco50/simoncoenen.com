@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v3.8.7" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Pak files - Virtual file system" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="Simon Coenen" />
 <meta property="og:image" content="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-07-10T00:00:00+01:00" />
+<meta property="article:published_time" content="2019-07-10T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" />
 <meta property="twitter:title" content="Pak files - Virtual file system" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-07-10T00:00:00+01:00","datePublished":"2019-07-10T00:00:00+01:00","description":"Virtual file system using pak files","headline":"Pak files - Virtual file system","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles"},"url":"https://www.simoncoenen.com/blog/programming/PakFiles"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-07-10T00:00:00+02:00","datePublished":"2019-07-10T00:00:00+02:00","description":"Virtual file system using pak files","headline":"Pak files - Virtual file system","image":"https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/PakFiles"},"url":"https://www.simoncoenen.com/blog/programming/PakFiles"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -170,7 +170,7 @@
 
 <p>I found it interesting to take a closer look at how data memory in Doom’s WAD files are laid out. You can <a href="http://distro.ibiblio.org/pub/linux/distributions/slitaz/sources/packages/d/doom1.wad">download DOOM1.WAD for free</a>. This is the asset file used for the shareware version of the game. To open and view this, I’ve used <a href="https://mh-nexus.de/en/hxd/">HxD</a> which is a free Hex editor for Windows but any other hex editor will do the job.</p>
 
-<p>According to the <a href="https://doomwiki.org/wiki/WAD">Doom Wiki</a>, a WAD file has one file header, multiple “directories” and a large binary blob of data. The file start with a 12 byte header containing a magic value (<code class="highlighter-rouge">IWAD</code> or <code class="highlighter-rouge">PWAD</code>), the amount of lumps and an offset in bytes from the start of the file to where the directory headers start. Following this directory offset in the hex editor, we hit the first directory entry. A directory is a 16 byte header containing another offset in bytes pointing to where the actual lump’s data is located, the size of the data and the name of the lump.</p>
+<p>According to the <a href="https://doomwiki.org/wiki/WAD">Doom Wiki</a>, a WAD file has one file header, multiple “directories” and a large binary blob of data. The file start with a 12 byte header containing a magic value (<code class="language-plaintext highlighter-rouge">IWAD</code> or <code class="language-plaintext highlighter-rouge">PWAD</code>), the amount of lumps and an offset in bytes from the start of the file to where the directory headers start. Following this directory offset in the hex editor, we hit the first directory entry. A directory is a 16 byte header containing another offset in bytes pointing to where the actual lump’s data is located, the size of the data and the name of the lump.</p>
 
 <p>Looking at HxD, you can quite easily trace this:</p>
 
@@ -359,9 +359,9 @@ Some files like config files are very small and don’t benefit from compression
 
 <h3 id="reading-and-decompression">Reading and decompression</h3>
 
-<p>Reading pak files is pretty much as simple as writing them however going for a naïve approach will limit the flexibility of using pak files combined with regular physical files. At the base of this lies a <strong>virtual file system</strong>. There are loads of code repositories that all implement this differently, I simply went my own way without looking too much at what’s already out there. A virtual file system (aka VFS), allows you to treat all files as if they were just physical files. This not only works with pak files, it can work with any archived file or even files on a network or server. The idea is that every type of data implements the same filesystem interface so that all files can be treated the same. This is especially important during development because you wouldn’t want to be needing to create a pak file each time you modify an asset. The VFS works by “mounting” certain directories or archives to a virtual file path. That way, the system can pretend that for example the files of my pak file at <code class="highlighter-rouge">C:\Games\MyGame\Resources\MyPak.pak</code> are in <code class="highlighter-rouge">Resources\</code>  and I can address the files in the pak files as if they were just physical files.</p>
+<p>Reading pak files is pretty much as simple as writing them however going for a naïve approach will limit the flexibility of using pak files combined with regular physical files. At the base of this lies a <strong>virtual file system</strong>. There are loads of code repositories that all implement this differently, I simply went my own way without looking too much at what’s already out there. A virtual file system (aka VFS), allows you to treat all files as if they were just physical files. This not only works with pak files, it can work with any archived file or even files on a network or server. The idea is that every type of data implements the same filesystem interface so that all files can be treated the same. This is especially important during development because you wouldn’t want to be needing to create a pak file each time you modify an asset. The VFS works by “mounting” certain directories or archives to a virtual file path. That way, the system can pretend that for example the files of my pak file at <code class="language-plaintext highlighter-rouge">C:\Games\MyGame\Resources\MyPak.pak</code> are in <code class="language-plaintext highlighter-rouge">Resources\</code>  and I can address the files in the pak files as if they were just physical files.</p>
 
-<p>I created two interfaces: <code class="highlighter-rouge">IMountPoint</code> and <code class="highlighter-rouge">IFile</code>. A mountpoint is basically the directory or archive that will get attached to the VFS. Each type of input implements how the file or directory should be treated. For a regular file directory, this is fairly simple. A <code class="highlighter-rouge">PhysicalMountPoint</code> simply reads the contents of the whole directory and stores in a list so that the VFS can later access and search it. <code class="highlighter-rouge">File</code> implements how a single file entry should be interpreted. Again for a regular file, this is just reading the file like you normally do, that is what the <code class="highlighter-rouge">PhysicalFile</code> does.</p>
+<p>I created two interfaces: <code class="language-plaintext highlighter-rouge">IMountPoint</code> and <code class="language-plaintext highlighter-rouge">IFile</code>. A mountpoint is basically the directory or archive that will get attached to the VFS. Each type of input implements how the file or directory should be treated. For a regular file directory, this is fairly simple. A <code class="language-plaintext highlighter-rouge">PhysicalMountPoint</code> simply reads the contents of the whole directory and stores in a list so that the VFS can later access and search it. <code class="language-plaintext highlighter-rouge">File</code> implements how a single file entry should be interpreted. Again for a regular file, this is just reading the file like you normally do, that is what the <code class="language-plaintext highlighter-rouge">PhysicalFile</code> does.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMountPoint</span>
 <span class="p">{</span>
@@ -395,7 +395,7 @@ Some files like config files are very small and don’t benefit from compression
 
 <p>A MountPoint can be given an “order”. This idea gives me the ability to prioritize certain folders or pak files in order to support patching or modding. Simply giving a certain pak file a higher order, will make the VFS choose the file with the highest order first. When accessing a file, the VFS will search the mountpoints in descending order.</p>
 
-<p>Using the same interfaces, I implemented the <code class="highlighter-rouge">PakMountPoint</code> and <code class="highlighter-rouge">PakFile</code>. They both implement the same functionality. The <code class="highlighter-rouge">PakMountPoint</code> actually uses a <code class="highlighter-rouge">PhysicalFile</code> to read the file headers of the pak file and store a list of files similar to the <code class="highlighter-rouge">PhysicalMountPoint</code> together with the data offset information in order to be able to access the data of each file.</p>
+<p>Using the same interfaces, I implemented the <code class="language-plaintext highlighter-rouge">PakMountPoint</code> and <code class="language-plaintext highlighter-rouge">PakFile</code>. They both implement the same functionality. The <code class="language-plaintext highlighter-rouge">PakMountPoint</code> actually uses a <code class="language-plaintext highlighter-rouge">PhysicalFile</code> to read the file headers of the pak file and store a list of files similar to the <code class="language-plaintext highlighter-rouge">PhysicalMountPoint</code> together with the data offset information in order to be able to access the data of each file.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">PakMountPoint</span><span class="o">::</span><span class="n">OnMount</span><span class="p">()</span>
 <span class="p">{</span>
@@ -421,7 +421,7 @@ Some files like config files are very small and don’t benefit from compression
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">PakFile</code> uses the info in the mountpoint to fetch the right part of the data blob and is able to uncompress the data if required. I’ve realized that the name <code class="highlighter-rouge">PakFile</code> in my implementation is quite ambiguous as it represents a single file inside a pak file and not the pak file itself.</p>
+<p>The <code class="language-plaintext highlighter-rouge">PakFile</code> uses the info in the mountpoint to fetch the right part of the data blob and is able to uncompress the data if required. I’ve realized that the name <code class="language-plaintext highlighter-rouge">PakFile</code> in my implementation is quite ambiguous as it represents a single file inside a pak file and not the pak file itself.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="n">PakFile</span><span class="o">::</span><span class="n">Read</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">pBuffer</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span>
 <span class="p">{</span>
@@ -445,9 +445,9 @@ Some files like config files are very small and don’t benefit from compression
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Writing to a <code class="highlighter-rouge">PakFile</code> is not implemented as it doesn’t really make sense to do that.</p>
+<p>Writing to a <code class="language-plaintext highlighter-rouge">PakFile</code> is not implemented as it doesn’t really make sense to do that.</p>
 
-<p>With this interface in place, supporting other archived types is very easy. I’ve also implemented support for zip files by creating a <code class="highlighter-rouge">ZipMountPoint</code> and <code class="highlighter-rouge">ZipFile</code>.</p>
+<p>With this interface in place, supporting other archived types is very easy. I’ve also implemented support for zip files by creating a <code class="language-plaintext highlighter-rouge">ZipMountPoint</code> and <code class="language-plaintext highlighter-rouge">ZipFile</code>.</p>
 
 <h2 id="links">Links</h2>
 
@@ -517,17 +517,7 @@ Some files like config files are very small and don’t benefit from compression
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#taking-a-closer-look-at-doom1wad">Taking a closer look at DOOM1.WAD</a></li>
-<li class="toc-entry toc-h2"><a href="#pak-file-implementation">Pak file implementation</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#layout">Layout</a></li>
-<li class="toc-entry toc-h3"><a href="#paking-and-compression">Paking and compression</a></li>
-<li class="toc-entry toc-h3"><a href="#reading-and-decompression">Reading and decompression</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#links">Links</a></li>
-</ul>
+                    <ul><li>Pak files - Virtual file system<ul><li><a href="#taking-a-closer-look-at-doom1wad">Taking a closer look at DOOM1.WAD</a></li><li><a href="#pak-file-implementation">Pak file implementation</a><ul><li><a href="#layout">Layout</a></li><li><a href="#paking-and-compression">Paking and compression</a></li><li><a href="#reading-and-decompression">Reading and decompression</a></li></ul></li><li><a href="#links">Links</a></li></ul></li></ul>
                 </div>
                 
 

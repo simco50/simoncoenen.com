@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v3.8.7" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Basic compile-time type information using constexpr" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="Simon Coenen" />
 <meta property="og:image" content="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-06-21T00:00:00+01:00" />
+<meta property="article:published_time" content="2019-06-21T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" />
 <meta property="twitter:title" content="Basic compile-time type information using constexpr" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-06-21T00:00:00+01:00","datePublished":"2019-06-21T00:00:00+01:00","description":"Using compile-time string hashing to generate type information in C++","headline":"Basic compile-time type information using constexpr","image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection"},"url":"https://www.simoncoenen.com/blog/programming/StaticReflection"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-06-21T00:00:00+02:00","datePublished":"2019-06-21T00:00:00+02:00","description":"Using compile-time string hashing to generate type information in C++","headline":"Basic compile-time type information using constexpr","image":"https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/StaticReflection"},"url":"https://www.simoncoenen.com/blog/programming/StaticReflection"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -204,14 +204,14 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Like the C++ documentation says, <code class="highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
+<p>Like the C++ documentation says, <code class="language-plaintext highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
 
 <p>From <a href="https://en.cppreference.com/w/cpp/language/constexpr">cppreference.com</a>:</p>
 <blockquote>
   <p>The constexpr specifier declares that it is possible to evaluate the value of the function or variable at compile time. Such variables and functions can then be used where only compile time constant expressions are allowed.</p>
 </blockquote>
 
-<p>So we can’t be sure when the function we wrote is going to be executed at compile time. A way to actually enforce this is to make the value in which the return value will get stored also <code class="highlighter-rouge">constexpr</code>. That way, if the function can not be evaluated at compile-time, the compiler will output an error.</p>
+<p>So we can’t be sure when the function we wrote is going to be executed at compile time. A way to actually enforce this is to make the value in which the return value will get stored also <code class="language-plaintext highlighter-rouge">constexpr</code>. That way, if the function can not be evaluated at compile-time, the compiler will output an error.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//constexpr function</span>
 <span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">Hash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
@@ -220,11 +220,11 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">NonConstexprHash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>A cool little feature in Visual Studio with <code class="highlighter-rouge">constexpr</code> values is that it shows the resulting value when you hover over it. However, I’ve noticed that it sometimes shows the wrong value.</p>
+<p>A cool little feature in Visual Studio with <code class="language-plaintext highlighter-rouge">constexpr</code> values is that it shows the resulting value when you hover over it. However, I’ve noticed that it sometimes shows the wrong value.</p>
 
 <h2 id="the-object-class">The “Object” class</h2>
 
-<p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
+<p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="language-plaintext highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="language-plaintext highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
 In this case, relevant to reflection, it has the following functions:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="n">StringHash</span> <span class="nf">GetType</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
@@ -236,7 +236,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="kt">bool</span> <span class="n">IsTypeOf</span><span class="p">(</span><span class="n">StringHash</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>As you can see, there are two versions of each function: a virtual method and a static method. The virtual method gets overridden by each class that inherits from Object and the static method gets hidden also by the class that inherits from Object. This might seem like a chore to do for each class by this can easily be wrapped in a small macro, just like Unreal Engine has <code class="highlighter-rouge">UOBJECT_BODY()</code>.</p>
+<p>As you can see, there are two versions of each function: a virtual method and a static method. The virtual method gets overridden by each class that inherits from Object and the static method gets hidden also by the class that inherits from Object. This might seem like a chore to do for each class by this can easily be wrapped in a small macro, just like Unreal Engine has <code class="language-plaintext highlighter-rouge">UOBJECT_BODY()</code>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define FLUX_OBJECT_BASE(typeName, baseTypeName, isAbstract) \
     private: \
@@ -255,13 +255,13 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <p>This provides each class with the tools to get its type id and name either statically or with a reference to an instance. As you can see, the static functions can be used at compile-time.</p>
 
-<p>Unreal Engine obviously has much more magic here. On top of that, UE4 has UnrealHeaderTool which will parse the file and actually generate extra code (which are the <code class="highlighter-rouge">classname.generated.h</code> files).</p>
+<p>Unreal Engine obviously has much more magic here. On top of that, UE4 has UnrealHeaderTool which will parse the file and actually generate extra code (which are the <code class="language-plaintext highlighter-rouge">classname.generated.h</code> files).</p>
 
 <h2 id="typeinfo">TypeInfo</h2>
 
-<p>One thing you might have seen in the code above, is the class <code class="highlighter-rouge">TypeInfo</code>. This class serves as the metadata for a class that describes the relation between the class and its parent and will provide us with the ability to create a simple <code class="highlighter-rouge">DynamicCast</code> function. There is exactly one <code class="highlighter-rouge">TypeInfo</code> for each class as it gets statically initialized in <code class="highlighter-rouge">GetTypeInfoStatic()</code>, it contains the type hash, name and a reference to the TypeInfo of the parent’s class.</p>
+<p>One thing you might have seen in the code above, is the class <code class="language-plaintext highlighter-rouge">TypeInfo</code>. This class serves as the metadata for a class that describes the relation between the class and its parent and will provide us with the ability to create a simple <code class="language-plaintext highlighter-rouge">DynamicCast</code> function. There is exactly one <code class="language-plaintext highlighter-rouge">TypeInfo</code> for each class as it gets statically initialized in <code class="language-plaintext highlighter-rouge">GetTypeInfoStatic()</code>, it contains the type hash, name and a reference to the TypeInfo of the parent’s class.</p>
 
-<p>Knowing what the parent class of an object is, allows us to create a simple <code class="highlighter-rouge">DynamicCast</code> by walking up the class hierarchy until we either hit the TypeInfo we’re looking for (<em>success</em>) or the parent TypeInfo is <code class="highlighter-rouge">nullptr</code> (<em>fail</em>).</p>
+<p>Knowing what the parent class of an object is, allows us to create a simple <code class="language-plaintext highlighter-rouge">DynamicCast</code> by walking up the class hierarchy until we either hit the TypeInfo we’re looking for (<em>success</em>) or the parent TypeInfo is <code class="language-plaintext highlighter-rouge">nullptr</code> (<em>fail</em>).</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">TypeInfo</span><span class="o">::</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="k">const</span> <span class="n">StringHash</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span>
 <span class="p">{</span>
@@ -287,7 +287,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <h2 id="object-factories">Object factories</h2>
 
-<p>One of the main reasons for a reflection system is making serialization and deserialization possible. Say, I want to serialize and then deserialize an object, the only way to do that without reflection, is having a huge if/else block checking what object it needs to create because in C++, you can’t just do something like <code class="highlighter-rouge">object = new "Foo"</code>.</p>
+<p>One of the main reasons for a reflection system is making serialization and deserialization possible. Say, I want to serialize and then deserialize an object, the only way to do that without reflection, is having a huge if/else block checking what object it needs to create because in C++, you can’t just do something like <code class="language-plaintext highlighter-rouge">object = new "Foo"</code>.</p>
 
 <p>This is pretty awful and not really maintainable.</p>
 
@@ -315,7 +315,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <h2 id="other-uses-of-compile-time-stringhash">Other uses of compile-time StringHash</h2>
 
-<p>Initially, I’ve worked on the compile time string hashing just for the purpose of basic reflection and “messing around”. Later, I realized there are lot more powerful things you can do with them. For example with shader variables, Before,  I was addressing them using strings. It’s easy to make typo’s when using strings and using them makes renaming identifiers hard because there is no validation and this can cause some really annoying bugs. Using compile time hashes, I could improve the performance and prevent making typo’s by putting common shader variables names in an enum. This provides some kind of “safety net” and IntelliSense has some nice auto-complete now <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">. An enum enforces compile-time constants so you can’t put strings in it. However, since our hashes are compile time, we can wrap the strings with <code class="highlighter-rouge">StringHash</code> as follows:</p>
+<p>Initially, I’ve worked on the compile time string hashing just for the purpose of basic reflection and “messing around”. Later, I realized there are lot more powerful things you can do with them. For example with shader variables, Before,  I was addressing them using strings. It’s easy to make typo’s when using strings and using them makes renaming identifiers hard because there is no validation and this can cause some really annoying bugs. Using compile time hashes, I could improve the performance and prevent making typo’s by putting common shader variables names in an enum. This provides some kind of “safety net” and IntelliSense has some nice auto-complete now <img class="emoji" title=":smile:" alt=":smile:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" height="20" width="20">. An enum enforces compile-time constants so you can’t put strings in it. However, since our hashes are compile time, we can wrap the strings with <code class="language-plaintext highlighter-rouge">StringHash</code> as follows:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">ShaderConstant</span>
 <span class="p">{</span>
@@ -383,14 +383,15 @@ In this case, relevant to reflection, it has the following functions:</p>
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#what-it-does">What it does</a></li>
-<li class="toc-entry toc-h2"><a href="#compile-time-string-hashing">Compile-time string hashing</a></li>
-<li class="toc-entry toc-h2"><a href="#the-object-class">The “Object” class</a></li>
-<li class="toc-entry toc-h2"><a href="#typeinfo">TypeInfo</a></li>
-<li class="toc-entry toc-h2"><a href="#object-factories">Object factories</a></li>
-<li class="toc-entry toc-h2"><a href="#other-uses-of-compile-time-stringhash">Other uses of compile-time StringHash</a></li>
+                    <ul><li>Basic compile-time type information using constexpr<ul>
+<li><a href="#what-it-does">What it does</a></li>
+<li><a href="#compile-time-string-hashing">Compile-time string hashing</a></li>
+<li><a href="#the-object-class">The “Object” class</a></li>
+<li><a href="#typeinfo">TypeInfo</a></li>
+<li><a href="#object-factories">Object factories</a></li>
+<li><a href="#other-uses-of-compile-time-stringhash">Other uses of compile-time StringHash</a></li>
 </ul>
+</li></ul>
                 </div>
                 
 

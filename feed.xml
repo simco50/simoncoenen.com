@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2023-02-01T11:37:22+00:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+01:00</published><updated>2020-08-30T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<h2 id="background">Background</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2023-06-06T21:34:33+02:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+02:00</published><updated>2020-08-30T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<h2 id="background">Background</h2>
 
 <p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
 
@@ -359,7 +359,7 @@ What’s interesting is that, as opposed to traditional compute shader particle 
 
 <h1 id="updates">Updates</h1>
 
-<p>02/09/2020 - Update Ambient Occlusion description</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[A graphics study of Doom Eternal]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Using the DirectXShaderCompiler C++ API</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling" rel="alternate" type="text/html" title="Using the DirectXShaderCompiler C++ API" /><published>2020-03-04T00:00:00+00:00</published><updated>2020-03-04T00:00:00+00:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"><![CDATA[<p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
+<p>02/09/2020 - Update Ambient Occlusion description</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[A graphics study of Doom Eternal]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Using the DirectXShaderCompiler C++ API</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling" rel="alternate" type="text/html" title="Using the DirectXShaderCompiler C++ API" /><published>2020-03-04T00:00:00+01:00</published><updated>2020-03-04T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"><![CDATA[<p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
 The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler DirectXShaderCompiler (DXC) which compiles to DXIL (whereas FXC compiles to DXBC).
 It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
@@ -374,7 +374,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 
 <p><strong>EDIT (20/03/2020)</strong>: DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. <a href="https://youtu.be/tyyKeTsdtmo?t=878">I’d definitely recommend watching that</a>. The general usage is the same but with the latest few updates, it has become a bit easier to use and manipulate.</p>
 
-<p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
+<p>The main thing that got updated are the introduction of <code class="language-plaintext highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
 
 <h2 id="getting-started">Getting Started</h2>
 
@@ -389,7 +389,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 
 <h2 id="compiling">Compiling</h2>
 
-<p>The new update comes with a new interface <code class="highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
+<p>The new update comes with a new interface <code class="language-plaintext highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="language-plaintext highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
 <span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
@@ -397,7 +397,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">pShaderSource</span><span class="p">,</span> <span class="n">shaderSourceSize</span><span class="p">,</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>Now introducing <code class="highlighter-rouge">IDxcCompiler3</code>, the <code class="highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="highlighter-rouge">-D</code> argument. Note the use of <code class="highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
+<p>Now introducing <code class="language-plaintext highlighter-rouge">IDxcCompiler3</code>, the <code class="language-plaintext highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="language-plaintext highlighter-rouge">-D</code> argument. Note the use of <code class="language-plaintext highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LPWSTR</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
 <span class="c1">//-E for the entry point (eg. PSMain)</span>
@@ -439,13 +439,13 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>.</p>
+<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="language-plaintext highlighter-rouge">-Qstrip_debug</code> and <code class="language-plaintext highlighter-rouge">-Qstrip_reflect</code>.</p>
 
 <h2 id="stripping-parts">Stripping parts</h2>
 
 <p>I’ve found that previously, stripping debug data or reflection data hasn’t always been doing what I would expect. With the new updates, this becomes a lot easier.</p>
 
-<p>The output of the compiler now is a <code class="highlighter-rouge">IDxcResult</code> (as opposed to <code class="highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
+<p>The output of the compiler now is a <code class="language-plaintext highlighter-rouge">IDxcResult</code> (as opposed to <code class="language-plaintext highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="language-plaintext highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
 
 <ul>
   <li>DXC_OUT_OBJECT</li>
@@ -459,7 +459,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
   <li>DXC_OUT_ROOT_SIGNATURE</li>
 </ul>
 
-<p>In the code example above, I added the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="highlighter-rouge">DXC_OUT_PDB</code> and <code class="highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
+<p>In the code example above, I added the two arguments <code class="language-plaintext highlighter-rouge">-Qstrip_debug</code> and <code class="language-plaintext highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="language-plaintext highlighter-rouge">DXC_OUT_PDB</code> and <code class="language-plaintext highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="language-plaintext highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
 
 <p>So now, it’s a lot more clear and easy to specifically get parts of the shader. Getting shader PDBs is done as follows:</p>
 
@@ -468,9 +468,9 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_PDB</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pDebugData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="n">pDebugDataPath</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>The function has one extra argument which can be retrieved as a <code class="highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
+<p>The function has one extra argument which can be retrieved as a <code class="language-plaintext highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
 
-<p>For reflection data: <em>(library reflection is similar but with <code class="highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
+<p>For reflection data: <em>(library reflection is similar but with <code class="language-plaintext highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pReflectionData</span><span class="p">;</span>
 <span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_REFLECTION</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflectionData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
@@ -489,7 +489,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <p>I’ve found no good examples of implementing a custom include handler and it’s really not straight forward at first.
 This is useful if you want to add some custom include logic or if you want to know which files were included to do some kind of shader hot-reloading.
 Here’s an example implementation that correctly loads include sources and makes sure not to include the same file twice.
-To add include directories, use the <code class="highlighter-rouge">-I</code> argument like for example <code class="highlighter-rouge">-I /Resources/Shaders</code>.</p>
+To add include directories, use the <code class="language-plaintext highlighter-rouge">-I</code> argument like for example <code class="language-plaintext highlighter-rouge">-I /Resources/Shaders</code>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
 <span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcIncludeHandler</span><span class="o">&gt;</span> <span class="n">pDefaultIncludeHandler</span><span class="p">;</span>
@@ -546,7 +546,7 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
 
 <p>I recently saw a conversation on the <a href="https://discordapp.com/invite/directx">DirectX Discord server</a> about when to use “-“ or “/” for compile argument but if you look at HLSLOptions.td in the <a href="https://github.com/microsoft/DirectXShaderCompiler/blob/master/include/dxc/Support/HLSLOptions.td">DirectXShaderCompiler</a> reposity, you’ll see “-“ works for all arguments while “/” only works for some. So it’s always best to use “-“.</p>
 
-<p>When you execute <code class="highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
+<p>When you execute <code class="language-plaintext highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
 
 <p>Version: dxcompiler.dll: 1.7 - 1.7.2212.12 (8c9d92be7);
 dxil.dll: 1.7(101.7.2212.14)</p>
@@ -1336,7 +1336,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
 <ul>
   <li><a href="https://www.wihlidal.com/blog/pipeline/2018-09-16-dxil-signing-post-compile/">Signing DXIL post-compile - Graham Wihlidal</a></li>
   <li><a href="http://reedbeta.com/blog/custom-toolchain-with-msbuild/">Using a Custom Toolchain with MSBuild - Nathan Reed</a></li>
-</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Optimizing spotlight intersection in tiled/clustered light culling</title><link href="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling" rel="alternate" type="text/html" title="Optimizing spotlight intersection in tiled/clustered light culling" /><published>2019-08-17T00:00:00+01:00</published><updated>2019-08-17T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling"><![CDATA[<p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
+</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Optimizing spotlight intersection in tiled/clustered light culling</title><link href="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling" rel="alternate" type="text/html" title="Optimizing spotlight intersection in tiled/clustered light culling" /><published>2019-08-17T00:00:00+02:00</published><updated>2019-08-17T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/SpotlightCulling"><![CDATA[<p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
 I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
 
 <!--more-->
@@ -1598,7 +1598,7 @@ However, with tiled light culling having large discontinuities, bounding spheres
   <li><a href="http://www.cse.chalmers.se/~uffe/clustered_shading_preprint.pdf">Clustered Deferred and Forward Shading - Ola Olsson, Markus Billeter, and Ulf Assarsson</a></li>
   <li><a href="https://www.3dgep.com/volume-tiled-forward-shading/">Volume Tiled Forward Shading - Jeremiah van Oosten</a></li>
   <li><a href="http://www.humus.name/Articles/PracticalClusteredShading.pdf">Partical Clustered Shader - Emil Person</a></li>
-</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[Optimizing spotlight intersection in tiled/clustered light culling]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Pak files - Virtual file system</title><link href="https://www.simoncoenen.com/blog/programming/PakFiles" rel="alternate" type="text/html" title="Pak files - Virtual file system" /><published>2019-07-10T00:00:00+01:00</published><updated>2019-07-10T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/PakFiles</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/PakFiles"><![CDATA[<p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
+</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[Optimizing spotlight intersection in tiled/clustered light culling]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/006_cone_culling/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Pak files - Virtual file system</title><link href="https://www.simoncoenen.com/blog/programming/PakFiles" rel="alternate" type="text/html" title="Pak files - Virtual file system" /><published>2019-07-10T00:00:00+02:00</published><updated>2019-07-10T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/PakFiles</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/PakFiles"><![CDATA[<p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
 
 <!--more-->
 
@@ -1612,7 +1612,7 @@ However, with tiled light culling having large discontinuities, bounding spheres
 
 <p>I found it interesting to take a closer look at how data memory in Doom’s WAD files are laid out. You can <a href="http://distro.ibiblio.org/pub/linux/distributions/slitaz/sources/packages/d/doom1.wad">download DOOM1.WAD for free</a>. This is the asset file used for the shareware version of the game. To open and view this, I’ve used <a href="https://mh-nexus.de/en/hxd/">HxD</a> which is a free Hex editor for Windows but any other hex editor will do the job.</p>
 
-<p>According to the <a href="https://doomwiki.org/wiki/WAD">Doom Wiki</a>, a WAD file has one file header, multiple “directories” and a large binary blob of data. The file start with a 12 byte header containing a magic value (<code class="highlighter-rouge">IWAD</code> or <code class="highlighter-rouge">PWAD</code>), the amount of lumps and an offset in bytes from the start of the file to where the directory headers start. Following this directory offset in the hex editor, we hit the first directory entry. A directory is a 16 byte header containing another offset in bytes pointing to where the actual lump’s data is located, the size of the data and the name of the lump.</p>
+<p>According to the <a href="https://doomwiki.org/wiki/WAD">Doom Wiki</a>, a WAD file has one file header, multiple “directories” and a large binary blob of data. The file start with a 12 byte header containing a magic value (<code class="language-plaintext highlighter-rouge">IWAD</code> or <code class="language-plaintext highlighter-rouge">PWAD</code>), the amount of lumps and an offset in bytes from the start of the file to where the directory headers start. Following this directory offset in the hex editor, we hit the first directory entry. A directory is a 16 byte header containing another offset in bytes pointing to where the actual lump’s data is located, the size of the data and the name of the lump.</p>
 
 <p>Looking at HxD, you can quite easily trace this:</p>
 
@@ -1801,9 +1801,9 @@ Some files like config files are very small and don’t benefit from compression
 
 <h3 id="reading-and-decompression">Reading and decompression</h3>
 
-<p>Reading pak files is pretty much as simple as writing them however going for a naïve approach will limit the flexibility of using pak files combined with regular physical files. At the base of this lies a <strong>virtual file system</strong>. There are loads of code repositories that all implement this differently, I simply went my own way without looking too much at what’s already out there. A virtual file system (aka VFS), allows you to treat all files as if they were just physical files. This not only works with pak files, it can work with any archived file or even files on a network or server. The idea is that every type of data implements the same filesystem interface so that all files can be treated the same. This is especially important during development because you wouldn’t want to be needing to create a pak file each time you modify an asset. The VFS works by “mounting” certain directories or archives to a virtual file path. That way, the system can pretend that for example the files of my pak file at <code class="highlighter-rouge">C:\Games\MyGame\Resources\MyPak.pak</code> are in <code class="highlighter-rouge">Resources\</code>  and I can address the files in the pak files as if they were just physical files.</p>
+<p>Reading pak files is pretty much as simple as writing them however going for a naïve approach will limit the flexibility of using pak files combined with regular physical files. At the base of this lies a <strong>virtual file system</strong>. There are loads of code repositories that all implement this differently, I simply went my own way without looking too much at what’s already out there. A virtual file system (aka VFS), allows you to treat all files as if they were just physical files. This not only works with pak files, it can work with any archived file or even files on a network or server. The idea is that every type of data implements the same filesystem interface so that all files can be treated the same. This is especially important during development because you wouldn’t want to be needing to create a pak file each time you modify an asset. The VFS works by “mounting” certain directories or archives to a virtual file path. That way, the system can pretend that for example the files of my pak file at <code class="language-plaintext highlighter-rouge">C:\Games\MyGame\Resources\MyPak.pak</code> are in <code class="language-plaintext highlighter-rouge">Resources\</code>  and I can address the files in the pak files as if they were just physical files.</p>
 
-<p>I created two interfaces: <code class="highlighter-rouge">IMountPoint</code> and <code class="highlighter-rouge">IFile</code>. A mountpoint is basically the directory or archive that will get attached to the VFS. Each type of input implements how the file or directory should be treated. For a regular file directory, this is fairly simple. A <code class="highlighter-rouge">PhysicalMountPoint</code> simply reads the contents of the whole directory and stores in a list so that the VFS can later access and search it. <code class="highlighter-rouge">File</code> implements how a single file entry should be interpreted. Again for a regular file, this is just reading the file like you normally do, that is what the <code class="highlighter-rouge">PhysicalFile</code> does.</p>
+<p>I created two interfaces: <code class="language-plaintext highlighter-rouge">IMountPoint</code> and <code class="language-plaintext highlighter-rouge">IFile</code>. A mountpoint is basically the directory or archive that will get attached to the VFS. Each type of input implements how the file or directory should be treated. For a regular file directory, this is fairly simple. A <code class="language-plaintext highlighter-rouge">PhysicalMountPoint</code> simply reads the contents of the whole directory and stores in a list so that the VFS can later access and search it. <code class="language-plaintext highlighter-rouge">File</code> implements how a single file entry should be interpreted. Again for a regular file, this is just reading the file like you normally do, that is what the <code class="language-plaintext highlighter-rouge">PhysicalFile</code> does.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMountPoint</span>
 <span class="p">{</span>
@@ -1837,7 +1837,7 @@ Some files like config files are very small and don’t benefit from compression
 
 <p>A MountPoint can be given an “order”. This idea gives me the ability to prioritize certain folders or pak files in order to support patching or modding. Simply giving a certain pak file a higher order, will make the VFS choose the file with the highest order first. When accessing a file, the VFS will search the mountpoints in descending order.</p>
 
-<p>Using the same interfaces, I implemented the <code class="highlighter-rouge">PakMountPoint</code> and <code class="highlighter-rouge">PakFile</code>. They both implement the same functionality. The <code class="highlighter-rouge">PakMountPoint</code> actually uses a <code class="highlighter-rouge">PhysicalFile</code> to read the file headers of the pak file and store a list of files similar to the <code class="highlighter-rouge">PhysicalMountPoint</code> together with the data offset information in order to be able to access the data of each file.</p>
+<p>Using the same interfaces, I implemented the <code class="language-plaintext highlighter-rouge">PakMountPoint</code> and <code class="language-plaintext highlighter-rouge">PakFile</code>. They both implement the same functionality. The <code class="language-plaintext highlighter-rouge">PakMountPoint</code> actually uses a <code class="language-plaintext highlighter-rouge">PhysicalFile</code> to read the file headers of the pak file and store a list of files similar to the <code class="language-plaintext highlighter-rouge">PhysicalMountPoint</code> together with the data offset information in order to be able to access the data of each file.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">PakMountPoint</span><span class="o">::</span><span class="n">OnMount</span><span class="p">()</span>
 <span class="p">{</span>
@@ -1863,7 +1863,7 @@ Some files like config files are very small and don’t benefit from compression
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">PakFile</code> uses the info in the mountpoint to fetch the right part of the data blob and is able to uncompress the data if required. I’ve realized that the name <code class="highlighter-rouge">PakFile</code> in my implementation is quite ambiguous as it represents a single file inside a pak file and not the pak file itself.</p>
+<p>The <code class="language-plaintext highlighter-rouge">PakFile</code> uses the info in the mountpoint to fetch the right part of the data blob and is able to uncompress the data if required. I’ve realized that the name <code class="language-plaintext highlighter-rouge">PakFile</code> in my implementation is quite ambiguous as it represents a single file inside a pak file and not the pak file itself.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="n">PakFile</span><span class="o">::</span><span class="n">Read</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">pBuffer</span><span class="p">,</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span>
 <span class="p">{</span>
@@ -1887,9 +1887,9 @@ Some files like config files are very small and don’t benefit from compression
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Writing to a <code class="highlighter-rouge">PakFile</code> is not implemented as it doesn’t really make sense to do that.</p>
+<p>Writing to a <code class="language-plaintext highlighter-rouge">PakFile</code> is not implemented as it doesn’t really make sense to do that.</p>
 
-<p>With this interface in place, supporting other archived types is very easy. I’ve also implemented support for zip files by creating a <code class="highlighter-rouge">ZipMountPoint</code> and <code class="highlighter-rouge">ZipFile</code>.</p>
+<p>With this interface in place, supporting other archived types is very easy. I’ve also implemented support for zip files by creating a <code class="language-plaintext highlighter-rouge">ZipMountPoint</code> and <code class="language-plaintext highlighter-rouge">ZipFile</code>.</p>
 
 <h2 id="links">Links</h2>
 
@@ -1900,7 +1900,7 @@ Some files like config files are very small and don’t benefit from compression
   <li><a href="https://zlib.net/">zlib</a></li>
   <li><a href="http://www.radgametools.com/oodle.htm">Oodle</a></li>
   <li><a href="https://docs.unrealengine.com/en-US/Engine/Basics/Projects/Packaging/index.html#signingandencryption">Pak file signing and encryption in Unreal Engine</a></li>
-</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Virtual file system using pak files]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Basic compile-time type information using constexpr</title><link href="https://www.simoncoenen.com/blog/programming/StaticReflection" rel="alternate" type="text/html" title="Basic compile-time type information using constexpr" /><published>2019-06-21T00:00:00+01:00</published><updated>2019-06-21T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/StaticReflection</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/StaticReflection"><![CDATA[<p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
+</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Virtual file system using pak files]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/005_pakfiles/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Basic compile-time type information using constexpr</title><link href="https://www.simoncoenen.com/blog/programming/StaticReflection" rel="alternate" type="text/html" title="Basic compile-time type information using constexpr" /><published>2019-06-21T00:00:00+02:00</published><updated>2019-06-21T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/StaticReflection</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/StaticReflection"><![CDATA[<p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
 
 <p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>. 
 <!--more-->
@@ -1948,14 +1948,14 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Like the C++ documentation says, <code class="highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
+<p>Like the C++ documentation says, <code class="language-plaintext highlighter-rouge">constexpr</code> doesn’t necessarily force the code to be executed at compile time, it is just a suggestion.</p>
 
 <p>From <a href="https://en.cppreference.com/w/cpp/language/constexpr">cppreference.com</a>:</p>
 <blockquote>
   <p>The constexpr specifier declares that it is possible to evaluate the value of the function or variable at compile time. Such variables and functions can then be used where only compile time constant expressions are allowed.</p>
 </blockquote>
 
-<p>So we can’t be sure when the function we wrote is going to be executed at compile time. A way to actually enforce this is to make the value in which the return value will get stored also <code class="highlighter-rouge">constexpr</code>. That way, if the function can not be evaluated at compile-time, the compiler will output an error.</p>
+<p>So we can’t be sure when the function we wrote is going to be executed at compile time. A way to actually enforce this is to make the value in which the return value will get stored also <code class="language-plaintext highlighter-rouge">constexpr</code>. That way, if the function can not be evaluated at compile-time, the compiler will output an error.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//constexpr function</span>
 <span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">Hash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
@@ -1964,11 +1964,11 @@ By making use of constexpr, we can have expressions get evaluated at compile tim
 <span class="k">constexpr</span> <span class="n">StringHash</span> <span class="n">Hash</span> <span class="o">=</span> <span class="n">StringHash</span><span class="o">::</span><span class="n">NonConstexprHash</span><span class="p">(</span><span class="s">"Foo"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>A cool little feature in Visual Studio with <code class="highlighter-rouge">constexpr</code> values is that it shows the resulting value when you hover over it. However, I’ve noticed that it sometimes shows the wrong value.</p>
+<p>A cool little feature in Visual Studio with <code class="language-plaintext highlighter-rouge">constexpr</code> values is that it shows the resulting value when you hover over it. However, I’ve noticed that it sometimes shows the wrong value.</p>
 
 <h2 id="the-object-class">The “Object” class</h2>
 
-<p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
+<p>Each class that wants to “participate” is this reflection system will need to inherit from a base class <code class="language-plaintext highlighter-rouge">Object</code> and insert a macro in its class body. Much like <code class="language-plaintext highlighter-rouge">UObject</code> in Unreal Engine, it provides the implementation with a load of functionality like reflection.
 In this case, relevant to reflection, it has the following functions:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="n">StringHash</span> <span class="nf">GetType</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetTypeInfoStatic</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetType</span><span class="p">();</span> <span class="p">}</span>
@@ -1980,7 +1980,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="kt">bool</span> <span class="n">IsTypeOf</span><span class="p">(</span><span class="n">StringHash</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>As you can see, there are two versions of each function: a virtual method and a static method. The virtual method gets overridden by each class that inherits from Object and the static method gets hidden also by the class that inherits from Object. This might seem like a chore to do for each class by this can easily be wrapped in a small macro, just like Unreal Engine has <code class="highlighter-rouge">UOBJECT_BODY()</code>.</p>
+<p>As you can see, there are two versions of each function: a virtual method and a static method. The virtual method gets overridden by each class that inherits from Object and the static method gets hidden also by the class that inherits from Object. This might seem like a chore to do for each class by this can easily be wrapped in a small macro, just like Unreal Engine has <code class="language-plaintext highlighter-rouge">UOBJECT_BODY()</code>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define FLUX_OBJECT_BASE(typeName, baseTypeName, isAbstract) \
     private: \
@@ -1999,13 +1999,13 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <p>This provides each class with the tools to get its type id and name either statically or with a reference to an instance. As you can see, the static functions can be used at compile-time.</p>
 
-<p>Unreal Engine obviously has much more magic here. On top of that, UE4 has UnrealHeaderTool which will parse the file and actually generate extra code (which are the <code class="highlighter-rouge">classname.generated.h</code> files).</p>
+<p>Unreal Engine obviously has much more magic here. On top of that, UE4 has UnrealHeaderTool which will parse the file and actually generate extra code (which are the <code class="language-plaintext highlighter-rouge">classname.generated.h</code> files).</p>
 
 <h2 id="typeinfo">TypeInfo</h2>
 
-<p>One thing you might have seen in the code above, is the class <code class="highlighter-rouge">TypeInfo</code>. This class serves as the metadata for a class that describes the relation between the class and its parent and will provide us with the ability to create a simple <code class="highlighter-rouge">DynamicCast</code> function. There is exactly one <code class="highlighter-rouge">TypeInfo</code> for each class as it gets statically initialized in <code class="highlighter-rouge">GetTypeInfoStatic()</code>, it contains the type hash, name and a reference to the TypeInfo of the parent’s class.</p>
+<p>One thing you might have seen in the code above, is the class <code class="language-plaintext highlighter-rouge">TypeInfo</code>. This class serves as the metadata for a class that describes the relation between the class and its parent and will provide us with the ability to create a simple <code class="language-plaintext highlighter-rouge">DynamicCast</code> function. There is exactly one <code class="language-plaintext highlighter-rouge">TypeInfo</code> for each class as it gets statically initialized in <code class="language-plaintext highlighter-rouge">GetTypeInfoStatic()</code>, it contains the type hash, name and a reference to the TypeInfo of the parent’s class.</p>
 
-<p>Knowing what the parent class of an object is, allows us to create a simple <code class="highlighter-rouge">DynamicCast</code> by walking up the class hierarchy until we either hit the TypeInfo we’re looking for (<em>success</em>) or the parent TypeInfo is <code class="highlighter-rouge">nullptr</code> (<em>fail</em>).</p>
+<p>Knowing what the parent class of an object is, allows us to create a simple <code class="language-plaintext highlighter-rouge">DynamicCast</code> by walking up the class hierarchy until we either hit the TypeInfo we’re looking for (<em>success</em>) or the parent TypeInfo is <code class="language-plaintext highlighter-rouge">nullptr</code> (<em>fail</em>).</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">TypeInfo</span><span class="o">::</span><span class="n">IsTypeOf</span><span class="p">(</span><span class="k">const</span> <span class="n">StringHash</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="k">const</span>
 <span class="p">{</span>
@@ -2031,7 +2031,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <h2 id="object-factories">Object factories</h2>
 
-<p>One of the main reasons for a reflection system is making serialization and deserialization possible. Say, I want to serialize and then deserialize an object, the only way to do that without reflection, is having a huge if/else block checking what object it needs to create because in C++, you can’t just do something like <code class="highlighter-rouge">object = new "Foo"</code>.</p>
+<p>One of the main reasons for a reflection system is making serialization and deserialization possible. Say, I want to serialize and then deserialize an object, the only way to do that without reflection, is having a huge if/else block checking what object it needs to create because in C++, you can’t just do something like <code class="language-plaintext highlighter-rouge">object = new "Foo"</code>.</p>
 
 <p>This is pretty awful and not really maintainable.</p>
 
@@ -2059,7 +2059,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <h2 id="other-uses-of-compile-time-stringhash">Other uses of compile-time StringHash</h2>
 
-<p>Initially, I’ve worked on the compile time string hashing just for the purpose of basic reflection and “messing around”. Later, I realized there are lot more powerful things you can do with them. For example with shader variables, Before,  I was addressing them using strings. It’s easy to make typo’s when using strings and using them makes renaming identifiers hard because there is no validation and this can cause some really annoying bugs. Using compile time hashes, I could improve the performance and prevent making typo’s by putting common shader variables names in an enum. This provides some kind of “safety net” and IntelliSense has some nice auto-complete now :smile:. An enum enforces compile-time constants so you can’t put strings in it. However, since our hashes are compile time, we can wrap the strings with <code class="highlighter-rouge">StringHash</code> as follows:</p>
+<p>Initially, I’ve worked on the compile time string hashing just for the purpose of basic reflection and “messing around”. Later, I realized there are lot more powerful things you can do with them. For example with shader variables, Before,  I was addressing them using strings. It’s easy to make typo’s when using strings and using them makes renaming identifiers hard because there is no validation and this can cause some really annoying bugs. Using compile time hashes, I could improve the performance and prevent making typo’s by putting common shader variables names in an enum. This provides some kind of “safety net” and IntelliSense has some nice auto-complete now :smile:. An enum enforces compile-time constants so you can’t put strings in it. However, since our hashes are compile time, we can wrap the strings with <code class="language-plaintext highlighter-rouge">StringHash</code> as follows:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="n">ShaderConstant</span>
 <span class="p">{</span>
@@ -2074,7 +2074,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="n">SetShaderVariable</span><span class="p">(</span><span class="s">"cElapsedTime"</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">);</span>
 <span class="c1">//Becomes this</span>
 <span class="n">SetShaderVariable</span><span class="p">(</span><span class="n">ShaderConstant</span><span class="o">::</span><span class="n">cElapsedTime</span><span class="p">,</span> <span class="n">deltaTime</span><span class="p">);</span>
-</code></pre></div></div>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Using compile-time string hashing to generate type information in C++]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Natvis in Visual Studio</title><link href="https://www.simoncoenen.com/blog/programming/Natvis" rel="alternate" type="text/html" title="Natvis in Visual Studio" /><published>2019-06-13T00:00:00+01:00</published><updated>2019-06-13T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/Natvis</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/Natvis"><![CDATA[<p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
+</code></pre></div></div>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Using compile-time string hashing to generate type information in C++]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/004_reflection/cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Natvis in Visual Studio</title><link href="https://www.simoncoenen.com/blog/programming/Natvis" rel="alternate" type="text/html" title="Natvis in Visual Studio" /><published>2019-06-13T00:00:00+02:00</published><updated>2019-06-13T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/Natvis</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/Natvis"><![CDATA[<p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
 
 <!--more-->
 
@@ -2086,7 +2086,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <h2 id="setup">Setup</h2>
 
-<p>It’s very easy to setup a natvis file, you create a new <code class="highlighter-rouge">.natvis</code> file with the following boilerplate code and include it in your project, the filename is not important. Visual Studio will automatically pick it up and you can have as many as you want.</p>
+<p>It’s very easy to setup a natvis file, you create a new <code class="language-plaintext highlighter-rouge">.natvis</code> file with the following boilerplate code and include it in your project, the filename is not important. Visual Studio will automatically pick it up and you can have as many as you want.</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
 <span class="nt">&lt;AutoVisualizer</span> <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/vstudio/debugger/natvis/2010"</span><span class="nt">&gt;</span>
@@ -2104,9 +2104,9 @@ In this case, relevant to reflection, it has the following functions:</p>
 
 <p>I found my delegates a good test case for natvis because it’s not always obvious when a delegate is bound and how it was allocated.</p>
 
-<p>For the Delegates, implementing natvis is quite simple. To achieve the results in the image shown in the beginning, we have to change the way a <code class="highlighter-rouge">Delegate&lt;&gt;</code> and an <code class="highlighter-rouge">InlineAllocator&lt;&gt;</code> is visualized.</p>
+<p>For the Delegates, implementing natvis is quite simple. To achieve the results in the image shown in the beginning, we have to change the way a <code class="language-plaintext highlighter-rouge">Delegate&lt;&gt;</code> and an <code class="language-plaintext highlighter-rouge">InlineAllocator&lt;&gt;</code> is visualized.</p>
 
-<p>I wanted to easily know when a Delegate was bound or not and if the data of the function it it’s bound to, is allocated dynamically or inline. Interesting to note here, is that we can leverage the fact that MSVC sets uninitialized stack values to <code class="highlighter-rouge">0xcccccccc</code> that way we can distinguish uninitialized values from initialized values.</p>
+<p>I wanted to easily know when a Delegate was bound or not and if the data of the function it it’s bound to, is allocated dynamically or inline. Interesting to note here, is that we can leverage the fact that MSVC sets uninitialized stack values to <code class="language-plaintext highlighter-rouge">0xcccccccc</code> that way we can distinguish uninitialized values from initialized values.</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"Delegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Allocator.m_Size &amp;gt;= 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
@@ -2127,11 +2127,11 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="nt">&lt;/Type&gt;</span>
 </code></pre></div></div>
 
-<p>In this case, I address all the instances of the <code class="highlighter-rouge">Delegate</code> class by using the wildcard <code class="highlighter-rouge">'*'</code> in <code class="highlighter-rouge">Delegate&amp;lt;*&amp;gt;</code> (notice we’re working in XML here and not use <code class="highlighter-rouge">'&lt;'</code> and <code class="highlighter-rouge">'&gt;'</code>, hence the <code class="highlighter-rouge">&amp;lt;</code> and <code class="highlighter-rouge">&amp;gt;</code>). This can be “specialized” using explicit types and/or values.</p>
+<p>In this case, I address all the instances of the <code class="language-plaintext highlighter-rouge">Delegate</code> class by using the wildcard <code class="language-plaintext highlighter-rouge">'*'</code> in <code class="language-plaintext highlighter-rouge">Delegate&amp;lt;*&amp;gt;</code> (notice we’re working in XML here and not use <code class="language-plaintext highlighter-rouge">'&lt;'</code> and <code class="language-plaintext highlighter-rouge">'&gt;'</code>, hence the <code class="language-plaintext highlighter-rouge">&amp;lt;</code> and <code class="language-plaintext highlighter-rouge">&amp;gt;</code>). This can be “specialized” using explicit types and/or values.</p>
 
-<p>Addressing template values and types is done with the following syntax: <code class="highlighter-rouge">$T%idx%</code>. So in this case, I get the first template value (which is the max size of an inline allocation) using <code class="highlighter-rouge">$T1</code>. This also works for types if you want to do typecasting. Using the template value, we can figure out if the allocation is inline or dynamic.</p>
+<p>Addressing template values and types is done with the following syntax: <code class="language-plaintext highlighter-rouge">$T%idx%</code>. So in this case, I get the first template value (which is the max size of an inline allocation) using <code class="language-plaintext highlighter-rouge">$T1</code>. This also works for types if you want to do typecasting. Using the template value, we can figure out if the allocation is inline or dynamic.</p>
 
-<p>I’ve extended this to work with the <code class="highlighter-rouge">MulticastDelegate</code> and what is cool is that because the <code class="highlighter-rouge">MulticastDelegate</code> is internally just a list of regular <code class="highlighter-rouge">Delegate</code>s, expanding the elements, will show each <code class="highlighter-rouge">Delegate</code> also using the visualization we’ve setup above. This is where things get a little bit more interesting. You can completely customize the way data is represented using <code class="highlighter-rouge">CustomListItems</code>. This allows you to even execute logic to get the data representation you want!</p>
+<p>I’ve extended this to work with the <code class="language-plaintext highlighter-rouge">MulticastDelegate</code> and what is cool is that because the <code class="language-plaintext highlighter-rouge">MulticastDelegate</code> is internally just a list of regular <code class="language-plaintext highlighter-rouge">Delegate</code>s, expanding the elements, will show each <code class="language-plaintext highlighter-rouge">Delegate</code> also using the visualization we’ve setup above. This is where things get a little bit more interesting. You can completely customize the way data is represented using <code class="language-plaintext highlighter-rouge">CustomListItems</code>. This allows you to even execute logic to get the data representation you want!</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"MulticastDelegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Locks == 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
@@ -2151,7 +2151,7 @@ In this case, relevant to reflection, it has the following functions:</p>
 <span class="nt">&lt;/Type&gt;</span>
 </code></pre></div></div>
 
-<p>For every Delegate in the list, we’re actually only interested in the <code class="highlighter-rouge">InlineAllocator</code> because that shows us all the information I’m interested in.</p>
+<p>For every Delegate in the list, we’re actually only interested in the <code class="language-plaintext highlighter-rouge">InlineAllocator</code> because that shows us all the information I’m interested in.</p>
 
 <p>Below the difference:</p>
 
@@ -2168,12 +2168,12 @@ I highly recommend looking at the <a href="https://docs.microsoft.com/en-us/visu
   <li><a href="https://docs.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects?view=vs-2019">Create custom views of C++ objects in the debugger</a></li>
   <li><a href="https://devblogs.microsoft.com/cppblog/debug-visualizers-in-visual-c-2015/">Debug Visualizers in Visual C++ 2015</a></li>
   <li><a href="https://davidhalonen.wordpress.com/2016/04/23/visual-studio-data-visualization-debugging-natvis/">Visual Studio Data Visualization: Debugging Natvis</a></li>
-</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Modifying watch window in Visual Studio using Natvis]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">C++ Delegates</title><link href="https://www.simoncoenen.com/blog/programming/CPP_Delegates" rel="alternate" type="text/html" title="C++ Delegates" /><published>2019-06-07T00:00:00+01:00</published><updated>2019-06-07T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/CPP_Delegates</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/CPP_Delegates"><![CDATA[<p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
-As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
+</ul>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Modifying watch window in Visual Studio using Natvis]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">C++ Delegates</title><link href="https://www.simoncoenen.com/blog/programming/CPP_Delegates" rel="alternate" type="text/html" title="C++ Delegates" /><published>2019-06-07T00:00:00+02:00</published><updated>2019-06-07T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/CPP_Delegates</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/CPP_Delegates"><![CDATA[<p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
+As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="language-plaintext highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
 
 <!--more-->
 
-<p>Take a look at an extremely simple example of executing a member function with a <code class="highlighter-rouge">int(float)</code> signature. Straight forward right? Well, not really…</p>
+<p>Take a look at an extremely simple example of executing a member function with a <code class="language-plaintext highlighter-rouge">int(float)</code> signature. Straight forward right? Well, not really…</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Foo</span> <span class="n">foo</span><span class="p">;</span>
 
@@ -2206,14 +2206,14 @@ What delegates allow you to do, is store a function in an object to execute at a
 <p>I’ve following Unreal Engine’s terminology and created the two main Delegate “types”. You could say there are more but they are functionally identical:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Delegate&lt;RetVal, Args&gt;</code>
+  <li><code class="language-plaintext highlighter-rouge">Delegate&lt;RetVal, Args&gt;</code>
     <ul>
-      <li>Binds a single function. Pretty much like a <code class="highlighter-rouge">delegate</code> in C#</li>
+      <li>Binds a single function. Pretty much like a <code class="language-plaintext highlighter-rouge">delegate</code> in C#</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">MulticastDelegate&lt;Args&gt;</code>
+  <li><code class="language-plaintext highlighter-rouge">MulticastDelegate&lt;Args&gt;</code>
     <ul>
-      <li>Binds multiple functions. Similar to an <code class="highlighter-rouge">event</code> in C#</li>
+      <li>Binds multiple functions. Similar to an <code class="language-plaintext highlighter-rouge">event</code> in C#</li>
     </ul>
   </li>
 </ul>
@@ -2228,7 +2228,7 @@ What delegates allow you to do, is store a function in an object to execute at a
 
 <p>A Delegate allows you to store a function and its data to execute later. Unlike a regular function pointer, this is much more flexible because it supports global/static functions, member function, lambda’s and member functions taking into account the reference count of a shared_ptr.</p>
 
-<p>Below is an example of binding a lambda to a delegate that returns an <code class="highlighter-rouge">int</code> and has a <code class="highlighter-rouge">float</code> as a parameter.</p>
+<p>Below is an example of binding a lambda to a delegate that returns an <code class="language-plaintext highlighter-rouge">int</code> and has a <code class="language-plaintext highlighter-rouge">float</code> as a parameter.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Foo</span>
 <span class="p">{</span>
@@ -2247,17 +2247,17 @@ What delegates allow you to do, is store a function in an object to execute at a
 
 <p>This outputs the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
 Lambda delegate parameter: 20
 Lambda delegate return value: 10
 </code></pre></div></div>
 
 <h3 id="multicastdelegate">MulticastDelegate</h3>
 
-<p>Building upon the above, we can create a delegate that can hold more than one reference to a function. This is what the MulticastDelegate is for. Multiple callbacks can be bound and when the MulticastDelegate is executed, it will call all the functions bound to it. You can compare this with an <code class="highlighter-rouge">event</code> in C#.
+<p>Building upon the above, we can create a delegate that can hold more than one reference to a function. This is what the MulticastDelegate is for. Multiple callbacks can be bound and when the MulticastDelegate is executed, it will call all the functions bound to it. You can compare this with an <code class="language-plaintext highlighter-rouge">event</code> in C#.
 What makes this so powerful, is that multiple “types” of functions can be bound to this.</p>
 
-<p>Below an example. Because multiple callbacks can be bound to a single MulticastDelegate, it doesn’t make sense for such a delegate to have a return type. Because of that, a function bound to a MulticastDelegate must always have a <code class="highlighter-rouge">void</code> return type.</p>
+<p>Below an example. Because multiple callbacks can be bound to a single MulticastDelegate, it doesn’t make sense for such a delegate to have a return type. Because of that, a function bound to a MulticastDelegate must always have a <code class="language-plaintext highlighter-rouge">void</code> return type.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Foo</span>
 <span class="p">{</span>
@@ -2277,7 +2277,7 @@ What makes this so powerful, is that multiple “types” of functions can be bo
 <span class="n">del</span><span class="p">.</span><span class="n">Broadcast</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output:
 Lambda delegate parameter: 20
 Raw delegate parameter: 20
 </code></pre></div></div>
@@ -2321,7 +2321,7 @@ Because We want to support multiple function types, we must define an interface:
   <li><strong>Static</strong>: For static or global functions that don’t have a reference to the object</li>
   <li><strong>Raw</strong>: Member functions</li>
   <li><strong>Delegate</strong>: Lambda’s. Here we store the capture list</li>
-  <li><strong>SharedPtr</strong>: A delegate that stores a <code class="highlighter-rouge">std::weak_ptr</code> of the object. This way, it is aware of object lifetime.</li>
+  <li><strong>SharedPtr</strong>: A delegate that stores a <code class="language-plaintext highlighter-rouge">std::weak_ptr</code> of the object. This way, it is aware of object lifetime.</li>
 </ul>
 
 <p>Here, I want to focus on the <strong>LambdaDelegate</strong> because that one will become the most interesting.
@@ -2377,9 +2377,9 @@ The implementation is pretty straight forward and is also quite simple for the o
 
 <h3 id="optimization-the-inlineallocator">Optimization: The InlineAllocator</h3>
 
-<p>As said, the <code class="highlighter-rouge">LambdaDelegate</code> stores the data of all elements in the capture list. That is the nature of a lambda. This means that naturally, a lambda needs to be dynamically allocated because the size of this data is not known beforehand. Besides, having different implementations for each delegate type, forces us to use dynamic allocations. This could have some bad performance implications. However, there’s a neat way of improving this and make sure small lambda’s don’t necessarily need to be dynamically allocated. This is where an <code class="highlighter-rouge">InlineAllocator</code> comes in and it will replace the dynamic allocation.</p>
+<p>As said, the <code class="language-plaintext highlighter-rouge">LambdaDelegate</code> stores the data of all elements in the capture list. That is the nature of a lambda. This means that naturally, a lambda needs to be dynamically allocated because the size of this data is not known beforehand. Besides, having different implementations for each delegate type, forces us to use dynamic allocations. This could have some bad performance implications. However, there’s a neat way of improving this and make sure small lambda’s don’t necessarily need to be dynamically allocated. This is where an <code class="language-plaintext highlighter-rouge">InlineAllocator</code> comes in and it will replace the dynamic allocation.</p>
 
-<p>This allocator will allocate inline until it crosses a specified size (32 bytes in this case). What this does is make sure a Delegate always has a fixed size until it cross the 32 bytes threshold. In most cases this is enough and thus executing the delegate will have a smaller execution overhead, especially when multiple delegates are fired in sequence. Using a <code class="highlighter-rouge">union</code> makes it easy to do this:</p>
+<p>This allocator will allocate inline until it crosses a specified size (32 bytes in this case). What this does is make sure a Delegate always has a fixed size until it cross the 32 bytes threshold. In most cases this is enough and thus executing the delegate will have a smaller execution overhead, especially when multiple delegates are fired in sequence. Using a <code class="language-plaintext highlighter-rouge">union</code> makes it easy to do this:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">union</span>
 <span class="p">{</span>
@@ -2390,9 +2390,9 @@ The implementation is pretty straight forward and is also quite simple for the o
 
 <h3 id="multicastdelegate-1">MulticastDelegate</h3>
 
-<p>A <code class="highlighter-rouge">MulticastDelegate</code> builds upon the regular delegate. It is simply a list with a ‘handle’ pointing to a bound delegate. This handle is a unique ID and is there to be able to later unbind the callback from the delegate.
+<p>A <code class="language-plaintext highlighter-rouge">MulticastDelegate</code> builds upon the regular delegate. It is simply a list with a ‘handle’ pointing to a bound delegate. This handle is a unique ID and is there to be able to later unbind the callback from the delegate.
 Executing the a MulticastDelegate basically boils down to a for-loop.
-An interesting catch is the fact that it’s possible to unbind functions during execution. This can be worked around by clearing callbacks instead of removing them during execution so that they can later be emplaced by new function bindings. The <code class="highlighter-rouge">Lock()</code> makes sure this is handled properly.</p>
+An interesting catch is the fact that it’s possible to unbind functions during execution. This can be worked around by clearing callbacks instead of removing them during execution so that they can later be emplaced by new function bindings. The <code class="language-plaintext highlighter-rouge">Lock()</code> makes sure this is handled properly.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">Broadcast</span><span class="p">(</span><span class="n">Args</span> <span class="p">...</span><span class="n">args</span><span class="p">)</span>
 <span class="p">{</span>
@@ -2412,7 +2412,7 @@ An interesting catch is the fact that it’s possible to unbind functions during
 
 <h2 id="extra">Extra</h2>
 
-<p>Unreal Engine has a pretty cool extra feature called <em>‘payloads’</em>. This gives you the ability to store data in the delegate at bind-time. This is doing using a <code class="highlighter-rouge">std::tuple</code>. I’ve implemented this myself too but I’ve never really found much use in having it so. However, it’s a great exercise in learning template programming as it makes the implementation much more complex in an interesting way. You can find this in the source code on GitHub.</p>
+<p>Unreal Engine has a pretty cool extra feature called <em>‘payloads’</em>. This gives you the ability to store data in the delegate at bind-time. This is doing using a <code class="language-plaintext highlighter-rouge">std::tuple</code>. I’ve implemented this myself too but I’ve never really found much use in having it so. However, it’s a great exercise in learning template programming as it makes the implementation much more complex in an interesting way. You can find this in the source code on GitHub.</p>
 
 <hr />
 
@@ -2422,7 +2422,7 @@ An interesting catch is the fact that it’s possible to unbind functions during
 
 <p>In the end, I think these Delegates are extremely powerful and I use them wherever I can in personal projects. This makes the code well decoupled while still having structure.</p>
 
-<p>Feel free to head <a href="https://github.com/simco50/CppDelegates">over to the repository</a> and copy, modify and/or use the code for yourself!</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Unreal Engine -like delegates in C++ using templates]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">A blog…?</title><link href="https://www.simoncoenen.com/blog/general/Blog" rel="alternate" type="text/html" title="A blog…?" /><published>2019-06-06T00:00:00+01:00</published><updated>2019-06-06T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/general/Blog</id><content type="html" xml:base="https://www.simoncoenen.com/blog/general/Blog"><![CDATA[<p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
+<p>Feel free to head <a href="https://github.com/simco50/CppDelegates">over to the repository</a> and copy, modify and/or use the code for yourself!</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><summary type="html"><![CDATA[Unreal Engine -like delegates in C++ using templates]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/002_delegates/card.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">A blog…?</title><link href="https://www.simoncoenen.com/blog/general/Blog" rel="alternate" type="text/html" title="A blog…?" /><published>2019-06-06T00:00:00+02:00</published><updated>2019-06-06T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/general/Blog</id><content type="html" xml:base="https://www.simoncoenen.com/blog/general/Blog"><![CDATA[<p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
 Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
 
 <ul>

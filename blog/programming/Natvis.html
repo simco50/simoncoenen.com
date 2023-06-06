@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v3.8.7" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Natvis in Visual Studio" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="Simon Coenen" />
 <meta property="og:image" content="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-06-13T00:00:00+01:00" />
+<meta property="article:published_time" content="2019-06-13T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/003_natvis/Difference.png" />
 <meta property="twitter:title" content="Natvis in Visual Studio" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-06-13T00:00:00+01:00","datePublished":"2019-06-13T00:00:00+01:00","description":"Modifying watch window in Visual Studio using Natvis","headline":"Natvis in Visual Studio","image":"https://www.simoncoenen.com/images/blog/003_natvis/Difference.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/Natvis"},"url":"https://www.simoncoenen.com/blog/programming/Natvis"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2019-06-13T00:00:00+02:00","datePublished":"2019-06-13T00:00:00+02:00","description":"Modifying watch window in Visual Studio using Natvis","headline":"Natvis in Visual Studio","image":"https://www.simoncoenen.com/images/blog/003_natvis/Difference.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/Natvis"},"url":"https://www.simoncoenen.com/blog/programming/Natvis"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -168,7 +168,7 @@
 
 <h2 id="setup">Setup</h2>
 
-<p>It’s very easy to setup a natvis file, you create a new <code class="highlighter-rouge">.natvis</code> file with the following boilerplate code and include it in your project, the filename is not important. Visual Studio will automatically pick it up and you can have as many as you want.</p>
+<p>It’s very easy to setup a natvis file, you create a new <code class="language-plaintext highlighter-rouge">.natvis</code> file with the following boilerplate code and include it in your project, the filename is not important. Visual Studio will automatically pick it up and you can have as many as you want.</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
 <span class="nt">&lt;AutoVisualizer</span> <span class="na">xmlns=</span><span class="s">"http://schemas.microsoft.com/vstudio/debugger/natvis/2010"</span><span class="nt">&gt;</span>
@@ -186,9 +186,9 @@
 
 <p>I found my delegates a good test case for natvis because it’s not always obvious when a delegate is bound and how it was allocated.</p>
 
-<p>For the Delegates, implementing natvis is quite simple. To achieve the results in the image shown in the beginning, we have to change the way a <code class="highlighter-rouge">Delegate&lt;&gt;</code> and an <code class="highlighter-rouge">InlineAllocator&lt;&gt;</code> is visualized.</p>
+<p>For the Delegates, implementing natvis is quite simple. To achieve the results in the image shown in the beginning, we have to change the way a <code class="language-plaintext highlighter-rouge">Delegate&lt;&gt;</code> and an <code class="language-plaintext highlighter-rouge">InlineAllocator&lt;&gt;</code> is visualized.</p>
 
-<p>I wanted to easily know when a Delegate was bound or not and if the data of the function it it’s bound to, is allocated dynamically or inline. Interesting to note here, is that we can leverage the fact that MSVC sets uninitialized stack values to <code class="highlighter-rouge">0xcccccccc</code> that way we can distinguish uninitialized values from initialized values.</p>
+<p>I wanted to easily know when a Delegate was bound or not and if the data of the function it it’s bound to, is allocated dynamically or inline. Interesting to note here, is that we can leverage the fact that MSVC sets uninitialized stack values to <code class="language-plaintext highlighter-rouge">0xcccccccc</code> that way we can distinguish uninitialized values from initialized values.</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"Delegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Allocator.m_Size &amp;gt;= 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
@@ -209,11 +209,11 @@
 <span class="nt">&lt;/Type&gt;</span>
 </code></pre></div></div>
 
-<p>In this case, I address all the instances of the <code class="highlighter-rouge">Delegate</code> class by using the wildcard <code class="highlighter-rouge">'*'</code> in <code class="highlighter-rouge">Delegate&amp;lt;*&amp;gt;</code> (notice we’re working in XML here and not use <code class="highlighter-rouge">'&lt;'</code> and <code class="highlighter-rouge">'&gt;'</code>, hence the <code class="highlighter-rouge">&amp;lt;</code> and <code class="highlighter-rouge">&amp;gt;</code>). This can be “specialized” using explicit types and/or values.</p>
+<p>In this case, I address all the instances of the <code class="language-plaintext highlighter-rouge">Delegate</code> class by using the wildcard <code class="language-plaintext highlighter-rouge">'*'</code> in <code class="language-plaintext highlighter-rouge">Delegate&amp;lt;*&amp;gt;</code> (notice we’re working in XML here and not use <code class="language-plaintext highlighter-rouge">'&lt;'</code> and <code class="language-plaintext highlighter-rouge">'&gt;'</code>, hence the <code class="language-plaintext highlighter-rouge">&amp;lt;</code> and <code class="language-plaintext highlighter-rouge">&amp;gt;</code>). This can be “specialized” using explicit types and/or values.</p>
 
-<p>Addressing template values and types is done with the following syntax: <code class="highlighter-rouge">$T%idx%</code>. So in this case, I get the first template value (which is the max size of an inline allocation) using <code class="highlighter-rouge">$T1</code>. This also works for types if you want to do typecasting. Using the template value, we can figure out if the allocation is inline or dynamic.</p>
+<p>Addressing template values and types is done with the following syntax: <code class="language-plaintext highlighter-rouge">$T%idx%</code>. So in this case, I get the first template value (which is the max size of an inline allocation) using <code class="language-plaintext highlighter-rouge">$T1</code>. This also works for types if you want to do typecasting. Using the template value, we can figure out if the allocation is inline or dynamic.</p>
 
-<p>I’ve extended this to work with the <code class="highlighter-rouge">MulticastDelegate</code> and what is cool is that because the <code class="highlighter-rouge">MulticastDelegate</code> is internally just a list of regular <code class="highlighter-rouge">Delegate</code>s, expanding the elements, will show each <code class="highlighter-rouge">Delegate</code> also using the visualization we’ve setup above. This is where things get a little bit more interesting. You can completely customize the way data is represented using <code class="highlighter-rouge">CustomListItems</code>. This allows you to even execute logic to get the data representation you want!</p>
+<p>I’ve extended this to work with the <code class="language-plaintext highlighter-rouge">MulticastDelegate</code> and what is cool is that because the <code class="language-plaintext highlighter-rouge">MulticastDelegate</code> is internally just a list of regular <code class="language-plaintext highlighter-rouge">Delegate</code>s, expanding the elements, will show each <code class="language-plaintext highlighter-rouge">Delegate</code> also using the visualization we’ve setup above. This is where things get a little bit more interesting. You can completely customize the way data is represented using <code class="language-plaintext highlighter-rouge">CustomListItems</code>. This allows you to even execute logic to get the data representation you want!</p>
 
 <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Type</span> <span class="na">Name=</span><span class="s">"MulticastDelegate&amp;lt;*&amp;gt;"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;DisplayString</span> <span class="na">Condition=</span><span class="s">"m_Locks == 0xcccccccc"</span><span class="nt">&gt;</span>Invalid<span class="nt">&lt;/DisplayString&gt;</span>
@@ -233,7 +233,7 @@
 <span class="nt">&lt;/Type&gt;</span>
 </code></pre></div></div>
 
-<p>For every Delegate in the list, we’re actually only interested in the <code class="highlighter-rouge">InlineAllocator</code> because that shows us all the information I’m interested in.</p>
+<p>For every Delegate in the list, we’re actually only interested in the <code class="language-plaintext highlighter-rouge">InlineAllocator</code> because that shows us all the information I’m interested in.</p>
 
 <p>Below the difference:</p>
 
@@ -309,12 +309,7 @@ I highly recommend looking at the <a href="https://docs.microsoft.com/en-us/visu
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#setup">Setup</a></li>
-<li class="toc-entry toc-h2"><a href="#applying-to-delegates">Applying to delegates</a></li>
-<li class="toc-entry toc-h2"><a href="#more-information">More information</a></li>
-<li class="toc-entry toc-h2"><a href="#links">Links</a></li>
-</ul>
+                    <ul><li>Natvis in Visual Studio<ul><li><a href="#setup">Setup</a></li><li><a href="#applying-to-delegates">Applying to delegates</a></li><li><a href="#more-information">More information</a></li><li><a href="#links">Links</a></li></ul></li></ul>
                 </div>
                 
 

@@ -21,7 +21,7 @@
     <link rel="alternate" type="application/rss+xml" href=" feed.xml" />
     
     <!-- Begin Jekyll SEO tag v2.8.0 -->
-<meta name="generator" content="Jekyll v3.8.7" />
+<meta name="generator" content="Jekyll v4.3.2" />
 <meta property="og:title" content="Using the DirectXShaderCompiler C++ API" />
 <meta name="author" content="Simon Coenen" />
 <meta property="og:locale" content="en_GB" />
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="Simon Coenen" />
 <meta property="og:image" content="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-03-04T00:00:00+00:00" />
+<meta property="article:published_time" content="2020-03-04T00:00:00+01:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:image" content="https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg" />
 <meta property="twitter:title" content="Using the DirectXShaderCompiler C++ API" />
 <meta name="twitter:site" content="@simon_coenen" />
 <meta name="twitter:creator" content="@Simon Coenen" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2020-03-04T00:00:00+00:00","datePublished":"2020-03-04T00:00:00+00:00","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","headline":"Using the DirectXShaderCompiler C++ API","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Simon Coenen"},"dateModified":"2020-03-04T00:00:00+01:00","datePublished":"2020-03-04T00:00:00+01:00","description":"The basics on how to use DirectXShaderCompiler (DXC) in C++ going from compilation to debug stripping and reflection.","headline":"Using the DirectXShaderCompiler C++ API","image":"https://www.simoncoenen.com/images/blog/007_dxc/cover.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"},"url":"https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -171,7 +171,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 
 <p><strong>EDIT (20/03/2020)</strong>: DirectX Developer day has happened and there’s been a super good talk by one of the DXC developers and they gave a great walkthrough of the interface. <a href="https://youtu.be/tyyKeTsdtmo?t=878">I’d definitely recommend watching that</a>. The general usage is the same but with the latest few updates, it has become a bit easier to use and manipulate.</p>
 
-<p>The main thing that got updated are the introduction of <code class="highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
+<p>The main thing that got updated are the introduction of <code class="language-plaintext highlighter-rouge">IDxcCompiler3</code> which is has the new interfaces that are streamlined with the CLI. Secondly, it’s now a lot clearer what “parts” the compiler outputs and it’s more easy to isolate certain parts like reflection and PDBs and possibly strip them to be processed later.</p>
 
 <h2 id="getting-started">Getting Started</h2>
 
@@ -186,7 +186,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 
 <h2 id="compiling">Compiling</h2>
 
-<p>The new update comes with a new interface <code class="highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
+<p>The new update comes with a new interface <code class="language-plaintext highlighter-rouge">IDxcUtils</code>, this interface essentially replaces <code class="language-plaintext highlighter-rouge">IDxcLibrary</code>. The ‘Utils’ interface provides all the functionality to create data blobs. Besides that, just like before, creating a blob remains the same:</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
 <span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
@@ -194,7 +194,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">pShaderSource</span><span class="p">,</span> <span class="n">shaderSourceSize</span><span class="p">,</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pSource</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>Now introducing <code class="highlighter-rouge">IDxcCompiler3</code>, the <code class="highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="highlighter-rouge">-D</code> argument. Note the use of <code class="highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
+<p>Now introducing <code class="language-plaintext highlighter-rouge">IDxcCompiler3</code>, the <code class="language-plaintext highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="language-plaintext highlighter-rouge">-D</code> argument. Note the use of <code class="language-plaintext highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LPWSTR</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
 <span class="c1">//-E for the entry point (eg. PSMain)</span>
@@ -236,13 +236,13 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>.</p>
+<p>Now before you stop reading and being happy that you compile a shader, wait! You’re missing out on the main reason why this update is such a big deal! You might have noticed the two arguments <code class="language-plaintext highlighter-rouge">-Qstrip_debug</code> and <code class="language-plaintext highlighter-rouge">-Qstrip_reflect</code>.</p>
 
 <h2 id="stripping-parts">Stripping parts</h2>
 
 <p>I’ve found that previously, stripping debug data or reflection data hasn’t always been doing what I would expect. With the new updates, this becomes a lot easier.</p>
 
-<p>The output of the compiler now is a <code class="highlighter-rouge">IDxcResult</code> (as opposed to <code class="highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
+<p>The output of the compiler now is a <code class="language-plaintext highlighter-rouge">IDxcResult</code> (as opposed to <code class="language-plaintext highlighter-rouge">IDxcOperationResult</code>). It has a method <code class="language-plaintext highlighter-rouge">GetOutput</code> which allows you to extract a part of the output. This can be one of the following: <em>(defined in dxcapi.h)</em></p>
 
 <ul>
   <li>DXC_OUT_OBJECT</li>
@@ -256,7 +256,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
   <li>DXC_OUT_ROOT_SIGNATURE</li>
 </ul>
 
-<p>In the code example above, I added the two arguments <code class="highlighter-rouge">-Qstrip_debug</code> and <code class="highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="highlighter-rouge">DXC_OUT_PDB</code> and <code class="highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
+<p>In the code example above, I added the two arguments <code class="language-plaintext highlighter-rouge">-Qstrip_debug</code> and <code class="language-plaintext highlighter-rouge">-Qstrip_reflect</code>. The effect of this is that the compiler will strip both the shader PDBs and reflection data from the Object part. The important thing here is that <strong>it will still be in the compile result</strong> and can be extracted using <code class="language-plaintext highlighter-rouge">DXC_OUT_PDB</code> and <code class="language-plaintext highlighter-rouge">DXC_OUT_REFLECTION</code> respectively. The result of the flags are that it will no longer be embedded in the <code class="language-plaintext highlighter-rouge">DXC_OUT_OBJECT</code> part which keeps the actual shader object nice and slim. I would definitely advise to always use these flags. <a href="https://devblogs.microsoft.com/pix/using-automatic-shader-pdb-resolution-in-pix/">Pix also understands separate PDBs for shaders.</a></p>
 
 <p>So now, it’s a lot more clear and easy to specifically get parts of the shader. Getting shader PDBs is done as follows:</p>
 
@@ -265,9 +265,9 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_PDB</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pDebugData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="n">pDebugDataPath</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>The function has one extra argument which can be retrieved as a <code class="highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
+<p>The function has one extra argument which can be retrieved as a <code class="language-plaintext highlighter-rouge">IDxcBlobUtf16</code>. This contains the path that is baked into the shader object to refer to the part in question. So if you want to save the PDBs to a separate file, use this name so that Pix will know where to find it.</p>
 
-<p>For reflection data: <em>(library reflection is similar but with <code class="highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
+<p>For reflection data: <em>(library reflection is similar but with <code class="language-plaintext highlighter-rouge">ID3D12LibraryReflection</code>)</em></p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pReflectionData</span><span class="p">;</span>
 <span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_REFLECTION</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pReflectionData</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
@@ -286,7 +286,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <p>I’ve found no good examples of implementing a custom include handler and it’s really not straight forward at first.
 This is useful if you want to add some custom include logic or if you want to know which files were included to do some kind of shader hot-reloading.
 Here’s an example implementation that correctly loads include sources and makes sure not to include the same file twice.
-To add include directories, use the <code class="highlighter-rouge">-I</code> argument like for example <code class="highlighter-rouge">-I /Resources/Shaders</code>.</p>
+To add include directories, use the <code class="language-plaintext highlighter-rouge">-I</code> argument like for example <code class="language-plaintext highlighter-rouge">-I /Resources/Shaders</code>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
 <span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcIncludeHandler</span><span class="o">&gt;</span> <span class="n">pDefaultIncludeHandler</span><span class="p">;</span>
@@ -343,7 +343,7 @@ To add include directories, use the <code class="highlighter-rouge">-I</code> ar
 
 <p>I recently saw a conversation on the <a href="https://discordapp.com/invite/directx">DirectX Discord server</a> about when to use “-“ or “/” for compile argument but if you look at HLSLOptions.td in the <a href="https://github.com/microsoft/DirectXShaderCompiler/blob/master/include/dxc/Support/HLSLOptions.td">DirectXShaderCompiler</a> reposity, you’ll see “-“ works for all arguments while “/” only works for some. So it’s always best to use “-“.</p>
 
-<p>When you execute <code class="highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
+<p>When you execute <code class="language-plaintext highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
 
 <p>Version: dxcompiler.dll: 1.7 - 1.7.2212.12 (8c9d92be7);
 dxil.dll: 1.7(101.7.2212.14)</p>
@@ -1192,15 +1192,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#getting-started">Getting Started</a></li>
-<li class="toc-entry toc-h2"><a href="#compiling">Compiling</a></li>
-<li class="toc-entry toc-h2"><a href="#stripping-parts">Stripping parts</a></li>
-<li class="toc-entry toc-h2"><a href="#custom-include-handler">Custom include handler</a></li>
-<li class="toc-entry toc-h2"><a href="#all-compiler-arguments">All compiler arguments</a></li>
-<li class="toc-entry toc-h2"><a href="#updates">Updates</a></li>
-<li class="toc-entry toc-h2"><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li>
-</ul>
+                    <ul><li>Using the DirectXShaderCompiler C++ API<ul><li><a href="#getting-started">Getting Started</a></li><li><a href="#compiling">Compiling</a></li><li><a href="#stripping-parts">Stripping parts</a></li><li><a href="#custom-include-handler">Custom include handler</a></li><li><a href="#all-compiler-arguments">All compiler arguments</a></li><li><a href="#updates">Updates</a></li><li><a href="#some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</a></li></ul></li></ul>
                 </div>
                 
 
