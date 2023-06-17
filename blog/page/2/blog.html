@@ -55,6 +55,8 @@
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     
+
+    
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
@@ -209,52 +211,60 @@ $(document).ready(function() {
 </script>
 
 <div id="blog-posts">
-
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/CPP_Delegates">
-        <h2 class="word-wrap-dots">C++ Delegates</h2>
-    </a>
-    <p style='font-style: italic;'>
-    07 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/CPP_Delegates">
+            <h3 class="word-wrap-dots">C++ Delegates</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    07 Jun 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     11 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/CPP_Delegates">
-        <img class="img-fluid" src="/images/blog/002_delegates/card.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
+</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>I’ve always really liked working with delegates in Unreal Engine 4. It’s so easy to use, works in various different ways and after a while of using them, I wanted to try to implement them myself.
 As you might know, it’s not straight forward at all to store and execute a method in a generic way in C++. A function pointer might be a solution but it’s not flexible as it’s very type-restricted and can’t have any extra data a lambda would have. The standard template library solved this by providing <code class="language-plaintext highlighter-rouge">std::function&lt;&gt;</code> which is sort of a more flexible and fancy function pointer. However, I’ve found that both function pointers and std::function <strong>are such a headache to work with!</strong>.</p>
 
-</p>
-    </div>
-</div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/general/Blog">
-        <h2 class="word-wrap-dots">A blog...?</h2>
-    </a>
-    <p style='font-style: italic;'>
-    06 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/CPP_Delegates">
+                    <img class="img-fluid" src="/images/blog/002_delegates/card.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/general/Blog">
+            <h3 class="word-wrap-dots">A blog...?</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    06 Jun 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     1 min
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/general/Blog">
-        <img class="img-fluid" src="/images/blog/001_blog/card.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
+</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>I really like programming blogs and I love reading about how people learn from personal projects and share their thinking process, ideas and potentially implementation details.
 Just to name a few of many blogs in my bookmarks bar that are absolutely worth checking out:</p>
 
 <ul>
@@ -266,11 +276,21 @@ Just to name a few of many blogs in my bookmarks bar that are absolutely worth c
   <li>Many more…</li>
 </ul>
 
-</p>
-    </div>
-</div>
-<hr>
 
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/general/Blog">
+                    <img class="img-fluid" src="/images/blog/001_blog/card.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
 </div>
 
 

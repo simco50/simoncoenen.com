@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2023-06-06T21:34:33+02:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+02:00</published><updated>2020-08-30T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<h2 id="background">Background</h2>
-
-<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
-
-<!--more-->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2023-06-17T17:51:23+02:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+02:00</published><updated>2020-08-30T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.
+<!--more--></p>
 
 <p>This frame breakdown is inspired by <a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/">Adrian Courreges’s study on Doom 2016</a>. I believe these graphics studies give a lot of insight into how certain rendering problems are solved in a AAA game and are greatly educational. In this breakdown I aim to stay at a high level and not go too in-depth of each rendering technique/pass. Some passes might not be covered here because they are very similar to Doom 2016 and are well covered in Adrian Courreges’s study.</p>
 
@@ -359,10 +356,9 @@ What’s interesting is that, as opposed to traditional compute shader particle 
 
 <h1 id="updates">Updates</h1>
 
-<p>02/09/2020 - Update Ambient Occlusion description</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[A graphics study of Doom Eternal]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Using the DirectXShaderCompiler C++ API</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling" rel="alternate" type="text/html" title="Using the DirectXShaderCompiler C++ API" /><published>2020-03-04T00:00:00+01:00</published><updated>2020-03-04T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"><![CDATA[<p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
-The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
+<p>02/09/2020 - Update Ambient Occlusion description</p>]]></content><author><name>Simon Coenen</name></author><category term="programming" /><category term="graphics" /><summary type="html"><![CDATA[A graphics study of Doom Eternal]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" /><media:content medium="image" url="https://www.simoncoenen.com/images/blog/010_doom_eternal_study/image1.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry xml:lang="en_GB"><title type="html">Using the DirectXShaderCompiler C++ API</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling" rel="alternate" type="text/html" title="Using the DirectXShaderCompiler C++ API" /><published>2020-03-04T00:00:00+01:00</published><updated>2020-03-04T00:00:00+01:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DxcCompiling"><![CDATA[<p>The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler DirectXShaderCompiler (DXC) which compiles to DXIL (whereas FXC compiles to DXBC).
-It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
+<a href="https://github.com/microsoft/DirectXShaderCompiler">It’s completely open-source on GitHub</a>. 
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
 
 <!--more-->
@@ -400,21 +396,20 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <p>Now introducing <code class="language-plaintext highlighter-rouge">IDxcCompiler3</code>, the <code class="language-plaintext highlighter-rouge">Compile</code> function no longer provides separate input arguments for defines. This now all needs to get passed through as compile arguments using the <code class="language-plaintext highlighter-rouge">-D</code> argument. Note the use of <code class="language-plaintext highlighter-rouge">std::vector</code> is just for simplicity’s sake.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">LPWSTR</span><span class="o">&gt;</span> <span class="n">arguments</span><span class="p">;</span>
-<span class="c1">//-E for the entry point (eg. PSMain)</span>
+<span class="c1">// -E for the entry point (eg. 'main')</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-E"</span><span class="p">);</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">entryPoint</span><span class="p">);</span>
 
-<span class="c1">//-T for the target profile (eg. ps_6_2)</span>
+<span class="c1">// -T for the target profile (eg. 'ps_6_6')</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-T"</span><span class="p">);</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
 
-<span class="c1">//Strip reflection data and pdbs (see later)</span>
+<span class="c1">// Strip reflection data and pdbs (see later)</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_debug"</span><span class="p">);</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">L"-Qstrip_reflect"</span><span class="p">);</span>
 
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_WARNINGS_ARE_ERRORS</span><span class="p">);</span> <span class="c1">//-WX</span>
 <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_DEBUG</span><span class="p">);</span> <span class="c1">//-Zi</span>
-<span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">DXC_ARG_PACK_MATRIX_ROW_MAJOR</span><span class="p">);</span> <span class="c1">//-Zp</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">wstring</span><span class="o">&amp;</span> <span class="n">define</span> <span class="o">:</span> <span class="n">defines</span><span class="p">)</span>
 <span class="p">{</span>
@@ -430,7 +425,7 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcResult</span><span class="o">&gt;</span> <span class="n">pCompileResult</span><span class="p">;</span>
 <span class="n">HR</span><span class="p">(</span><span class="n">pCompiler</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sourceBuffer</span><span class="p">,</span> <span class="n">arguments</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="p">(</span><span class="n">uint32</span><span class="p">)</span><span class="n">arguments</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="nb">nullptr</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pCompileResult</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
 
-<span class="c1">//Error Handling</span>
+<span class="c1">// Error Handling. Note that this will also include warnings unless disabled.</span>
 <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcBlobUtf8</span><span class="o">&gt;</span> <span class="n">pErrors</span><span class="p">;</span>
 <span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_ERRORS</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pErrors</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">);</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">pErrors</span> <span class="o">&amp;&amp;</span> <span class="n">pErrors</span><span class="o">-&gt;</span><span class="n">GetStringLength</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -482,6 +477,15 @@ Using DXC’s commandline tools are quite straight forward and self-explanatory 
 <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateReflection</span><span class="p">(</span><span class="o">&amp;</span><span class="n">reflectionBuffer</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pShaderReflection</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
 </code></pre></div></div>
 
+<p>The hash:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RefCountPtr</span><span class="o">&lt;</span><span class="n">IDxcBlob</span><span class="o">&gt;</span> <span class="n">pHash</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">SUCCEEDED</span><span class="p">(</span><span class="n">pCompileResult</span><span class="o">-&gt;</span><span class="n">GetOutput</span><span class="p">(</span><span class="n">DXC_OUT_SHADER_HASH</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pHash</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()),</span> <span class="nb">nullptr</span><span class="p">)))</span>
+<span class="p">{</span>
+    <span class="n">DxcShaderHash</span><span class="o">*</span> <span class="n">pHashBuf</span> <span class="o">=</span> <span class="p">(</span><span class="n">DxcShaderHash</span><span class="o">*</span><span class="p">)</span><span class="n">pHash</span><span class="o">-&gt;</span><span class="n">GetBufferPointer</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 <p>On a last note, as mentioned in the video, <strong>none of the DXC interfaces are thread-safe</strong> and it is advised to have an instance of each interface for each thread. DxcCreateInstance is an exception and is thread-safe.</p>
 
 <h2 id="custom-include-handler">Custom include handler</h2>
@@ -492,12 +496,8 @@ Here’s an example implementation that correctly loads include sources and make
 To add include directories, use the <code class="language-plaintext highlighter-rouge">-I</code> argument like for example <code class="language-plaintext highlighter-rouge">-I /Resources/Shaders</code>.</p>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcUtils</span><span class="o">&gt;</span> <span class="n">pUtils</span><span class="p">;</span>
-<span class="k">static</span> <span class="n">ComPtr</span><span class="o">&lt;</span><span class="n">IDxcIncludeHandler</span><span class="o">&gt;</span> <span class="n">pDefaultIncludeHandler</span><span class="p">;</span>
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">pUtils</span><span class="p">)</span>
-<span class="p">{</span>
     <span class="n">VERIFY_HR</span><span class="p">(</span><span class="n">DxcCreateInstance</span><span class="p">(</span><span class="n">CLSID_DxcUtils</span><span class="p">,</span> <span class="n">IID_PPV_ARGS</span><span class="p">(</span><span class="n">pUtils</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">())));</span>
-    <span class="n">VERIFY_HR</span><span class="p">(</span><span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateDefaultIncludeHandler</span><span class="p">(</span><span class="n">pDefaultIncludeHandler</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">()));</span>
-<span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">CustomIncludeHandler</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IDxcIncludeHandler</span>
 <span class="p">{</span>
@@ -510,7 +510,7 @@ To add include directories, use the <code class="language-plaintext highlighter-
         <span class="p">{</span>
             <span class="c1">// Return empty string blob if this file has been included before</span>
             <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">nullStr</span><span class="p">[]</span> <span class="o">=</span> <span class="s">" "</span><span class="p">;</span>
-            <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlob</span><span class="p">(</span><span class="n">nullStr</span><span class="p">,</span> <span class="n">ARRAYSIZE</span><span class="p">(</span><span class="n">nullStr</span><span class="p">),</span> <span class="n">CP_UTF8</span><span class="p">,</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
+            <span class="n">pUtils</span><span class="o">-&gt;</span><span class="n">CreateBlobFromPinned</span><span class="p">(</span><span class="n">nullStr</span><span class="p">,</span> <span class="n">ARRAYSIZE</span><span class="p">(</span><span class="n">nullStr</span><span class="p">),</span> <span class="n">DXC_CP_ACP</span><span class="p">,</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">GetAddressOf</span><span class="p">());</span>
             <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">Detach</span><span class="p">();</span>
             <span class="k">return</span> <span class="n">S_OK</span><span class="p">;</span>
         <span class="p">}</span>
@@ -521,18 +521,10 @@ To add include directories, use the <code class="language-plaintext highlighter-
             <span class="n">IncludedFiles</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
             <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="n">pEncoding</span><span class="p">.</span><span class="n">Detach</span><span class="p">();</span>
         <span class="p">}</span>
-        <span class="k">else</span>
-        <span class="p">{</span>
-            <span class="o">*</span><span class="n">ppIncludeSource</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-        <span class="p">}</span>
         <span class="k">return</span> <span class="n">hr</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="n">HRESULT</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">QueryInterface</span><span class="p">(</span><span class="n">REFIID</span> <span class="n">riid</span><span class="p">,</span> <span class="n">_COM_Outptr_</span> <span class="kt">void</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">ppvObject</span><span class="p">)</span> <span class="k">override</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="n">pDefaultIncludeHandler</span><span class="o">-&gt;</span><span class="n">QueryInterface</span><span class="p">(</span><span class="n">riid</span><span class="p">,</span> <span class="n">ppvObject</span><span class="p">);</span>
-    <span class="p">}</span>
-
+    <span class="n">HRESULT</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">QueryInterface</span><span class="p">(</span><span class="n">REFIID</span> <span class="n">riid</span><span class="p">,</span> <span class="n">_COM_Outptr_</span> <span class="kt">void</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">__RPC_FAR</span><span class="o">*</span> <span class="n">ppvObject</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">E_NOINTERFACE</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">ULONG</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">AddRef</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">ULONG</span> <span class="n">STDMETHODCALLTYPE</span> <span class="n">Release</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
 

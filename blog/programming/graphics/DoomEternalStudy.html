@@ -49,6 +49,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
     <script src="/js/main_head.js"></script>
     
+
+    
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
@@ -147,20 +149,17 @@
             <div class="blog-post">
 
 <h1>DOOM Eternal - Graphics Study</h1>
-<p style='font-style: italic;'>
-    30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<div style='font-style: italic; padding-left: 10px;'>
+    30 Aug 2020 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     23 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
-</p>
+</div>
 
-<h2 id="background">Background</h2>
-
-<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
-
-<!--more-->
+<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.
+<!--more--></p>
 
 <p>This frame breakdown is inspired by <a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/">Adrian Courreges’s study on Doom 2016</a>. I believe these graphics studies give a lot of insight into how certain rendering problems are solved in a AAA game and are greatly educational. In this breakdown I aim to stay at a high level and not go too in-depth of each rendering technique/pass. Some passes might not be covered here because they are very similar to Doom 2016 and are well covered in Adrian Courreges’s study.</p>
 
@@ -574,7 +573,7 @@ What’s interesting is that, as opposed to traditional compute shader particle 
                 
                 <h3>Contents</h3>
                 <div id="table-of-contents" class="table-of-contents">
-                    <ul><li>DOOM Eternal - Graphics Study<ul><li><a href="#background">Background</a></li></ul></li><li><a href="#a-frame-in-doom-eternal">A frame in Doom Eternal</a><ul><li><a href="#step-away-from-mega-texture">Step away from Mega-Texture</a></li><li><a href="#gpu-skinning">GPU Skinning</a></li><li><a href="#shadow-mapping">Shadow Mapping</a></li><li><a href="#depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</a></li><li><a href="#hierarchical-z-depth">Hierarchical-Z Depth</a></li><li><a href="#mesh-decals">Mesh Decals</a></li><li><a href="#light-and-decal-culling">Light and Decal culling</a></li><li><a href="#screen-space-ambient-occlusion">Screen Space Ambient Occlusion</a></li><li><a href="#opaque-forward-pass">Opaque Forward pass</a><ul><li><a href="#bindless-resources">Bindless resources</a></li><li><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li><li><a href="#reflections">Reflections</a></li></ul></li><li><a href="#particles">Particles</a><ul><li><a href="#simulation">Simulation</a></li><li><a href="#lighting">Lighting</a></li></ul></li><li><a href="#sky-and-scattering">Sky and scattering</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#ui">UI</a></li><li><a href="#post-processing">Post processing</a></li><li><a href="#conclusion">Conclusion</a></li></ul></li><li><a href="#reading-material-and-references">Reading material and references</a></li><li><a href="#updates">Updates</a></li></ul>
+                    <ul><li>DOOM Eternal - Graphics Study</li><li><a href="#a-frame-in-doom-eternal">A frame in Doom Eternal</a><ul><li><a href="#step-away-from-mega-texture">Step away from Mega-Texture</a></li><li><a href="#gpu-skinning">GPU Skinning</a></li><li><a href="#shadow-mapping">Shadow Mapping</a></li><li><a href="#depth-pre-pass-and-velocity">Depth Pre-pass and Velocity</a></li><li><a href="#hierarchical-z-depth">Hierarchical-Z Depth</a></li><li><a href="#mesh-decals">Mesh Decals</a></li><li><a href="#light-and-decal-culling">Light and Decal culling</a></li><li><a href="#screen-space-ambient-occlusion">Screen Space Ambient Occlusion</a></li><li><a href="#opaque-forward-pass">Opaque Forward pass</a><ul><li><a href="#bindless-resources">Bindless resources</a></li><li><a href="#dynamic-draw-call-merging">Dynamic draw call merging</a></li><li><a href="#reflections">Reflections</a></li></ul></li><li><a href="#particles">Particles</a><ul><li><a href="#simulation">Simulation</a></li><li><a href="#lighting">Lighting</a></li></ul></li><li><a href="#sky-and-scattering">Sky and scattering</a></li><li><a href="#transparency">Transparency</a></li><li><a href="#ui">UI</a></li><li><a href="#post-processing">Post processing</a></li><li><a href="#conclusion">Conclusion</a></li></ul></li><li><a href="#reading-material-and-references">Reading material and references</a></li><li><a href="#updates">Updates</a></li></ul>
                 </div>
                 
 

@@ -55,6 +55,8 @@
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
     
+
+    
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
@@ -209,165 +211,215 @@ $(document).ready(function() {
 </script>
 
 <div id="blog-posts">
-
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/graphics/DoomEternalStudy">
-        <h2 class="word-wrap-dots">DOOM Eternal - Graphics Study</h2>
-    </a>
-    <p style='font-style: italic;'>
-    30 Aug 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/graphics/DoomEternalStudy">
+            <h3 class="word-wrap-dots">DOOM Eternal - Graphics Study</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    30 Aug 2020 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     23 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/graphics/DoomEternalStudy">
-        <img class="img-fluid" src="/images/blog/010_doom_eternal_study/image1.jpeg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><h2 id="background">Background</h2>
-
-<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
-
-</p>
-    </div>
 </div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/graphics/DxcCompiling">
-        <h2 class="word-wrap-dots">Using the DirectXShaderCompiler C++ API</h2>
-    </a>
-    <p style='font-style: italic;'>
-    04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.</p>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/graphics/DoomEternalStudy">
+                    <img class="img-fluid" src="/images/blog/010_doom_eternal_study/image1.jpeg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/graphics/DxcCompiling">
+            <h3 class="word-wrap-dots">Using the DirectXShaderCompiler C++ API</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    04 Mar 2020 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     18 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/graphics/DxcCompiling">
-        <img class="img-fluid" src="/images/blog/007_dxc/cover.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
-The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
+</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler DirectXShaderCompiler (DXC) which compiles to DXIL (whereas FXC compiles to DXBC).
-It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
+<a href="https://github.com/microsoft/DirectXShaderCompiler">It’s completely open-source on GitHub</a>. 
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
 
-</p>
-    </div>
-</div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/graphics/SpotlightCulling">
-        <h2 class="word-wrap-dots">Optimizing spotlight intersection in tiled/clustered light culling</h2>
-    </a>
-    <p style='font-style: italic;'>
-    17 Aug 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/graphics/DxcCompiling">
+                    <img class="img-fluid" src="/images/blog/007_dxc/cover.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/graphics/SpotlightCulling">
+            <h3 class="word-wrap-dots">Optimizing spotlight intersection in tiled/clustered light culling</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    17 Aug 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     10 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/graphics/SpotlightCulling">
-        <img class="img-fluid" src="/images/blog/006_cone_culling/cover.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
+</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>I’ve been implementing both tiled and clustered light culling with forward rendering recently and one of the things I never was quite happy with is the way spot lights were tested against the frustum voxel/AABBs. 
 I wanted to write up something about my entire culling implementation but then I got a bit sidetracked by looking into way to improve cone culling specifically and I thought the spot light testing is an interesting case on its own.</p>
 
-</p>
-    </div>
-</div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/PakFiles">
-        <h2 class="word-wrap-dots">Pak files - Virtual file system</h2>
-    </a>
-    <p style='font-style: italic;'>
-    10 Jul 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/graphics/SpotlightCulling">
+                    <img class="img-fluid" src="/images/blog/006_cone_culling/cover.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/PakFiles">
+            <h3 class="word-wrap-dots">Pak files - Virtual file system</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    10 Jul 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     15 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/PakFiles">
-        <img class="img-fluid" src="/images/blog/005_pakfiles/cover.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
-
-</p>
-    </div>
 </div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/StaticReflection">
-        <h2 class="word-wrap-dots">Basic compile-time type information using constexpr</h2>
-    </a>
-    <p style='font-style: italic;'>
-    21 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>Packaging assets in large binary blobs in games is quite common. In 1992, Wolfenstein 3D introduced so called “WAD” files (Stands for “<em>Where’s All the Data?</em>”). This file format has been used after on Doom and eventually pretty much all games currently today in some form. It gives more flexibility to users (and developers) to create patches, mods, it provides opportunities for security measures but more importantly, it improves performance significantly as having only a few large binary files to read from is much faster than reading many small files.</p>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/PakFiles">
+                    <img class="img-fluid" src="/images/blog/005_pakfiles/cover.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/StaticReflection">
+            <h3 class="word-wrap-dots">Basic compile-time type information using constexpr</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    21 Jun 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     10 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/StaticReflection">
-        <img class="img-fluid" src="/images/blog/004_reflection/cover.jpg"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
+</div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>When working on my game engine project, I always get distracted by new interesting things or thoughts I want to look into and one of them was reflection. Almost all commercial game engine have some kind of reflection that makes GUI editors and visual scripting possible. Unlike those engines, I didn’t look into full all-the-way reflection because I didn’t want to bloat my code with that and maintain it. I was mostly interested in very simple type reflection so before you start frowning when looking at the code, this is not meant to be a complete reflection system at all! This is quite basic but I found it to be an interesting use of compile-time expressions.</p>
 
 <p>All the code can be found on <a href="https://github.com/simco50/FluxEngine">GitHub</a>.</p>
-</p>
-    </div>
-</div>
-<hr>
 
-<div class="blog-post">
-    <a class="blacklink" href="/blog/programming/Natvis">
-        <h2 class="word-wrap-dots">Natvis in Visual Studio</h2>
-    </a>
-    <p style='font-style: italic;'>
-    13 Jun 2019 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/StaticReflection">
+                    <img class="img-fluid" src="/images/blog/004_reflection/cover.jpg"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
+    <div class="blog-post">
+        
+        <a class="blacklink" href="/blog/programming/Natvis">
+            <h3 class="word-wrap-dots">Natvis in Visual Studio</h3>
+        </a>
+        <div style='font-style: italic; padding-left: 10px;'>
+    13 Jun 2019 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     4 mins
   
 </span><span class="far fa-clock"></span>
-</p>
-    
-    <a href="/blog/programming/Natvis">
-        <img class="img-fluid" src="/images/blog/003_natvis/Difference.png"/>
-    </a>
-    
-    <div class="word-wrap-dots">
-    <p><p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
-
-</p>
-    </div>
 </div>
-<hr>
 
+        <div class="row">
+            <div class="col-md-8">
+                <div class="word-wrap-dots">
+                    <p>When working on the C++ delegates (<a href="/blog/programming/CPP_Delegates">see previous post</a>), I found out about a thing called “natvis” and I never actually heard of it before even though it’s always been right under my nose when debugging Unreal Engine projects. It’s a really awesome and powerful debugging tool that allows you to define how classes should be visualized in the Visual Studio “Watch” windows and hover windows.</p>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                
+                <a href="/blog/programming/Natvis">
+                    <img class="img-fluid" src="/images/blog/003_natvis/Difference.png"/>
+                </a>
+                
+            </div>        
+        </div>        
+
+    </div>
+    <hr style="margin: 3px;">
+    
 </div>
 
 

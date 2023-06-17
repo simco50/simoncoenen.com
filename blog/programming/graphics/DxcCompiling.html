@@ -49,6 +49,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous"></script>
     <script src="/js/main_head.js"></script>
     
+
+    
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" />
@@ -147,19 +149,18 @@
             <div class="blog-post">
 
 <h1>Using the DirectXShaderCompiler C++ API</h1>
-<p style='font-style: italic;'>
-    04 Mar 2020 - Simon Coenen - Reading time: <span class="reading-time" title="Estimated read time">
+<div style='font-style: italic; padding-left: 10px;'>
+    04 Mar 2020 - Reading time: <span class="reading-time" title="Estimated read time">
   
   
     18 mins
   
 </span><span class="far fa-clock"></span> - <a href="#comment-section">Comments</a>
-</p>
+</div>
 
-<p>Shader Model 6 has existed for quite a while now and after reading this great article from <a href="https://flashypixels.wordpress.com/2018/11/10/intro-to-gpu-scalarization-part-2-scalarize-all-the-lights/">Francesco Cifariello Ciardi</a> about scalarizing the light loop in tiled/clustered lighting, I wanted to try out <a href="https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-shader-model-6-0-features-for-direct3d-12">Wave Intrisics</a>.
-The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
+<p>The old fxc.exe compiles to DXBC and only supports up to Shader Model 5.1.
 Microsoft has since introduced their new llvm-based compiler DirectXShaderCompiler (DXC) which compiles to DXIL (whereas FXC compiles to DXBC).
-It’s completely open-source on GitHub here: https://github.com/microsoft/DirectXShaderCompiler
+<a href="https://github.com/microsoft/DirectXShaderCompiler">It’s completely open-source on GitHub</a>. 
 It both provides command line tools and a C++ API for compiling, validating and using shaders with SM 6.0 and up.</p>
 
 <!--more-->
