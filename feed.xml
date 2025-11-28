@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2023-10-07T15:47:05+02:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+02:00</published><updated>2020-08-30T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://www.simoncoenen.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://www.simoncoenen.com/" rel="alternate" type="text/html" /><updated>2025-11-28T22:29:34+01:00</updated><id>https://www.simoncoenen.com/feed.xml</id><title type="html">Simon Coenen</title><subtitle>Simon Coenen - Graphics Progammer</subtitle><entry xml:lang="en_GB"><title type="html">DOOM Eternal - Graphics Study</title><link href="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy" rel="alternate" type="text/html" title="DOOM Eternal - Graphics Study" /><published>2020-08-30T00:00:00+02:00</published><updated>2020-08-30T00:00:00+02:00</updated><id>https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy</id><content type="html" xml:base="https://www.simoncoenen.com/blog/programming/graphics/DoomEternalStudy"><![CDATA[<p>Doom Eternal is the successor of Doom 2016. It’s developed using the 7th iteration of id Tech, id Software’s in-house game engine. Doom 2016 has inspired me greatly on a technologic level due to its simplicity and elegance while still having a high visual quality. For Doom Eternal, this is no different. Doom Eternal has improved in many areas of which a few are worth investigating which I will try to cover in this frame breakdown.
 <!--more--></p>
 
 <p>This frame breakdown is inspired by <a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/">Adrian Courreges’s study on Doom 2016</a>. I believe these graphics studies give a lot of insight into how certain rendering problems are solved in a AAA game and are greatly educational. In this breakdown I aim to stay at a high level and not go too in-depth of each rendering technique/pass. Some passes might not be covered here because they are very similar to Doom 2016 and are well covered in Adrian Courreges’s study.</p>
@@ -540,14 +540,15 @@ To add include directories, use the <code class="language-plaintext highlighter-
 
 <p>When you execute <code class="language-plaintext highlighter-rouge">dxc.exe -help</code>, it shows you the most important options which I’ve formatted below, mostly for my own reference.</p>
 
-<p>Version: dxcompiler.dll: 1.7 - 1.7.2212.12 (8c9d92be7);
-dxil.dll: 1.7(101.7.2212.14)</p>
+<p>Version: DX Compiler release for May 2025 - Patch 1</p>
+
+<h3 id="common-options">Common Options</h3>
 
 <table>
   <thead>
     <tr>
-      <th>Common Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -566,11 +567,15 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="compilation-options">Compilation Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>Commpilation Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
       <th> </th>
       <th> </th>
       <th> </th>
@@ -579,7 +584,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   <tbody>
     <tr>
       <td>-all-resources-bound</td>
-      <td>Enables agressive flattening</td>
+      <td>Enables aggressive flattening</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -652,7 +657,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
       <td>Set default encoding for source inputs and text outputs (utf8</td>
       <td>utf16(win)</td>
       <td>utf32(*nix)</td>
-      <td>wide) default=utf8</td>
+      <td>wide)<br />default=utf8</td>
     </tr>
     <tr>
       <td>-export-shaders-only</td>
@@ -678,6 +683,13 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-Fc <file></file></td>
       <td>Output assembly code listing file</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-fdiagnostics-format=<value></value></td>
+      <td>Select diagnostic message format. Supported values: clang, msvc, mdvc-fallback, vi</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -739,6 +751,13 @@ dxil.dll: 1.7(101.7.2212.14)</p>
       <td> </td>
     </tr>
     <tr>
+      <td>-fnew-inlining-behavior</td>
+      <td>Experimental option to use heuristics-driven late inlining and disable alwaysinline annotation for library shaders</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
       <td>-fno-diagnostics-show-option</td>
       <td>Do not print option name with mappable diagnostics</td>
       <td> </td>
@@ -783,6 +802,13 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-ftime-report</td>
       <td>Print time report</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-ftime-trace-granularity=<value></value></td>
+      <td>Minimum time granularity (in microseconds) traced by time profiler</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -838,7 +864,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     </tr>
     <tr>
       <td>-HV <value></value></td>
-      <td>HLSL version (2016, 2017, 2018, 2021). Default is 2018</td>
+      <td>HLSL version (2016, 2017, 2018, 2021). Default is 2021</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -874,13 +900,6 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-Ni</td>
       <td>Output instruction numbers in assembly listings</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>-no-legacy-cbuf-layout</td>
-      <td>Do not use legacy cbuffer load</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -950,7 +969,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     </tr>
     <tr>
       <td>-T <profile></profile></td>
-      <td>Set target profile. <profile>: ps_6_0, ps_6_1, ps_6_2, ps_6_3, ps_6_4, ps_6_5, ps_6_6, ps_6_7, vs_6_0, vs_6_1, vs_6_2, vs_6_3, vs_6_4, vs_6_5, vs_6_6, vs_6_7, gs_6_0, gs_6_1, gs_6_2, gs_6_3, gs_6_4, gs_6_5, gs_6_6, gs_6_7, hs_6_0, hs_6_1, hs_6_2, hs_6_3, hs_6_4, hs_6_5, hs_6_6, hs_6_7, ds_6_0, ds_6_1, ds_6_2, ds_6_3, ds_6_4, ds_6_5, ds_6_6, ds_6_7, cs_6_0, cs_6_1, cs_6_2, cs_6_3, cs_6_4, cs_6_5, cs_6_6, cs_6_7, lib_6_1, lib_6_2, lib_6_3, lib_6_4, lib_6_5, lib_6_6, lib_6_7, ms_6_5, ms_6_6, ms_6_7, as_6_5, as_6_6, as_6_7</profile></td>
+      <td>Set target profile. profile: ps_6_0, ps_6_1, ps_6_2, ps_6_3, ps_6_4, ps_6_5, ps_6_6, ps_6_7, ps_6_8, ps_6_9, vs_6_0, vs_6_1, vs_6_2, vs_6_3, vs_6_4, vs_6_5, vs_6_6, vs_6_7, vs_6_8, vs_6_9, gs_6_0, gs_6_1, gs_6_2, gs_6_3, gs_6_4, gs_6_5, gs_6_6, gs_6_7, gs_6_8, gs_6_9, hs_6_0, hs_6_1, hs_6_2, hs_6_3, hs_6_4, hs_6_5, hs_6_6, hs_6_7, hs_6_8, hs_6_9, ds_6_0, ds_6_1, ds_6_2, ds_6_3, ds_6_4, ds_6_5, ds_6_6, ds_6_7, ds_6_8, ds_6_9, cs_6_0, cs_6_1, cs_6_2, cs_6_3, cs_6_4, cs_6_5, cs_6_6, cs_6_7, cs_6_8, cs_6_9, lib_6_1, lib_6_2, lib_6_3, lib_6_4, lib_6_5, lib_6_6, lib_6_7, lib_6_8, lib_6_9, ms_6_5, ms_6_6, ms_6_7, ms_6_8, ms_6_9, as_6_5, as_6_6, as_6_7, as_6_8, as_6_9</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -958,6 +977,13 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-Vd</td>
       <td>Disable validation</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>-verify<value></value></td>
+      <td>Verify diagnostic output using comment directives</td>
       <td> </td>
       <td> </td>
       <td> </td>
@@ -1028,11 +1054,15 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="options">Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>OPTIONS:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1042,7 +1072,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     </tr>
     <tr>
       <td>-MF <file></file></td>
-      <td>Write the specfied file that will contain the list of the compilation target dependencies.</td>
+      <td>Write the specified file that will contain the list of the compilation target dependencies.</td>
     </tr>
     <tr>
       <td>-M</td>
@@ -1051,14 +1081,26 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="optimization-options">Optimization Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>Optimization Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>-ffinite-math-only</td>
+      <td>Allow optimizations for floating-point arithmetic that assume that arguments and results are not NaNs or +-Infs.</td>
+    </tr>
+    <tr>
+      <td>-fno-finite-math-only</td>
+      <td>Disallow optimizations for floating-point arithmetic that assume that arguments and results are not NaNs or +-Infs.</td>
+    </tr>
     <tr>
       <td>-O0</td>
       <td>Optimization Level 0</td>
@@ -1078,11 +1120,15 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="rewriter-options">Rewriter Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>Rewriter Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1129,17 +1175,25 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="spir-v-codegen-options">SPIR-V CodeGen Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>SPIR-V CodeGen Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>-fspv-debug=<value></value></td>
       <td>Specify whitelist of debug info category (file -&gt; source -&gt; line, tool, vulkan-with-source)</td>
+    </tr>
+    <tr>
+      <td>-fspv-enable-maximal-reconvergence</td>
+      <td>Enables the MaximallyReconvergesKHR execution mode for this module.</td>
     </tr>
     <tr>
       <td>-fspv-entrypoint-name=<value></value></td>
@@ -1152,6 +1206,18 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-fspv-flatten-resource-arrays</td>
       <td>Flatten arrays of resources so each array element takes one binding number</td>
+    </tr>
+    <tr>
+      <td>-fspv-max-id <shift> <space></space></shift></td>
+      <td>Set the maximum value for an id in the SPIR-V binary. Default is 0x3FFFFF, which is the largest value all drivers must support.</td>
+    </tr>
+    <tr>
+      <td>-fspv-preserve-bindings</td>
+      <td>Preserves all bindings declared within the module, even when those bindings are unused</td>
+    </tr>
+    <tr>
+      <td>-fspv-preserve-interface</td>
+      <td>Preserves all interface variables in the entry point, even when those variables are unused</td>
     </tr>
     <tr>
       <td>-fspv-print-all</td>
@@ -1174,12 +1240,20 @@ dxil.dll: 1.7(101.7.2212.14)</p>
       <td>Assume the legacy matrix order (row major) when accessing raw buffers (e.g., ByteAdddressBuffer)</td>
     </tr>
     <tr>
+      <td>-fspv-use-vulkan-memory-model</td>
+      <td>Generates SPIR-V modules that use the Vulkan memory model instead of GLSL450.</td>
+    </tr>
+    <tr>
       <td>-fvk-auto-shift-bindings</td>
       <td>Apply fvk-*-shift to resources without an explicit register assignment.</td>
     </tr>
     <tr>
       <td>-fvk-b-shift <shift> <space></space></shift></td>
       <td>Specify Vulkan binding number shift for b-type register</td>
+    </tr>
+    <tr>
+      <td>-fvk-bind-counter-heap <binding> <set></set></binding></td>
+      <td>Specify Vulkan binding number and set number for the counter heap.</td>
     </tr>
     <tr>
       <td>-fvk-bind-globals <binding> <set></set></binding></td>
@@ -1190,8 +1264,16 @@ dxil.dll: 1.7(101.7.2212.14)</p>
       <td>Specify Vulkan descriptor set and binding for a specific register</td>
     </tr>
     <tr>
+      <td>-fvk-bind-resource-heap <binding> <set></set></binding></td>
+      <td>Specify Vulkan binding number and set number for the resource heap.</td>
+    </tr>
+    <tr>
+      <td>-fvk-bind-sampler-heap <binding> <set></set></binding></td>
+      <td>Specify Vulkan binding number and set number for the sampler heap.</td>
+    </tr>
+    <tr>
       <td>-fvk-invert-y</td>
-      <td>Negate SV_Position.y before writing to stage output in VS/DS/GS to accommodate Vulkan’s coordinate system</td>
+      <td>Negate SV_Position.y before writing to stage output in VS/DS/GS/MS/Lib to accommodate Vulkan’s coordinate system</td>
     </tr>
     <tr>
       <td>-fvk-s-shift <shift> <space></space></shift></td>
@@ -1200,6 +1282,10 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-fvk-support-nonzero-base-instance</td>
       <td>Follow Vulkan spec to use gl_BaseInstance as the first vertex instance, which makes SV_InstanceID = gl_InstanceIndex - gl_BaseInstance (without this option, SV_InstanceID = gl_InstanceIndex)</td>
+    </tr>
+    <tr>
+      <td>-fvk-support-nonzero-base-vertex</td>
+      <td>Follow Vulkan spec to use gl_BaseVertex as the first vertex, which makes SV_VertexID = gl_VertexIndex - gl_BaseVertex (without this option, SV_VertexID = gl_VertexIndex)</td>
     </tr>
     <tr>
       <td>-fvk-t-shift <shift> <space></space></shift></td>
@@ -1226,6 +1312,10 @@ dxil.dll: 1.7(101.7.2212.14)</p>
       <td>Use scalar memory layout for Vulkan resources</td>
     </tr>
     <tr>
+      <td>-metal</td>
+      <td>Generate Metal code</td>
+    </tr>
+    <tr>
       <td>-Oconfig=<value></value></td>
       <td>Specify a comma-separated list of SPIRV-Tools passes to customize optimization configuration (see http://khr.io/hlsl2spirv#optimization)</td>
     </tr>
@@ -1236,11 +1326,15 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="utility-options">Utility Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>Utility Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1267,6 +1361,10 @@ dxil.dll: 1.7(101.7.2212.14)</p>
     <tr>
       <td>-Qembed_debug</td>
       <td>Embed PDB in shader container (must be used with /Zi)</td>
+    </tr>
+    <tr>
+      <td>-Qsource_in_debug_module</td>
+      <td>Embed source code in PDB</td>
     </tr>
     <tr>
       <td>-Qstrip_debug</td>
@@ -1299,11 +1397,15 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
+<h3 id="warning-options">Warning Options</h3>
+
 <table>
   <thead>
     <tr>
-      <th>Warning Options:</th>
-      <th> </th>
+      <th>Argument</th>
+      <th>Description</th>
     </tr>
   </thead>
   <tbody>
@@ -1314,6 +1416,8 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   </tbody>
 </table>
 
+<hr />
+
 <h2 id="updates">Updates</h2>
 
 <ul>
@@ -1321,6 +1425,7 @@ dxil.dll: 1.7(101.7.2212.14)</p>
   <li><strong>27/04/2021:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.6.0.3119) with SM6.6 support</li>
   <li><strong>14/10/2021:</strong> Add custom include handler example</li>
   <li><strong>01/02/2023:</strong> Update DXC cheat sheet with options from DXC 1.7 (1.7.2212.12)</li>
+  <li><strong>28/11/2025:</strong> Update DXC cheat sheet with options</li>
 </ul>
 
 <h2 id="some-great-articles-that-go-more-in-depth">Some great articles that go more in-depth</h2>
